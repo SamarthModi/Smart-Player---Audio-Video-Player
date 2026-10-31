@@ -1,0 +1,18 @@
+R_DEF: Internal format may change without notice
+local
+drawable ic_launcher_background
+drawable ic_launcher_foreground
+mipmap ic_launcher
+mipmap ic_launcher_round
+string app_description
+string app_name
+string channel_desc
+string channel_name
+string grant_permission
+string permission_desc
+string permission_required
+string tab_music
+string tab_playlists
+string tab_settings
+string tab_videos
+style Theme.SmartPlayer

@@ -1,0 +1,243 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.smartplayer.app"
+4    android:versionCode="1"
+5    android:versionName="1.0.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="26"
+9        android:targetSdkVersion="36" />
+10
+11    <!-- Storage and Media Permissions -->
+12    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+12-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:6:5-75
+12-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:6:22-72
+13    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+13-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:7:5-75
+13-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:7:22-72
+14    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+14-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:8:5-76
+14-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:8:22-73
+15    <uses-permission
+15-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:9:5-11:38
+16        android:name="android.permission.READ_EXTERNAL_STORAGE"
+16-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:10:9-64
+17        android:maxSdkVersion="32" />
+17-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:11:9-35
+18    <uses-permission
+18-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:12:5-15:40
+19        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+19-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:13:9-65
+20        android:maxSdkVersion="29" />
+20-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:14:9-35
+21
+22    <!-- Playback, Service, and System Permissions -->
+23    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+23-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:18:5-77
+23-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:18:22-74
+24    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+24-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:19:5-92
+24-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:19:22-89
+25    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+25-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:20:5-77
+25-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:20:22-74
+26    <uses-permission android:name="android.permission.WAKE_LOCK" />
+26-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:21:5-68
+26-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:21:22-65
+27    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+27-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:22:5-80
+27-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:22:22-77
+28    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+28-->[androidx.media3:media3-common:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/83f59c0fa0dfa1f2b2e5256ee0068a36/transformed/media3-common-1.4.1/AndroidManifest.xml:22:5-79
+28-->[androidx.media3:media3-common:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/83f59c0fa0dfa1f2b2e5256ee0068a36/transformed/media3-common-1.4.1/AndroidManifest.xml:22:22-76
+29
+30    <permission
+30-->[androidx.core:core:1.17.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/82a87227b83727758ed8d0cfa78ff3f9/transformed/core-1.17.0/AndroidManifest.xml:22:5-24:47
+31        android:name="com.smartplayer.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+31-->[androidx.core:core:1.17.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/82a87227b83727758ed8d0cfa78ff3f9/transformed/core-1.17.0/AndroidManifest.xml:23:9-81
+32        android:protectionLevel="signature" />
+32-->[androidx.core:core:1.17.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/82a87227b83727758ed8d0cfa78ff3f9/transformed/core-1.17.0/AndroidManifest.xml:24:9-44
+33
+34    <uses-permission android:name="com.smartplayer.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+34-->[androidx.core:core:1.17.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/82a87227b83727758ed8d0cfa78ff3f9/transformed/core-1.17.0/AndroidManifest.xml:26:5-97
+34-->[androidx.core:core:1.17.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/82a87227b83727758ed8d0cfa78ff3f9/transformed/core-1.17.0/AndroidManifest.xml:26:22-94
+35
+36    <application
+36-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:24:5-73:19
+37        android:name="com.smartplayer.app.SmartPlayerApplication"
+37-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:25:9-47
+38        android:allowBackup="true"
+38-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:26:9-35
+39        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+39-->[androidx.core:core:1.17.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/82a87227b83727758ed8d0cfa78ff3f9/transformed/core-1.17.0/AndroidManifest.xml:28:18-86
+40        android:debuggable="true"
+41        android:extractNativeLibs="false"
+42        android:icon="@mipmap/ic_launcher"
+42-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:27:9-43
+43        android:label="@string/app_name"
+43-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:28:9-41
+44        android:roundIcon="@mipmap/ic_launcher_round"
+44-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:29:9-54
+45        android:supportsRtl="true"
+45-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:30:9-35
+46        android:theme="@style/Theme.SmartPlayer" >
+46-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:31:9-49
+47
+48        <!-- Main Media Hub Activity -->
+49        <activity
+49-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:35:9-44:20
+50            android:name="com.smartplayer.app.MainActivity"
+50-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:36:13-41
+51            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
+51-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:38:13-91
+52            android:exported="true"
+52-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:37:13-36
+53            android:windowSoftInputMode="adjustResize" >
+53-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:39:13-55
+54            <intent-filter>
+54-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:40:13-43:29
+55                <action android:name="android.intent.action.MAIN" />
+55-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:41:17-69
+55-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:41:25-66
+56
+57                <category android:name="android.intent.category.LAUNCHER" />
+57-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:42:17-77
+57-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:42:27-74
+58            </intent-filter>
+59        </activity>
+60
+61        <!-- Pro Fullscreen Video Player Activity (Supports PiP, Gesture Controls) -->
+62        <activity
+62-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:47:9-60:20
+63            android:name="com.smartplayer.app.ui.player.VideoPlayerActivity"
+63-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:48:13-58
+64            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden"
+64-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:51:13-106
+65            android:exported="true"
+65-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:49:13-36
+66            android:screenOrientation="sensorLandscape"
+66-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:52:13-56
+67            android:supportsPictureInPicture="true"
+67-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:50:13-52
+68            android:theme="@style/Theme.SmartPlayer" >
+68-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:53:13-53
+69            <intent-filter>
+69-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:54:13-59:29
+70                <action android:name="android.intent.action.VIEW" />
+70-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:55:17-69
+70-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:55:25-66
+71
+72                <category android:name="android.intent.category.DEFAULT" />
+72-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:56:17-76
+72-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:56:27-73
+73                <category android:name="android.intent.category.BROWSABLE" />
+73-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:57:17-78
+73-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:57:27-75
+74
+75                <data android:mimeType="video/*" />
+75-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:58:17-52
+75-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:58:23-49
+76            </intent-filter>
+77        </activity>
+78
+79        <!-- AndroidX Media3 MediaSession Foreground Service -->
+80        <service
+80-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:63:9-71:19
+81            android:name="com.smartplayer.app.service.SmartAudioService"
+81-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:64:13-54
+82            android:exported="true"
+82-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:65:13-36
+83            android:foregroundServiceType="mediaPlayback" >
+83-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:66:13-58
+84            <intent-filter>
+84-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:67:13-70:29
+85                <action android:name="androidx.media3.session.MediaSessionService" />
+85-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:68:17-86
+85-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:68:25-83
+86                <action android:name="android.media.browse.MediaBrowserService" />
+86-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:69:17-83
+86-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:69:25-80
+87            </intent-filter>
+88        </service>
+89
+90        <uses-library
+90-->[androidx.window:window:1.5.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/467763a28d01363752335ff0d5691d15/transformed/window-1.5.0/AndroidManifest.xml:23:9-25:40
+91            android:name="androidx.window.extensions"
+91-->[androidx.window:window:1.5.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/467763a28d01363752335ff0d5691d15/transformed/window-1.5.0/AndroidManifest.xml:24:13-54
+92            android:required="false" />
+92-->[androidx.window:window:1.5.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/467763a28d01363752335ff0d5691d15/transformed/window-1.5.0/AndroidManifest.xml:25:13-37
+93        <uses-library
+93-->[androidx.window:window:1.5.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/467763a28d01363752335ff0d5691d15/transformed/window-1.5.0/AndroidManifest.xml:26:9-28:40
+94            android:name="androidx.window.sidecar"
+94-->[androidx.window:window:1.5.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/467763a28d01363752335ff0d5691d15/transformed/window-1.5.0/AndroidManifest.xml:27:13-51
+95            android:required="false" />
+95-->[androidx.window:window:1.5.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/467763a28d01363752335ff0d5691d15/transformed/window-1.5.0/AndroidManifest.xml:28:13-37
+96
+97        <provider
+97-->[androidx.emoji2:emoji2:1.4.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/ab604a72a0cb3526d920c930d5d750e0/transformed/emoji2-1.4.0/AndroidManifest.xml:24:9-32:20
+98            android:name="androidx.startup.InitializationProvider"
+98-->[androidx.emoji2:emoji2:1.4.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/ab604a72a0cb3526d920c930d5d750e0/transformed/emoji2-1.4.0/AndroidManifest.xml:25:13-67
+99            android:authorities="com.smartplayer.app.androidx-startup"
+99-->[androidx.emoji2:emoji2:1.4.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/ab604a72a0cb3526d920c930d5d750e0/transformed/emoji2-1.4.0/AndroidManifest.xml:26:13-68
+100            android:exported="false" >
+100-->[androidx.emoji2:emoji2:1.4.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/ab604a72a0cb3526d920c930d5d750e0/transformed/emoji2-1.4.0/AndroidManifest.xml:27:13-37
+101            <meta-data
+101-->[androidx.emoji2:emoji2:1.4.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/ab604a72a0cb3526d920c930d5d750e0/transformed/emoji2-1.4.0/AndroidManifest.xml:29:13-31:52
+102                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+102-->[androidx.emoji2:emoji2:1.4.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/ab604a72a0cb3526d920c930d5d750e0/transformed/emoji2-1.4.0/AndroidManifest.xml:30:17-75
+103                android:value="androidx.startup" />
+103-->[androidx.emoji2:emoji2:1.4.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/ab604a72a0cb3526d920c930d5d750e0/transformed/emoji2-1.4.0/AndroidManifest.xml:31:17-49
+104            <meta-data
+104-->[androidx.lifecycle:lifecycle-process:2.9.4] /home/serpentcs/.gradle/caches/9.8.2/transforms/b4a0664932e0be31744491179f0d0317/transformed/lifecycle-process-2.9.4/AndroidManifest.xml:29:13-31:52
+105                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+105-->[androidx.lifecycle:lifecycle-process:2.9.4] /home/serpentcs/.gradle/caches/9.8.2/transforms/b4a0664932e0be31744491179f0d0317/transformed/lifecycle-process-2.9.4/AndroidManifest.xml:30:17-78
+106                android:value="androidx.startup" />
+106-->[androidx.lifecycle:lifecycle-process:2.9.4] /home/serpentcs/.gradle/caches/9.8.2/transforms/b4a0664932e0be31744491179f0d0317/transformed/lifecycle-process-2.9.4/AndroidManifest.xml:31:17-49
+107            <meta-data
+107-->[androidx.profileinstaller:profileinstaller:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/1d9da6d17eb774113302ad21cb867c14/transformed/profileinstaller-1.4.1/AndroidManifest.xml:29:13-31:52
+108                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+108-->[androidx.profileinstaller:profileinstaller:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/1d9da6d17eb774113302ad21cb867c14/transformed/profileinstaller-1.4.1/AndroidManifest.xml:30:17-85
+109                android:value="androidx.startup" />
+109-->[androidx.profileinstaller:profileinstaller:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/1d9da6d17eb774113302ad21cb867c14/transformed/profileinstaller-1.4.1/AndroidManifest.xml:31:17-49
+110        </provider>
+111
+112        <receiver
+112-->[androidx.profileinstaller:profileinstaller:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/1d9da6d17eb774113302ad21cb867c14/transformed/profileinstaller-1.4.1/AndroidManifest.xml:34:9-52:20
+113            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+113-->[androidx.profileinstaller:profileinstaller:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/1d9da6d17eb774113302ad21cb867c14/transformed/profileinstaller-1.4.1/AndroidManifest.xml:35:13-76
+114            android:directBootAware="false"
+114-->[androidx.profileinstaller:profileinstaller:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/1d9da6d17eb774113302ad21cb867c14/transformed/profileinstaller-1.4.1/AndroidManifest.xml:36:13-44
+115            android:enabled="true"
+115-->[androidx.profileinstaller:profileinstaller:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/1d9da6d17eb774113302ad21cb867c14/transformed/profileinstaller-1.4.1/AndroidManifest.xml:37:13-35
+116            android:exported="true"
+116-->[androidx.profileinstaller:profileinstaller:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/1d9da6d17eb774113302ad21cb867c14/transformed/profileinstaller-1.4.1/AndroidManifest.xml:38:13-36
+117            android:permission="android.permission.DUMP" >
+117-->[androidx.profileinstaller:profileinstaller:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/1d9da6d17eb774113302ad21cb867c14/transformed/profileinstaller-1.4.1/AndroidManifest.xml:39:13-57
+118            <intent-filter>
+118-->[androidx.profileinstaller:profileinstaller:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/1d9da6d17eb774113302ad21cb867c14/transformed/profileinstaller-1.4.1/AndroidManifest.xml:40:13-42:29
+119                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+119-->[androidx.profileinstaller:profileinstaller:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/1d9da6d17eb774113302ad21cb867c14/transformed/profileinstaller-1.4.1/AndroidManifest.xml:41:17-91
+119-->[androidx.profileinstaller:profileinstaller:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/1d9da6d17eb774113302ad21cb867c14/transformed/profileinstaller-1.4.1/AndroidManifest.xml:41:25-88
+120            </intent-filter>
+121            <intent-filter>
+121-->[androidx.profileinstaller:profileinstaller:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/1d9da6d17eb774113302ad21cb867c14/transformed/profileinstaller-1.4.1/AndroidManifest.xml:43:13-45:29
+122                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+122-->[androidx.profileinstaller:profileinstaller:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/1d9da6d17eb774113302ad21cb867c14/transformed/profileinstaller-1.4.1/AndroidManifest.xml:44:17-85
+122-->[androidx.profileinstaller:profileinstaller:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/1d9da6d17eb774113302ad21cb867c14/transformed/profileinstaller-1.4.1/AndroidManifest.xml:44:25-82
+123            </intent-filter>
+124            <intent-filter>
+124-->[androidx.profileinstaller:profileinstaller:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/1d9da6d17eb774113302ad21cb867c14/transformed/profileinstaller-1.4.1/AndroidManifest.xml:46:13-48:29
+125                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+125-->[androidx.profileinstaller:profileinstaller:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/1d9da6d17eb774113302ad21cb867c14/transformed/profileinstaller-1.4.1/AndroidManifest.xml:47:17-88
+125-->[androidx.profileinstaller:profileinstaller:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/1d9da6d17eb774113302ad21cb867c14/transformed/profileinstaller-1.4.1/AndroidManifest.xml:47:25-85
+126            </intent-filter>
+127            <intent-filter>
+127-->[androidx.profileinstaller:profileinstaller:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/1d9da6d17eb774113302ad21cb867c14/transformed/profileinstaller-1.4.1/AndroidManifest.xml:49:13-51:29
+128                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+128-->[androidx.profileinstaller:profileinstaller:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/1d9da6d17eb774113302ad21cb867c14/transformed/profileinstaller-1.4.1/AndroidManifest.xml:50:17-95
+128-->[androidx.profileinstaller:profileinstaller:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/1d9da6d17eb774113302ad21cb867c14/transformed/profileinstaller-1.4.1/AndroidManifest.xml:50:25-92
+129            </intent-filter>
+130        </receiver>
+131    </application>
+132
+133</manifest>
