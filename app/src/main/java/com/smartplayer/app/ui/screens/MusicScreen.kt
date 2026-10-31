@@ -1,5 +1,8 @@
 package com.smartplayer.app.ui.screens
 
+import android.content.Intent
+import androidx.compose.ui.platform.LocalContext
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -35,6 +38,7 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.PlaylistAdd
 import androidx.compose.material.icons.filled.QueueMusic
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.Shuffle
 import androidx.compose.material.icons.filled.Sort
 import androidx.compose.material3.AlertDialog
@@ -521,6 +525,7 @@ fun AudioTrackItem(
     onAddToPlaylist: () -> Unit,
     onShowDetails: () -> Unit
 ) {
+    val context = LocalContext.current
     var showMenu by remember { mutableStateOf(false) }
 
     Row(
@@ -611,6 +616,18 @@ fun AudioTrackItem(
                         showMenu = false
                     },
                     leadingIcon = { Icon(Icons.Default.PlaylistAdd, contentDescription = null) }
+                )
+                DropdownMenuItem(
+                    text = { Text("Share Track") },
+                    onClick = {
+                        val shareIntent = Intent(Intent.ACTION_SEND).apply {
+                            type = "audio/*"
+                            putExtra(Intent.EXTRA_STREAM, song.uri)
+                        }
+                        context.startActivity(Intent.createChooser(shareIntent, "Share Track"))
+                        showMenu = false
+                    },
+                    leadingIcon = { Icon(Icons.Default.Share, contentDescription = null) }
                 )
                 DropdownMenuItem(
                     text = { Text("Details") },

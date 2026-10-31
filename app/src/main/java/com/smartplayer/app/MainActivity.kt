@@ -78,6 +78,7 @@ import com.smartplayer.app.ui.theme.NeonCyan
 import com.smartplayer.app.ui.theme.PlayerBlack
 import com.smartplayer.app.ui.theme.PlayerSurface
 import com.smartplayer.app.ui.theme.SmartPlayerTheme
+import com.smartplayer.app.util.LocaleHelper
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
@@ -92,6 +93,9 @@ class MainActivity : ComponentActivity() {
         mediaStoreRepository = MediaStoreRepository.getInstance(this)
         preferencesRepository = PreferencesRepository.getInstance(this)
         playerManager = SmartAudioPlayerManager.getInstance(this)
+
+        // Apply saved language
+        LocaleHelper.applyLanguage(preferencesRepository.appLanguage)
 
         // Start Foreground Playback Service
         val serviceIntent = Intent(this, SmartAudioService::class.java)
@@ -283,7 +287,8 @@ fun MainAppScreen(
                     NavigationTab.SETTINGS -> {
                         SettingsScreen(
                             preferencesRepository = preferencesRepository,
-                            onOpenEqualizer = { isEqualizerOpen = true }
+                            onOpenEqualizer = { isEqualizerOpen = true },
+                            onRefreshMedia = { reloadMedia() }
                         )
                     }
                 }

@@ -10,4 +10,20 @@
     <string name="grant_permission">Grant Permission</string>
     <string name="channel_name">Smart Media Playback</string>
     <string name="channel_desc">Playback controls for background music and videos</string>
+
+    <!-- General -->
+    <string name="search_hint_video">Search videos...</string>
+    <string name="search_hint_music">Search songs, artists, albums...</string>
+    <string name="all_videos">All Videos</string>
+    <string name="folders">Folders</string>
+    <string name="tracks">Tracks</string>
+    <string name="albums">Albums</string>
+    <string name="artists">Artists</string>
+    <string name="favorites">Favorites</string>
+    <string name="history">History</string>
+    <string name="custom_playlists">Custom</string>
+    <string name="equalizer">Equalizer</string>
+    <string name="sleep_timer">Sleep Timer</string>
+    <string name="audio_boost">Audio Boost (200%)</string>
+    <string name="app_language">App Language</string>
 </resources>

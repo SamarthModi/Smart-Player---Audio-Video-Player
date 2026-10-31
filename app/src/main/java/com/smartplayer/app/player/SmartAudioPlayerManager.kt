@@ -34,7 +34,8 @@ data class AudioPlaybackState(
     val playbackSpeed: Float = 1.0f,
     val queue: List<AudioItem> = emptyList(),
     val queueIndex: Int = 0,
-    val sleepTimerMinutesRemaining: Int? = null
+    val sleepTimerMinutesRemaining: Int? = null,
+    val sleepAtEndOfSong: Boolean = false
 )
 
 @OptIn(UnstableApi::class)
@@ -118,6 +119,13 @@ class SmartAudioPlayerManager private constructor(private val context: Context) 
     }
 
     private fun handleTrackEnded() {
+        if (_playbackState.value.sleepAtEndOfSong) {
+            _playbackState.value = _playbackState.value.copy(sleepAtEndOfSong = false)
+            exoPlayer.pause()
+            exoPlayer.seekTo(0)
+            return
+        }
+
         when (_playbackState.value.repeatMode) {
             SmartRepeatMode.ONE -> {
                 exoPlayer.seekTo(0)
@@ -238,6 +246,38 @@ class SmartAudioPlayerManager private constructor(private val context: Context) 
                 .setMediaId(song.id.toString())
                 .build()
         )
+    }
+
+    fun moveQueueItem(fromIndex: Int, toIndex: Int) {
+        val current = _playbackState.value.queue.toMutableList()
+        if (fromIndex in current.indices && toIndex in current.indices) {
+            val item = current.removeAt(fromIndex)
+            current.add(toIndex, item)
+            val newIdx = when (_playbackState.value.queueIndex) {
+                fromIndex -> toIndex
+                in (fromIndex + 1)..toIndex -> _playbackState.value.queueIndex - 1
+                in toIndex until fromIndex -> _playbackState.value.queueIndex + 1
+                else -> _playbackState.value.queueIndex
+            }
+            _playbackState.value = _playbackState.value.copy(queue = current, queueIndex = newIdx)
+            exoPlayer.moveMediaItem(fromIndex, toIndex)
+        }
+    }
+
+    fun removeFromQueue(index: Int) {
+        val current = _playbackState.value.queue.toMutableList()
+        if (index in current.indices) {
+            current.removeAt(index)
+            exoPlayer.removeMediaItem(index)
+            val newIdx = if (index < _playbackState.value.queueIndex) {
+                _playbackState.value.queueIndex - 1
+            } else _playbackState.value.queueIndex
+            _playbackState.value = _playbackState.value.copy(queue = current, queueIndex = newIdx)
+        }
+    }
+
+    fun setSleepAtEndOfSong(enabled: Boolean) {
+        _playbackState.value = _playbackState.value.copy(sleepAtEndOfSong = enabled)
     }
 
     fun setSleepTimer(minutes: Int?) {

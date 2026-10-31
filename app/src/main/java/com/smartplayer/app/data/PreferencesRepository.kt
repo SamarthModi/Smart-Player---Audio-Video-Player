@@ -181,6 +181,36 @@ class PreferencesRepository(private val context: Context) {
         get() = prefs.getInt("virtualizer_level", 250)
         set(value) = prefs.edit().putInt("virtualizer_level", value).apply()
 
+    // App Language ("system", "en", "gu", "hi")
+    var appLanguage: String
+        get() = prefs.getString("app_language", "system") ?: "system"
+        set(value) = prefs.edit().putString("app_language", value).apply()
+
+    // Decoder Mode ("HW", "SW")
+    var decoderMode: String
+        get() = prefs.getString("decoder_mode", "HW") ?: "HW"
+        set(value) = prefs.edit().putString("decoder_mode", value).apply()
+
+    // Double tap seek seconds (5, 10, 15, 30)
+    var doubleTapSeekSeconds: Int
+        get() = prefs.getInt("double_tap_seek_seconds", 10)
+        set(value) = prefs.edit().putInt("double_tap_seek_seconds", value).apply()
+
+    // Auto hide controls duration in seconds
+    var autoHideControlsSec: Int
+        get() = prefs.getInt("auto_hide_controls_sec", 4)
+        set(value) = prefs.edit().putInt("auto_hide_controls_sec", value).apply()
+
+    // Theme style ("AMOLED", "DARK", "BLUE")
+    var themeStyle: String
+        get() = prefs.getString("theme_style", "DARK") ?: "DARK"
+        set(value) = prefs.edit().putString("theme_style", value).apply()
+
+    fun clearPlaybackHistory() {
+        _recentlyPlayedAudioIds.value = emptyList()
+        prefs.edit().remove("recent_audio_ids").apply()
+    }
+
     companion object {
         @Volatile
         private var instance: PreferencesRepository? = null

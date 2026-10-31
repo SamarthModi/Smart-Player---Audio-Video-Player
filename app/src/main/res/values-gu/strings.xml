@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">Smart Player</string>
+    <string name="app_description">પ્રોફેશનલ સ્માર્ટ વિડીયો અને મ્યુઝિક પ્લેયર</string>
+    <string name="tab_videos">વિડીયો</string>
+    <string name="tab_music">મ્યુઝિક</string>
+    <string name="tab_playlists">પ્લેલિસ્ટ</string>
+    <string name="tab_settings">સેટિંગ્સ</string>
+    <string name="permission_required">સ્ટોરેજ પરમિશન જરૂરી છે</string>
+    <string name="permission_desc">તમારા લોકલ વિડીયો અને ગીતો વગાડવા માટે, Smart Player ને સ્ટોરેજ ઍક્સેસની જરૂર છે.</string>
+    <string name="grant_permission">પરમિશન આપો</string>
+    <string name="channel_name">સ્માર્ટ મીડિયા પ્લેબેક</string>
+    <string name="channel_desc">બેકગ્રાઉન્ડ મ્યુઝિક અને વિડીયો કંટ્રોલ્સ</string>
+
+    <!-- General -->
+    <string name="search_hint_video">વિડીયો શોધો...</string>
+    <string name="search_hint_music">ગીતો, આર્ટિસ્ટ શોધો...</string>
+    <string name="all_videos">બધા વિડીયો</string>
+    <string name="folders">ફોલ્ડર્સ</string>
+    <string name="tracks">ગીતો</string>
+    <string name="albums">આલ્બમ્સ</string>
+    <string name="artists">આર્ટિસ્ટ્સ</string>
+    <string name="favorites">ફેવરિટ્સ</string>
+    <string name="history">હિસ્ટ્રી</string>
+    <string name="custom_playlists">કસ્ટમ</string>
+    <string name="equalizer">ઇક્વલાઇઝર</string>
+    <string name="sleep_timer">સ્લીપ ટાઇમર</string>
+    <string name="audio_boost">ઓડિયો બૂસ્ટ (200%)</string>
+    <string name="app_language">એપ ભાષા</string>
+</resources>
