@@ -43,7 +43,6 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:testOnly="true"
         android:theme="@style/Theme.SmartPlayer" >
 
         <!-- Main Media Hub Activity -->
@@ -87,6 +86,27 @@
                 <action android:name="android.media.browse.MediaBrowserService" />
             </intent-filter>
         </service>
+
+        <!-- TODO: b/510644544 - Remove this workaround once minSdk is 38 -->
+        <activity
+            android:name="androidx.media3.session.BluetoothValidationActivity"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:noHistory="true"
+            android:permission="android.permission.BLUETOOTH_PRIVILEGED"
+            android:theme="@android:style/Theme.NoDisplay" >
+            <intent-filter>
+
+                <!-- Omit CATEGORY_DEFAULT to avoid listing this app as a generic audio app. -->
+                <action android:name="android.intent.action.VIEW" />
+
+                <data android:scheme="content" />
+                <data android:host="media" />
+                <!-- Satisfies the probe used in Bluetooths's MediaPlayerList.java on API 36 and 37. -->
+                <data android:pathPrefix="/internal/audio/media/" />
+                <data android:mimeType="audio/*" />
+            </intent-filter>
+        </activity>
 
         <uses-library
             android:name="androidx.window.extensions"

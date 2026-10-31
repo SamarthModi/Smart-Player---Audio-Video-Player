@@ -29,18 +29,18 @@ MERGED from [androidx.navigationevent:navigationevent-android:1.0.1] /home/serpe
 MERGED from [androidx.navigationevent:navigationevent-compose-android:1.0.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/2347ad4587653f8f7bc09e6732faa571/transformed/navigationevent-compose/AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.compose.material:material-icons-extended-android:1.7.8] /home/serpentcs/.gradle/caches/9.8.2/transforms/408753246dd35ebe106bc10d79218474/transformed/material-icons-extended-release/AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.compose.material:material-icons-core-android:1.7.8] /home/serpentcs/.gradle/caches/9.8.2/transforms/dab9c806246c6a960def7a492fb3cd55/transformed/material-icons-core-release/AndroidManifest.xml:2:1-7:12
-MERGED from [androidx.media3:media3-ui:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/08d6340af5b6e77097865941576be984/transformed/media3-ui-1.4.1/AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.media3:media3-session:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/f9b058dae89856325cba2057c7cce206/transformed/media3-session-1.4.1/AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.media3:media3-extractor:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/e7f2a1e45d40f0c4577571d6f3760963/transformed/media3-extractor-1.4.1/AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.media3:media3-container:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/d749a20a246c7c531f214b84dc98a3ed/transformed/media3-container-1.4.1/AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.media3:media3-datasource:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/c7d4cc109e8c6cb8eea155add949fba0/transformed/media3-datasource-1.4.1/AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.media3:media3-decoder:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/813053049f6fdb27b1353a3545bd53ce/transformed/media3-decoder-1.4.1/AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.media3:media3-database:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/5a09164ec1aba8c7e411603de98e29be/transformed/media3-database-1.4.1/AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.media3:media3-common:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/83f59c0fa0dfa1f2b2e5256ee0068a36/transformed/media3-common-1.4.1/AndroidManifest.xml:17:1-24:12
-MERGED from [androidx.media3:media3-exoplayer:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/668402dce3e461601606b16515d8c7e2/transformed/media3-exoplayer-1.4.1/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.media3:media3-exoplayer:1.11.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/e4f6778bfe99600a1d28082c43a53602/transformed/media3-exoplayer-1.11.1/AndroidManifest.xml:17:1-25:12
+MERGED from [androidx.media3:media3-ui:1.11.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/0a33b2b3f290e55f06861a31cb9ee022/transformed/media3-ui-1.11.1/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.media3:media3-extractor:1.11.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/66a289418f2981ff5a998a51d60f3a9b/transformed/media3-extractor-1.11.1/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.media3:media3-container:1.11.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/92eb0ef3b270dc9ebbd353be771edbf4/transformed/media3-container-1.11.1/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.media3:media3-datasource:1.11.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/bcaf1dc49eee21c526740aff8f439b95/transformed/media3-datasource-1.11.1/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.media3:media3-decoder:1.11.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/8d140adfc51a2bb1e32ac1eb78059ea1/transformed/media3-decoder-1.11.1/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.media3:media3-database:1.11.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/eb24281278816f077501ca3eab8d3ab0/transformed/media3-database-1.11.1/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.media3:media3-common:1.11.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/01aa969a7c4e236ca286c6221dff5ef4/transformed/media3-common-1.11.1/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.media3:media3-session:1.11.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/19b002e0e0cd4705825b5e35aa99681e/transformed/media3-session-1.11.1/AndroidManifest.xml:17:1-46:12
 MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/0228d25126de7ed675864edd8b932a33/transformed/drawerlayout-1.0.0/AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.media:media:1.7.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/d103e78fe85e02a5542c8fd3a860353a/transformed/media-1.7.0/AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.recyclerview:recyclerview:1.3.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/afa815ffb40b7a91a27e4535325c453d/transformed/recyclerview-1.3.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.media:media:1.7.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/d103e78fe85e02a5542c8fd3a860353a/transformed/media-1.7.0/AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/4f539d048fe7cee94cd6eea4e7c8319e/transformed/vectordrawable-animated-1.1.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/a6023d17f9bccb448f1cd1f84ed61995/transformed/vectordrawable-1.1.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.viewpager:viewpager:1.0.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/c9f9593d5c809f36566153a7ce1dbd49/transformed/viewpager-1.0.0/AndroidManifest.xml:17:1-22:12
@@ -61,6 +61,7 @@ MERGED from [androidx.lifecycle:lifecycle-runtime-ktx-android:2.9.4] /home/serpe
 MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate-android:2.9.4] /home/serpentcs/.gradle/caches/9.8.2/transforms/eca0ed3c14b81cb5886289ab1cdb7930/transformed/lifecycle-viewmodel-savedstate-release/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.9.4] /home/serpentcs/.gradle/caches/9.8.2/transforms/7fe004988f7428fb5e8a603a27bece9d/transformed/lifecycle-livedata-core-ktx-2.9.4/AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.9.4] /home/serpentcs/.gradle/caches/9.8.2/transforms/57f1cc8139064c2a809c787062addaf8/transformed/lifecycle-viewmodel-ktx-2.9.4/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.lifecycle:lifecycle-service:2.9.4] /home/serpentcs/.gradle/caches/9.8.2/transforms/11ddabce18a22ae4e9d0c8f754fa528f/transformed/lifecycle-service-2.9.4/AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.9.4] /home/serpentcs/.gradle/caches/9.8.2/transforms/270d2cd21c0dfebbcdb8270ad1641497/transformed/lifecycle-livedata-core-2.9.4/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.lifecycle:lifecycle-livedata:2.9.4] /home/serpentcs/.gradle/caches/9.8.2/transforms/32aceaeedd669a38a573fa0061966f35/transformed/lifecycle-livedata-2.9.4/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.compose.runtime:runtime-annotation-android:1.10.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/df1216bc7ca8cb857aca2ceeb35011c4/transformed/runtime-annotation/AndroidManifest.xml:2:1-7:12
@@ -86,8 +87,8 @@ MERGED from [androidx.annotation:annotation-experimental:1.4.1] /home/serpentcs/
 MERGED from [androidx.core:core-viewtree:1.0.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/11a4579946522f2fbad21f9a2618284a/transformed/core-viewtree-1.0.0/AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/2fb18a39718da959f8f7ee0f536b25e5/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:17:1-27:12
 MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/3f7e1b133cff2342a5d6633e0a55beb3/transformed/cursoradapter-1.0.0/AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.interpolator:interpolator:1.0.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/d3b33eaf81b936414fb8bcfd9f5d6a60/transformed/interpolator-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.profileinstaller:profileinstaller:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/1d9da6d17eb774113302ad21cb867c14/transformed/profileinstaller-1.4.1/AndroidManifest.xml:17:1-55:12
+MERGED from [androidx.interpolator:interpolator:1.0.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/d3b33eaf81b936414fb8bcfd9f5d6a60/transformed/interpolator-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.startup:startup-runtime:1.1.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/77f0acbe54baf45c35374458883b3893/transformed/startup-runtime-1.1.1/AndroidManifest.xml:17:1-33:12
 MERGED from [androidx.tracing:tracing:1.2.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/3c68c424fb5ff29dc16198ae9f669a99/transformed/tracing-1.2.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.arch.core:core-runtime:2.2.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/9a3f6685aec5f305481075da97b49871/transformed/core-runtime-2.2.0/AndroidManifest.xml:17:1-22:12
@@ -145,6 +146,8 @@ ADDED from /home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/sr
 		ADDED from /home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:20:22-74
 uses-permission#android.permission.WAKE_LOCK
 ADDED from /home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:21:5-68
+MERGED from [androidx.media3:media3-exoplayer:1.11.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/e4f6778bfe99600a1d28082c43a53602/transformed/media3-exoplayer-1.11.1/AndroidManifest.xml:23:5-68
+MERGED from [androidx.media3:media3-exoplayer:1.11.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/e4f6778bfe99600a1d28082c43a53602/transformed/media3-exoplayer-1.11.1/AndroidManifest.xml:23:5-68
 	android:name
 		ADDED from /home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:21:22-65
 uses-permission#android.permission.MODIFY_AUDIO_SETTINGS
@@ -154,6 +157,8 @@ ADDED from /home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/sr
 application
 ADDED from /home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:24:5-73:19
 INJECTED from /home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:24:5-73:19
+MERGED from [androidx.media3:media3-session:1.11.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/19b002e0e0cd4705825b5e35aa99681e/transformed/media3-session-1.11.1/AndroidManifest.xml:22:5-44:19
+MERGED from [androidx.media3:media3-session:1.11.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/19b002e0e0cd4705825b5e35aa99681e/transformed/media3-session-1.11.1/AndroidManifest.xml:22:5-44:19
 MERGED from [androidx.window:window:1.5.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/467763a28d01363752335ff0d5691d15/transformed/window-1.5.0/AndroidManifest.xml:22:5-29:19
 MERGED from [androidx.window:window:1.5.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/467763a28d01363752335ff0d5691d15/transformed/window-1.5.0/AndroidManifest.xml:22:5-29:19
 MERGED from [androidx.emoji2:emoji2:1.4.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/ab604a72a0cb3526d920c930d5d750e0/transformed/emoji2-1.4.0/AndroidManifest.xml:23:5-33:19
@@ -312,30 +317,30 @@ MERGED from [androidx.compose.material:material-icons-extended-android:1.7.8] /h
 MERGED from [androidx.compose.material:material-icons-extended-android:1.7.8] /home/serpentcs/.gradle/caches/9.8.2/transforms/408753246dd35ebe106bc10d79218474/transformed/material-icons-extended-release/AndroidManifest.xml:5:5-44
 MERGED from [androidx.compose.material:material-icons-core-android:1.7.8] /home/serpentcs/.gradle/caches/9.8.2/transforms/dab9c806246c6a960def7a492fb3cd55/transformed/material-icons-core-release/AndroidManifest.xml:5:5-44
 MERGED from [androidx.compose.material:material-icons-core-android:1.7.8] /home/serpentcs/.gradle/caches/9.8.2/transforms/dab9c806246c6a960def7a492fb3cd55/transformed/material-icons-core-release/AndroidManifest.xml:5:5-44
-MERGED from [androidx.media3:media3-ui:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/08d6340af5b6e77097865941576be984/transformed/media3-ui-1.4.1/AndroidManifest.xml:20:5-44
-MERGED from [androidx.media3:media3-ui:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/08d6340af5b6e77097865941576be984/transformed/media3-ui-1.4.1/AndroidManifest.xml:20:5-44
-MERGED from [androidx.media3:media3-session:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/f9b058dae89856325cba2057c7cce206/transformed/media3-session-1.4.1/AndroidManifest.xml:20:5-44
-MERGED from [androidx.media3:media3-session:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/f9b058dae89856325cba2057c7cce206/transformed/media3-session-1.4.1/AndroidManifest.xml:20:5-44
-MERGED from [androidx.media3:media3-extractor:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/e7f2a1e45d40f0c4577571d6f3760963/transformed/media3-extractor-1.4.1/AndroidManifest.xml:20:5-44
-MERGED from [androidx.media3:media3-extractor:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/e7f2a1e45d40f0c4577571d6f3760963/transformed/media3-extractor-1.4.1/AndroidManifest.xml:20:5-44
-MERGED from [androidx.media3:media3-container:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/d749a20a246c7c531f214b84dc98a3ed/transformed/media3-container-1.4.1/AndroidManifest.xml:20:5-44
-MERGED from [androidx.media3:media3-container:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/d749a20a246c7c531f214b84dc98a3ed/transformed/media3-container-1.4.1/AndroidManifest.xml:20:5-44
-MERGED from [androidx.media3:media3-datasource:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/c7d4cc109e8c6cb8eea155add949fba0/transformed/media3-datasource-1.4.1/AndroidManifest.xml:20:5-44
-MERGED from [androidx.media3:media3-datasource:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/c7d4cc109e8c6cb8eea155add949fba0/transformed/media3-datasource-1.4.1/AndroidManifest.xml:20:5-44
-MERGED from [androidx.media3:media3-decoder:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/813053049f6fdb27b1353a3545bd53ce/transformed/media3-decoder-1.4.1/AndroidManifest.xml:20:5-44
-MERGED from [androidx.media3:media3-decoder:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/813053049f6fdb27b1353a3545bd53ce/transformed/media3-decoder-1.4.1/AndroidManifest.xml:20:5-44
-MERGED from [androidx.media3:media3-database:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/5a09164ec1aba8c7e411603de98e29be/transformed/media3-database-1.4.1/AndroidManifest.xml:20:5-44
-MERGED from [androidx.media3:media3-database:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/5a09164ec1aba8c7e411603de98e29be/transformed/media3-database-1.4.1/AndroidManifest.xml:20:5-44
-MERGED from [androidx.media3:media3-common:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/83f59c0fa0dfa1f2b2e5256ee0068a36/transformed/media3-common-1.4.1/AndroidManifest.xml:20:5-44
-MERGED from [androidx.media3:media3-common:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/83f59c0fa0dfa1f2b2e5256ee0068a36/transformed/media3-common-1.4.1/AndroidManifest.xml:20:5-44
-MERGED from [androidx.media3:media3-exoplayer:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/668402dce3e461601606b16515d8c7e2/transformed/media3-exoplayer-1.4.1/AndroidManifest.xml:20:5-44
-MERGED from [androidx.media3:media3-exoplayer:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/668402dce3e461601606b16515d8c7e2/transformed/media3-exoplayer-1.4.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-exoplayer:1.11.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/e4f6778bfe99600a1d28082c43a53602/transformed/media3-exoplayer-1.11.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-exoplayer:1.11.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/e4f6778bfe99600a1d28082c43a53602/transformed/media3-exoplayer-1.11.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-ui:1.11.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/0a33b2b3f290e55f06861a31cb9ee022/transformed/media3-ui-1.11.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-ui:1.11.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/0a33b2b3f290e55f06861a31cb9ee022/transformed/media3-ui-1.11.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-extractor:1.11.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/66a289418f2981ff5a998a51d60f3a9b/transformed/media3-extractor-1.11.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-extractor:1.11.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/66a289418f2981ff5a998a51d60f3a9b/transformed/media3-extractor-1.11.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-container:1.11.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/92eb0ef3b270dc9ebbd353be771edbf4/transformed/media3-container-1.11.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-container:1.11.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/92eb0ef3b270dc9ebbd353be771edbf4/transformed/media3-container-1.11.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-datasource:1.11.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/bcaf1dc49eee21c526740aff8f439b95/transformed/media3-datasource-1.11.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-datasource:1.11.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/bcaf1dc49eee21c526740aff8f439b95/transformed/media3-datasource-1.11.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-decoder:1.11.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/8d140adfc51a2bb1e32ac1eb78059ea1/transformed/media3-decoder-1.11.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-decoder:1.11.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/8d140adfc51a2bb1e32ac1eb78059ea1/transformed/media3-decoder-1.11.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-database:1.11.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/eb24281278816f077501ca3eab8d3ab0/transformed/media3-database-1.11.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-database:1.11.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/eb24281278816f077501ca3eab8d3ab0/transformed/media3-database-1.11.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-common:1.11.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/01aa969a7c4e236ca286c6221dff5ef4/transformed/media3-common-1.11.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-common:1.11.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/01aa969a7c4e236ca286c6221dff5ef4/transformed/media3-common-1.11.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-session:1.11.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/19b002e0e0cd4705825b5e35aa99681e/transformed/media3-session-1.11.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-session:1.11.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/19b002e0e0cd4705825b5e35aa99681e/transformed/media3-session-1.11.1/AndroidManifest.xml:20:5-44
 MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/0228d25126de7ed675864edd8b932a33/transformed/drawerlayout-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/0228d25126de7ed675864edd8b932a33/transformed/drawerlayout-1.0.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.media:media:1.7.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/d103e78fe85e02a5542c8fd3a860353a/transformed/media-1.7.0/AndroidManifest.xml:5:5-44
-MERGED from [androidx.media:media:1.7.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/d103e78fe85e02a5542c8fd3a860353a/transformed/media-1.7.0/AndroidManifest.xml:5:5-44
 MERGED from [androidx.recyclerview:recyclerview:1.3.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/afa815ffb40b7a91a27e4535325c453d/transformed/recyclerview-1.3.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.recyclerview:recyclerview:1.3.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/afa815ffb40b7a91a27e4535325c453d/transformed/recyclerview-1.3.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.media:media:1.7.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/d103e78fe85e02a5542c8fd3a860353a/transformed/media-1.7.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.media:media:1.7.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/d103e78fe85e02a5542c8fd3a860353a/transformed/media-1.7.0/AndroidManifest.xml:5:5-44
 MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/4f539d048fe7cee94cd6eea4e7c8319e/transformed/vectordrawable-animated-1.1.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/4f539d048fe7cee94cd6eea4e7c8319e/transformed/vectordrawable-animated-1.1.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/a6023d17f9bccb448f1cd1f84ed61995/transformed/vectordrawable-1.1.0/AndroidManifest.xml:20:5-22:41
@@ -376,6 +381,8 @@ MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.9.4] /home/serpent
 MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.9.4] /home/serpentcs/.gradle/caches/9.8.2/transforms/7fe004988f7428fb5e8a603a27bece9d/transformed/lifecycle-livedata-core-ktx-2.9.4/AndroidManifest.xml:5:5-44
 MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.9.4] /home/serpentcs/.gradle/caches/9.8.2/transforms/57f1cc8139064c2a809c787062addaf8/transformed/lifecycle-viewmodel-ktx-2.9.4/AndroidManifest.xml:5:5-44
 MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.9.4] /home/serpentcs/.gradle/caches/9.8.2/transforms/57f1cc8139064c2a809c787062addaf8/transformed/lifecycle-viewmodel-ktx-2.9.4/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-service:2.9.4] /home/serpentcs/.gradle/caches/9.8.2/transforms/11ddabce18a22ae4e9d0c8f754fa528f/transformed/lifecycle-service-2.9.4/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-service:2.9.4] /home/serpentcs/.gradle/caches/9.8.2/transforms/11ddabce18a22ae4e9d0c8f754fa528f/transformed/lifecycle-service-2.9.4/AndroidManifest.xml:5:5-44
 MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.9.4] /home/serpentcs/.gradle/caches/9.8.2/transforms/270d2cd21c0dfebbcdb8270ad1641497/transformed/lifecycle-livedata-core-2.9.4/AndroidManifest.xml:20:5-44
 MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.9.4] /home/serpentcs/.gradle/caches/9.8.2/transforms/270d2cd21c0dfebbcdb8270ad1641497/transformed/lifecycle-livedata-core-2.9.4/AndroidManifest.xml:20:5-44
 MERGED from [androidx.lifecycle:lifecycle-livedata:2.9.4] /home/serpentcs/.gradle/caches/9.8.2/transforms/32aceaeedd669a38a573fa0061966f35/transformed/lifecycle-livedata-2.9.4/AndroidManifest.xml:20:5-44
@@ -426,10 +433,10 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /home/serpe
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/2fb18a39718da959f8f7ee0f536b25e5/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/3f7e1b133cff2342a5d6633e0a55beb3/transformed/cursoradapter-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/3f7e1b133cff2342a5d6633e0a55beb3/transformed/cursoradapter-1.0.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.interpolator:interpolator:1.0.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/d3b33eaf81b936414fb8bcfd9f5d6a60/transformed/interpolator-1.0.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.interpolator:interpolator:1.0.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/d3b33eaf81b936414fb8bcfd9f5d6a60/transformed/interpolator-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.profileinstaller:profileinstaller:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/1d9da6d17eb774113302ad21cb867c14/transformed/profileinstaller-1.4.1/AndroidManifest.xml:21:5-44
 MERGED from [androidx.profileinstaller:profileinstaller:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/1d9da6d17eb774113302ad21cb867c14/transformed/profileinstaller-1.4.1/AndroidManifest.xml:21:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/d3b33eaf81b936414fb8bcfd9f5d6a60/transformed/interpolator-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/d3b33eaf81b936414fb8bcfd9f5d6a60/transformed/interpolator-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.startup:startup-runtime:1.1.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/77f0acbe54baf45c35374458883b3893/transformed/startup-runtime-1.1.1/AndroidManifest.xml:21:5-23:41
 MERGED from [androidx.startup:startup-runtime:1.1.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/77f0acbe54baf45c35374458883b3893/transformed/startup-runtime-1.1.1/AndroidManifest.xml:21:5-23:41
 MERGED from [androidx.tracing:tracing:1.2.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/3c68c424fb5ff29dc16198ae9f669a99/transformed/tracing-1.2.0/AndroidManifest.xml:20:5-44
@@ -449,11 +456,27 @@ MERGED from [androidx.exifinterface:exifinterface:1.3.7] /home/serpentcs/.gradle
 	android:minSdkVersion
 		INJECTED from /home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml
 uses-permission#android.permission.ACCESS_NETWORK_STATE
-ADDED from [androidx.media3:media3-common:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/83f59c0fa0dfa1f2b2e5256ee0068a36/transformed/media3-common-1.4.1/AndroidManifest.xml:22:5-79
-MERGED from [androidx.media3:media3-exoplayer:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/668402dce3e461601606b16515d8c7e2/transformed/media3-exoplayer-1.4.1/AndroidManifest.xml:22:5-79
-MERGED from [androidx.media3:media3-exoplayer:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/668402dce3e461601606b16515d8c7e2/transformed/media3-exoplayer-1.4.1/AndroidManifest.xml:22:5-79
+ADDED from [androidx.media3:media3-exoplayer:1.11.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/e4f6778bfe99600a1d28082c43a53602/transformed/media3-exoplayer-1.11.1/AndroidManifest.xml:22:5-79
+MERGED from [androidx.media3:media3-common:1.11.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/01aa969a7c4e236ca286c6221dff5ef4/transformed/media3-common-1.11.1/AndroidManifest.xml:22:5-79
+MERGED from [androidx.media3:media3-common:1.11.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/01aa969a7c4e236ca286c6221dff5ef4/transformed/media3-common-1.11.1/AndroidManifest.xml:22:5-79
 	android:name
-		ADDED from [androidx.media3:media3-common:1.4.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/83f59c0fa0dfa1f2b2e5256ee0068a36/transformed/media3-common-1.4.1/AndroidManifest.xml:22:22-76
+		ADDED from [androidx.media3:media3-exoplayer:1.11.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/e4f6778bfe99600a1d28082c43a53602/transformed/media3-exoplayer-1.11.1/AndroidManifest.xml:22:22-76
+activity#androidx.media3.session.BluetoothValidationActivity
+ADDED from [androidx.media3:media3-session:1.11.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/19b002e0e0cd4705825b5e35aa99681e/transformed/media3-session-1.11.1/AndroidManifest.xml:25:9-43:20
+	android:excludeFromRecents
+		ADDED from [androidx.media3:media3-session:1.11.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/19b002e0e0cd4705825b5e35aa99681e/transformed/media3-session-1.11.1/AndroidManifest.xml:27:13-46
+	android:noHistory
+		ADDED from [androidx.media3:media3-session:1.11.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/19b002e0e0cd4705825b5e35aa99681e/transformed/media3-session-1.11.1/AndroidManifest.xml:29:13-37
+	android:exported
+		ADDED from [androidx.media3:media3-session:1.11.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/19b002e0e0cd4705825b5e35aa99681e/transformed/media3-session-1.11.1/AndroidManifest.xml:28:13-36
+	android:permission
+		ADDED from [androidx.media3:media3-session:1.11.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/19b002e0e0cd4705825b5e35aa99681e/transformed/media3-session-1.11.1/AndroidManifest.xml:30:13-73
+	android:theme
+		ADDED from [androidx.media3:media3-session:1.11.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/19b002e0e0cd4705825b5e35aa99681e/transformed/media3-session-1.11.1/AndroidManifest.xml:31:13-59
+	android:name
+		ADDED from [androidx.media3:media3-session:1.11.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/19b002e0e0cd4705825b5e35aa99681e/transformed/media3-session-1.11.1/AndroidManifest.xml:26:13-79
+intent-filter#action:name:android.intent.action.VIEW+data:host:media+data:mimeType:audio/*+data:pathPrefix:/internal/audio/media/+data:scheme:content
+ADDED from [androidx.media3:media3-session:1.11.1] /home/serpentcs/.gradle/caches/9.8.2/transforms/19b002e0e0cd4705825b5e35aa99681e/transformed/media3-session-1.11.1/AndroidManifest.xml:32:13-42:29
 uses-library#androidx.window.extensions
 ADDED from [androidx.window:window:1.5.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/467763a28d01363752335ff0d5691d15/transformed/window-1.5.0/AndroidManifest.xml:23:9-25:40
 	android:required

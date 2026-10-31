@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.smartplayer.app-mergeDebugResources-52:/values-en-rXC/values-en-rXC.xml",
+            "outputFile": "com.smartplayer.app-mergeDebugResources-53:/values-en-rXC/values-en-rXC.xml",
             "map": [
                 {
                     "source": "/home/serpentcs/.gradle/caches/9.8.2/transforms/312db502ab1e146cf044e91519f061a2/transformed/foundation/res/values-en-rXC/values-en-rXC.xml",
