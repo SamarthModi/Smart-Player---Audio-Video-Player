@@ -236,10 +236,20 @@ class VideoPlayerActivity : ComponentActivity() {
             val mediaItem = Media3Item.fromUri(Uri.parse(videoUriString))
             player.setMediaItem(mediaItem)
 
+            val audioMgr = com.smartplayer.app.player.SmartAudioPlayerManager.getInstance(applicationContext)
+            val bgSong = audioMgr.playbackState.value.currentSong
+            var targetPos = preferencesRepository.getVideoPosition(videoPath)
+            if (bgSong != null && (bgSong.path == videoPath || bgSong.uriString == videoUriString)) {
+                val bgPos = audioMgr.playbackState.value.currentPosition
+                if (bgPos > 0L) {
+                    targetPos = bgPos
+                }
+                audioMgr.pause()
+            }
+
             // Auto-resume from last saved position
-            val savedPos = preferencesRepository.getVideoPosition(videoPath)
-            if (savedPos > 3000 && preferencesRepository.isAutoResumeEnabled) {
-                player.seekTo(savedPos)
+            if (targetPos > 3000 && preferencesRepository.isAutoResumeEnabled) {
+                player.seekTo(targetPos)
             }
 
             player.prepare()
@@ -322,13 +332,50 @@ class VideoPlayerActivity : ComponentActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        val audioMgr = com.smartplayer.app.player.SmartAudioPlayerManager.getInstance(applicationContext)
+        val bgSong = audioMgr.playbackState.value.currentSong
+        if (bgSong != null && (bgSong.path == videoPath || bgSong.uriString == videoUriString)) {
+            val bgPos = audioMgr.playbackState.value.currentPosition
+            audioMgr.pause()
+            exoPlayer?.seekTo(bgPos)
+            exoPlayer?.play()
+        }
+    }
+
     override fun onPause() {
         super.onPause()
         exoPlayer?.let { player ->
+            val wasPlaying = player.isPlaying
+            val currentPos = player.currentPosition
+
             if (videoPath.isNotBlank()) {
-                preferencesRepository.saveVideoPosition(videoPath, player.currentPosition)
+                preferencesRepository.saveVideoPosition(videoPath, currentPos)
             }
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N || !isInPictureInPictureMode) {
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && isInPictureInPictureMode) {
+                return
+            }
+
+            // If video was actively playing when user exited/minimized/swiped app:
+            // ALWAYS keep sound playing in background until user pauses from notification!
+            if (wasPlaying && preferencesRepository.isBackgroundVideoPlayEnabled) {
+                player.pause()
+                val audioMgr = com.smartplayer.app.player.SmartAudioPlayerManager.getInstance(applicationContext)
+                audioMgr.playSingleMedia(Uri.parse(videoUriString), videoTitle, videoPath, currentPos)
+
+                val serviceIntent = Intent(applicationContext, com.smartplayer.app.service.SmartAudioService::class.java)
+                try {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        applicationContext.startForegroundService(serviceIntent)
+                    } else {
+                        applicationContext.startService(serviceIntent)
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            } else {
                 player.pause()
             }
         }

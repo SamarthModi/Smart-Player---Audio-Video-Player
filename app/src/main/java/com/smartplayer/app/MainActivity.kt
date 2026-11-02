@@ -115,6 +115,20 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        val currentSong = playerManager.playbackState.value.currentSong
+        if (currentSong != null && currentSong.artist == "Smart Player (Video Audio)" && playerManager.playbackState.value.isPlaying) {
+            com.smartplayer.app.ui.player.VideoPlayerActivity.start(
+                this,
+                android.net.Uri.parse(currentSong.uriString),
+                currentSong.title,
+                currentSong.path,
+                currentSong.id
+            )
+        }
+    }
 }
 
 enum class NavigationTab(val title: String, val icon: ImageVector) {

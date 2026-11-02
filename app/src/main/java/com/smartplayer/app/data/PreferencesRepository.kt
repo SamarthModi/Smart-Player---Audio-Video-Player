@@ -290,9 +290,9 @@ class PreferencesRepository(private val context: Context) {
         get() = prefs.getBoolean("subtitle_has_bg", true)
         set(value) = prefs.edit().putBoolean("subtitle_has_bg", value).apply()
 
-    // Background Video Playback
+    // Background Video Playback (Keep playing sound even when app is closed / minimized until paused from notification)
     var isBackgroundVideoPlayEnabled: Boolean
-        get() = prefs.getBoolean("bg_video_play_enabled", false)
+        get() = prefs.getBoolean("bg_video_play_enabled", true)
         set(value) = prefs.edit().putBoolean("bg_video_play_enabled", value).apply()
 
     fun clearPlaybackHistory() {

@@ -150,7 +150,7 @@ class SmartAudioPlayerManager private constructor(private val context: Context) 
             id = uri.hashCode().toLong(),
             title = title,
             displayName = title,
-            artist = "Video Audio Background",
+            artist = "Smart Player (Video Audio)",
             album = "Videos",
             albumId = -1L,
             duration = 0L,
@@ -165,9 +165,14 @@ class SmartAudioPlayerManager private constructor(private val context: Context) 
             currentSong = audioItem
         )
         exoPlayer.clearMediaItems()
+        val mediaMetadata = androidx.media3.common.MediaMetadata.Builder()
+            .setTitle(title)
+            .setArtist("Smart Player (Video Audio)")
+            .build()
         val media3Item = Media3Item.Builder()
             .setUri(uri)
             .setMediaId(audioItem.id.toString())
+            .setMediaMetadata(mediaMetadata)
             .build()
         exoPlayer.setMediaItem(media3Item, startPositionMs)
         exoPlayer.prepare()
@@ -186,9 +191,16 @@ class SmartAudioPlayerManager private constructor(private val context: Context) 
 
         exoPlayer.clearMediaItems()
         val media3Items = songs.map { song ->
+            val mediaMetadata = androidx.media3.common.MediaMetadata.Builder()
+                .setTitle(song.title)
+                .setArtist(song.artist)
+                .setAlbumTitle(song.album)
+                .setArtworkUri(song.albumArtUri)
+                .build()
             Media3Item.Builder()
                 .setUri(song.uri)
                 .setMediaId(song.id.toString())
+                .setMediaMetadata(mediaMetadata)
                 .build()
         }
         exoPlayer.setMediaItems(media3Items, validIndex, 0L)
