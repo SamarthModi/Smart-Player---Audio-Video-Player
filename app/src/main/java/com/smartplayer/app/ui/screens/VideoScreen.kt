@@ -126,6 +126,7 @@ fun VideoScreen(
 
     val favoriteVideoIds by preferencesRepository.favoriteVideoIds.collectAsState()
     val vaultVideoIds by preferencesRepository.vaultVideoIds.collectAsState()
+    val historyVersion by preferencesRepository.historyVersion.collectAsState()
 
     // Filter public vs private vault videos
     val activeVideosPool = remember(videos, vaultVideoIds, isVaultOpen) {
@@ -137,7 +138,7 @@ fun VideoScreen(
     }
 
     // Continue Watching list (for uncompleted videos with progress > 4s)
-    val continueWatchingVideos = remember(videos, vaultVideoIds, isVaultOpen) {
+    val continueWatchingVideos = remember(videos, vaultVideoIds, isVaultOpen, historyVersion) {
         if (isVaultOpen) emptyList()
         else videos.filter {
             !vaultVideoIds.contains(it.id) &&
@@ -431,7 +432,7 @@ fun VideoScreen(
                 ) {
                     items(displayedVideos, key = { it.id }) { video ->
                         val isFav = favoriteVideoIds.contains(video.id)
-                        val lastPos = preferencesRepository.getVideoPosition(video.path)
+                        val lastPos = if (historyVersion >= 0) preferencesRepository.getVideoPosition(video.path) else 0L
 
                         VideoGridCard(
                             video = video,
@@ -468,7 +469,7 @@ fun VideoScreen(
                 ) {
                     items(displayedVideos, key = { it.id }) { video ->
                         val isFav = favoriteVideoIds.contains(video.id)
-                        val lastPos = preferencesRepository.getVideoPosition(video.path)
+                        val lastPos = if (historyVersion >= 0) preferencesRepository.getVideoPosition(video.path) else 0L
 
                         VideoListCard(
                             video = video,

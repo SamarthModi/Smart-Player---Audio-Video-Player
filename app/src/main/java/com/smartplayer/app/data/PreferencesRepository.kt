@@ -41,6 +41,9 @@ class PreferencesRepository(private val context: Context) {
     private val _themeStyleFlow = MutableStateFlow(prefs.getString("theme_style", "DARK") ?: "DARK")
     val themeStyleFlow: StateFlow<String> = _themeStyleFlow.asStateFlow()
 
+    private val _historyVersion = MutableStateFlow(0)
+    val historyVersion: StateFlow<Int> = _historyVersion.asStateFlow()
+
     init {
         loadData()
     }
@@ -83,6 +86,7 @@ class PreferencesRepository(private val context: Context) {
     // Video Resume Position
     fun saveVideoPosition(videoPath: String, positionMs: Long) {
         prefs.edit().putLong("vid_pos_${videoPath.hashCode()}", positionMs).apply()
+        _historyVersion.value += 1
     }
 
     fun getVideoPosition(videoPath: String): Long {
@@ -138,6 +142,7 @@ class PreferencesRepository(private val context: Context) {
         }
         _recentlyPlayedVideoIds.value = current
         prefs.edit().putString("recent_video_ids", json.encodeToString(current)).apply()
+        _historyVersion.value += 1
     }
 
     // Private Vault (PIN protection & Hidden items)
@@ -305,7 +310,18 @@ class PreferencesRepository(private val context: Context) {
 
     fun clearPlaybackHistory() {
         _recentlyPlayedAudioIds.value = emptyList()
-        prefs.edit().remove("recent_audio_ids").apply()
+        _recentlyPlayedVideoIds.value = emptyList()
+        val editor = prefs.edit()
+        editor.remove("recent_audio_ids")
+        editor.remove("recent_video_ids")
+        val allKeys = prefs.all.keys
+        for (key in allKeys) {
+            if (key.startsWith("vid_pos_")) {
+                editor.remove(key)
+            }
+        }
+        editor.commit()
+        _historyVersion.value += 1
     }
 
     companion object {

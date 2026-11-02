@@ -92,6 +92,7 @@ fun SettingsScreen(
     var showDoubleTapDialog by remember { mutableStateOf(false) }
     var showAutoHideDialog by remember { mutableStateOf(false) }
     var showThemeDialog by remember { mutableStateOf(false) }
+    var showClearHistoryDialog by remember { mutableStateOf(false) }
 
     Column(
         modifier = modifier
@@ -477,8 +478,7 @@ fun SettingsScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .clickable {
-                            preferencesRepository.clearPlaybackHistory()
-                            Toast.makeText(context, "Playback history cleared", Toast.LENGTH_SHORT).show()
+                            showClearHistoryDialog = true
                         }
                         .padding(vertical = 6.dp),
                     verticalAlignment = Alignment.CenterVertically
@@ -714,6 +714,32 @@ fun SettingsScreen(
             },
             confirmButton = {
                 TextButton(onClick = { showThemeDialog = false }) { Text(stringResource(R.string.close), color = NeonCyan) }
+            }
+        )
+    }
+
+    // Clear History Confirmation Dialog
+    if (showClearHistoryDialog) {
+        AlertDialog(
+            onDismissRequest = { showClearHistoryDialog = false },
+            title = { Text(stringResource(R.string.clear_history), fontWeight = FontWeight.Bold, color = Color.Red) },
+            text = { Text(stringResource(R.string.clear_history_desc), color = Color.White) },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        preferencesRepository.clearPlaybackHistory()
+                        onRefreshMedia()
+                        showClearHistoryDialog = false
+                        Toast.makeText(context, "Playback history cleared", Toast.LENGTH_SHORT).show()
+                    }
+                ) {
+                    Text("Clear", color = Color.Red, fontWeight = FontWeight.Bold)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showClearHistoryDialog = false }) {
+                    Text(stringResource(R.string.close), color = NeonCyan)
+                }
             }
         )
     }

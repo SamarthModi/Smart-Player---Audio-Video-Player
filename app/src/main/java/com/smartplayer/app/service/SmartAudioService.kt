@@ -20,6 +20,18 @@ class SmartAudioService : MediaSessionService() {
 
     private var mediaSession: MediaSession? = null
 
+    private val noisyReceiver = object : android.content.BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            if (intent?.action == android.media.AudioManager.ACTION_AUDIO_BECOMING_NOISY) {
+                val prefs = com.smartplayer.app.data.PreferencesRepository.getInstance(applicationContext)
+                if (prefs.isPauseOnUnplugEnabled) {
+                    val playerManager = SmartAudioPlayerManager.getInstance(applicationContext)
+                    playerManager.pause()
+                }
+            }
+        }
+    }
+
     override fun onCreate() {
         super.onCreate()
         createNotificationChannel()
@@ -40,6 +52,13 @@ class SmartAudioService : MediaSessionService() {
             .setSessionActivity(pendingIntent)
             .setId("SmartAudioSession")
             .build()
+
+        val noisyFilter = android.content.IntentFilter(android.media.AudioManager.ACTION_AUDIO_BECOMING_NOISY)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            registerReceiver(noisyReceiver, noisyFilter, Context.RECEIVER_NOT_EXPORTED)
+        } else {
+            registerReceiver(noisyReceiver, noisyFilter)
+        }
     }
 
     override fun onGetSession(controllerInfo: MediaSession.ControllerInfo): MediaSession? {
@@ -78,6 +97,9 @@ class SmartAudioService : MediaSessionService() {
     }
 
     override fun onDestroy() {
+        try {
+            unregisterReceiver(noisyReceiver)
+        } catch (_: Exception) {}
         mediaSession?.run {
             release()
             mediaSession = null

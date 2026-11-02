@@ -2,14 +2,17 @@ package com.smartplayer.app.ui.player
 
 import android.app.Activity
 import android.app.PictureInPictureParams
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.media.AudioManager
 import android.media.MediaMetadataRetriever
 import android.media.MediaScannerConnection
+import android.media.audiofx.LoudnessEnhancer
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -134,6 +137,7 @@ import com.smartplayer.app.ui.theme.PlayerBlack
 import com.smartplayer.app.ui.theme.PlayerSurface
 import com.smartplayer.app.ui.theme.PlayerSurfaceVariant
 import com.smartplayer.app.ui.theme.SmartPlayerTheme
+import com.smartplayer.app.ui.theme.VividAmber
 import com.smartplayer.app.util.FormatUtils
 import com.smartplayer.app.util.LocaleHelper
 import kotlinx.coroutines.Dispatchers
@@ -164,6 +168,18 @@ class VideoPlayerActivity : ComponentActivity() {
     private var audioManager: AudioManager? = null
     private var maxVolume: Int = 15
     private var isSoftwareDecoder: Boolean = false
+    private var loudnessEnhancer: LoudnessEnhancer? = null
+    private var boostVolumeLevel: Int = 0 // 0 to 15 (representing 100% to 200%)
+
+    private val noisyReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            if (intent?.action == AudioManager.ACTION_AUDIO_BECOMING_NOISY) {
+                if (preferencesRepository.isPauseOnUnplugEnabled) {
+                    exoPlayer?.pause()
+                }
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -190,6 +206,13 @@ class VideoPlayerActivity : ComponentActivity() {
         }
 
         initPlayer(isSoftwareDecoder)
+
+        val noisyFilter = IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            registerReceiver(noisyReceiver, noisyFilter, Context.RECEIVER_NOT_EXPORTED)
+        } else {
+            registerReceiver(noisyReceiver, noisyFilter)
+        }
 
         setContent {
             val themeStyle by preferencesRepository.themeStyleFlow.collectAsState()
@@ -238,6 +261,25 @@ class VideoPlayerActivity : ComponentActivity() {
                 true
             )
             .build()
+
+        player.addListener(object : androidx.media3.common.Player.Listener {
+            override fun onAudioSessionIdChanged(audioSessionId: Int) {
+                if (audioSessionId != C.AUDIO_SESSION_ID_UNSET && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    try {
+                        loudnessEnhancer?.release()
+                        loudnessEnhancer = LoudnessEnhancer(audioSessionId).apply {
+                            if (preferencesRepository.isAudioBoostEnabled && boostVolumeLevel > 0) {
+                                val targetGainMb = ((boostVolumeLevel.toFloat() / maxVolume.toFloat()) * 1200f).toInt()
+                                setTargetGain(targetGainMb)
+                                enabled = true
+                            }
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+            }
+        })
 
         exoPlayer = player
 
@@ -302,13 +344,52 @@ class VideoPlayerActivity : ComponentActivity() {
     }
 
     private fun getCurrentMediaVolume(): Int {
-        return audioManager?.getStreamVolume(AudioManager.STREAM_MUSIC) ?: 0
+        val sysVol = audioManager?.getStreamVolume(AudioManager.STREAM_MUSIC) ?: 0
+        return sysVol + boostVolumeLevel
     }
 
     private fun setMediaVolume(volumeDelta: Int) {
-        val current = getCurrentMediaVolume()
-        val target = (current + volumeDelta).coerceIn(0, maxVolume)
-        audioManager?.setStreamVolume(AudioManager.STREAM_MUSIC, target, 0)
+        val isBoostAllowed = preferencesRepository.isAudioBoostEnabled
+        val currentSysVol = audioManager?.getStreamVolume(AudioManager.STREAM_MUSIC) ?: 0
+
+        if (volumeDelta > 0) {
+            if (currentSysVol < maxVolume) {
+                audioManager?.setStreamVolume(AudioManager.STREAM_MUSIC, currentSysVol + 1, 0)
+            } else if (isBoostAllowed && boostVolumeLevel < maxVolume) {
+                boostVolumeLevel++
+                applyAudioBoost()
+            }
+        } else if (volumeDelta < 0) {
+            if (boostVolumeLevel > 0) {
+                boostVolumeLevel--
+                applyAudioBoost()
+            } else if (currentSysVol > 0) {
+                audioManager?.setStreamVolume(AudioManager.STREAM_MUSIC, currentSysVol - 1, 0)
+            }
+        }
+    }
+
+    private fun applyAudioBoost() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            try {
+                if (loudnessEnhancer == null) {
+                    val sessionId = exoPlayer?.audioSessionId ?: androidx.media3.common.C.AUDIO_SESSION_ID_UNSET
+                    if (sessionId != androidx.media3.common.C.AUDIO_SESSION_ID_UNSET) {
+                        loudnessEnhancer = LoudnessEnhancer(sessionId)
+                    }
+                }
+                if (boostVolumeLevel > 0) {
+                    val targetGainMb = ((boostVolumeLevel.toFloat() / maxVolume.toFloat()) * 1200f).toInt()
+                    loudnessEnhancer?.setTargetGain(targetGainMb)
+                    loudnessEnhancer?.enabled = true
+                } else {
+                    loudnessEnhancer?.setTargetGain(0)
+                    loudnessEnhancer?.enabled = false
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
     }
 
     private fun enterPipMode() {
@@ -391,6 +472,13 @@ class VideoPlayerActivity : ComponentActivity() {
     }
 
     override fun onDestroy() {
+        try {
+            unregisterReceiver(noisyReceiver)
+        } catch (_: Exception) {}
+        try {
+            loudnessEnhancer?.release()
+            loudnessEnhancer = null
+        } catch (_: Exception) {}
         super.onDestroy()
         exoPlayer?.release()
         exoPlayer = null
@@ -718,7 +806,8 @@ fun VideoPlayerScreen(
                                 }
 
                                 if (isHorizontalSeek) {
-                                    val seekDeltaMs = ((dx / width) * 90000L).toLong()
+                                    val sensitivity = preferencesRepository.gestureSensitivity
+                                    val seekDeltaMs = ((dx / width) * 90000L * sensitivity).toLong()
                                     val targetPos = (initialSeekPos + seekDeltaMs).coerceIn(0L, duration)
                                     val deltaSign = if (seekDeltaMs >= 0) "+ " else "- "
 
@@ -726,7 +815,8 @@ fun VideoPlayerScreen(
                                     gestureSeekDeltaText = "$deltaSign${FormatUtils.formatDuration(abs(seekDeltaMs))}"
                                     gestureSeekTimeText = "${FormatUtils.formatDuration(targetPos)} / ${FormatUtils.formatDuration(duration)}"
                                 } else if (isVerticalSwipe) {
-                                    val deltaYFactor = -dy / height
+                                    val sensitivity = preferencesRepository.gestureSensitivity
+                                    val deltaYFactor = (-dy / height) * sensitivity
                                     if (startX < width * 0.5f) {
                                         gestureHudType = "brightness"
                                         onBrightnessChange(deltaYFactor * 0.05f)
@@ -735,7 +825,8 @@ fun VideoPlayerScreen(
                                     } else {
                                         gestureHudType = "volume"
                                         val volChange = if (dy < 0) 1 else -1
-                                        if (absDy > 60) {
+                                        val swipeThreshold = (60f / sensitivity).toInt().coerceIn(20, 150)
+                                        if (absDy > swipeThreshold) {
                                             onVolumeChange(volChange)
                                             startY = event.y
                                         }
@@ -752,8 +843,9 @@ fun VideoPlayerScreen(
                                     exoPlayer?.playbackParameters = PlaybackParameters(originalSpeed)
                                 }
                                 if (isHorizontalSeek) {
+                                    val sensitivity = preferencesRepository.gestureSensitivity
                                     val dx = event.x - startX
-                                    val seekDeltaMs = ((dx / width) * 90000L).toLong()
+                                    val seekDeltaMs = ((dx / width) * 90000L * sensitivity).toLong()
                                     val targetPos = (initialSeekPos + seekDeltaMs).coerceIn(0L, duration)
                                     exoPlayer?.seekTo(targetPos)
                                 }
@@ -781,26 +873,28 @@ fun VideoPlayerScreen(
                     contentAlignment = Alignment.Center
                 ) {
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        val isBoosted = gestureHudValue > 1f
+                        val hudTint = if (isBoosted) VividAmber else NeonCyan
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.VolumeUp,
                             contentDescription = "Volume",
-                            tint = NeonCyan,
+                            tint = hudTint,
                             modifier = Modifier.size(40.dp)
                         )
                         Spacer(modifier = Modifier.height(12.dp))
                         LinearProgressIndicator(
-                            progress = { gestureHudValue.coerceIn(0f, 1f) },
+                            progress = { if (isBoosted) (gestureHudValue / 2f).coerceIn(0f, 1f) else gestureHudValue.coerceIn(0f, 1f) },
                             modifier = Modifier
                                 .width(140.dp)
                                 .height(8.dp)
                                 .clip(RoundedCornerShape(4.dp)),
-                            color = NeonCyan,
+                            color = hudTint,
                             trackColor = Color.White.copy(alpha = 0.2f),
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         Text(
-                            text = "${(gestureHudValue * 100).toInt()}%",
-                            color = Color.White,
+                            text = if (isBoosted) "${(gestureHudValue * 100).toInt()}% (200% BOOST)" else "${(gestureHudValue * 100).toInt()}%",
+                            color = if (isBoosted) VividAmber else Color.White,
                             fontSize = 14.sp,
                             fontWeight = FontWeight.Bold
                         )

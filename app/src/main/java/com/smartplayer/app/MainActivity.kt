@@ -3,10 +3,13 @@ package com.smartplayer.app
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.provider.Settings
+import java.io.File
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
@@ -221,6 +224,24 @@ fun MainAppScreen(
 
     fun reloadMedia() {
         coroutineScope.launch {
+            try {
+                val extDir = Environment.getExternalStorageDirectory()
+                if (extDir != null && extDir.exists()) {
+                    val pathsToScan = mutableListOf<String>()
+                    listOf("Download", "Movies", "Music", "DCIM").forEach { folderName ->
+                        val dir = File(extDir, folderName)
+                        if (dir.exists()) {
+                            dir.listFiles()?.take(50)?.forEach { file ->
+                                if (file.isFile) pathsToScan.add(file.absolutePath)
+                            }
+                        }
+                    }
+                    if (pathsToScan.isNotEmpty()) {
+                        MediaScannerConnection.scanFile(context, pathsToScan.toTypedArray(), null, null)
+                    }
+                }
+            } catch (_: Exception) {}
+
             val vids = mediaStoreRepository.getAllVideos()
             videos = vids
             videoFolders = mediaStoreRepository.groupVideosByFolders(vids)
