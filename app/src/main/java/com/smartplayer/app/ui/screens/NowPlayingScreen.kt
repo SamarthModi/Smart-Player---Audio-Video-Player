@@ -1,5 +1,6 @@
 package com.smartplayer.app.ui.screens
 
+import android.content.Intent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -72,6 +73,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -81,6 +83,7 @@ import coil3.compose.AsyncImage
 import com.smartplayer.app.data.PreferencesRepository
 import com.smartplayer.app.model.SmartRepeatMode
 import com.smartplayer.app.player.SmartAudioPlayerManager
+import com.smartplayer.app.service.SmartAudioService
 import com.smartplayer.app.ui.theme.ElectricViolet
 import com.smartplayer.app.ui.theme.NeonCyan
 import com.smartplayer.app.ui.theme.PlayerBlack
@@ -100,6 +103,7 @@ fun NowPlayingScreen(
     val playbackState by playerManager.playbackState.collectAsState()
     val favoriteSongIds by preferencesRepository.favoriteSongIds.collectAsState()
     val song = playbackState.currentSong ?: return
+    val context = LocalContext.current
 
     val isFav = favoriteSongIds.contains(song.id)
     var showQueueSheet by remember { mutableStateOf(false) }
@@ -156,7 +160,7 @@ fun NowPlayingScreen(
                     letterSpacing = 2.sp
                 )
 
-                Row {
+                Row(verticalAlignment = Alignment.CenterVertically) {
                     IconButton(onClick = { showSongInfoDialog = true }) {
                         Icon(
                             imageVector = Icons.Default.Info,
@@ -170,6 +174,26 @@ fun NowPlayingScreen(
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.QueueMusic,
                             contentDescription = "Queue",
+                            tint = Color.White,
+                            modifier = Modifier.size(26.dp)
+                        )
+                    }
+
+                    IconButton(onClick = {
+                        onCollapse()
+                        playerManager.stopPlayback()
+                        val stopIntent = Intent(context, SmartAudioService::class.java).apply {
+                            action = SmartAudioService.ACTION_STOP_SERVICE
+                        }
+                        try {
+                            context.startService(stopIntent)
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                    }) {
+                        Icon(
+                            imageVector = Icons.Default.Close,
+                            contentDescription = "Close Player",
                             tint = Color.White,
                             modifier = Modifier.size(26.dp)
                         )

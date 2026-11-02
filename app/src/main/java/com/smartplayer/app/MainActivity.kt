@@ -306,6 +306,17 @@ fun MainAppScreen(
                     duration = playbackState.duration,
                     onPlayPauseClick = { playerManager.playPause() },
                     onSkipNextClick = { playerManager.skipToNext() },
+                    onCloseClick = {
+                        playerManager.stopPlayback()
+                        val stopIntent = Intent(context, SmartAudioService::class.java).apply {
+                            action = SmartAudioService.ACTION_STOP_SERVICE
+                        }
+                        try {
+                            context.startService(stopIntent)
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                    },
                     onPlayerClick = { isNowPlayingOpen = true }
                 )
 

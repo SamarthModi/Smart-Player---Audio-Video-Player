@@ -226,6 +226,19 @@ class SmartAudioPlayerManager private constructor(private val context: Context) 
         exoPlayer.pause()
     }
 
+    fun stopPlayback() {
+        exoPlayer.stop()
+        exoPlayer.clearMediaItems()
+        _playbackState.value = _playbackState.value.copy(
+            isPlaying = false,
+            currentSong = null,
+            currentPosition = 0L,
+            duration = 0L,
+            queue = emptyList(),
+            queueIndex = 0
+        )
+    }
+
     fun seekTo(positionMs: Long) {
         exoPlayer.seekTo(positionMs)
         _playbackState.value = _playbackState.value.copy(currentPosition = positionMs)

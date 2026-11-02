@@ -65,6 +65,11 @@
     <string name="no_vault_songs">No hidden songs in Private Vault.\nMove songs here using the 3-dot menu.</string>
     <string name="cancel">Cancel</string>
     <string name="close">Close</string>
+    <string name="action_play">Play</string>
+    <string name="action_pause">Pause</string>
+    <string name="action_next">Next</string>
+    <string name="action_prev">Previous</string>
+    <string name="action_stop">Stop</string>
     <string name="done">Done</string>
     <string name="ok">OK</string>
     <string name="delete">Delete</string>
