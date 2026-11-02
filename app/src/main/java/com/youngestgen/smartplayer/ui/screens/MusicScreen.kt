@@ -85,7 +85,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil3.compose.AsyncImage
+import com.youngestgen.smartplayer.util.AudioAlbumArt
 import com.youngestgen.smartplayer.R
 import com.youngestgen.smartplayer.data.PreferencesRepository
 import com.youngestgen.smartplayer.model.AudioItem
@@ -380,13 +380,14 @@ fun MusicScreen(
                                                 .background(PlayerSurfaceVariant),
                                             contentAlignment = Alignment.Center
                                         ) {
-                                            AsyncImage(
-                                                model = s.albumArtUri,
-                                                contentDescription = null,
-                                                contentScale = ContentScale.Crop,
-                                                modifier = Modifier.fillMaxSize()
+                                            AudioAlbumArt(
+                                                audioUri = s.uri,
+                                                albumId = s.albumId,
+                                                contentDescription = s.title,
+                                                modifier = Modifier.fillMaxSize(),
+                                                iconTint = NeonCyan,
+                                                iconSize = 18.dp
                                             )
-                                            Icon(Icons.Default.MusicNote, contentDescription = null, tint = NeonCyan, modifier = Modifier.size(16.dp))
                                         }
                                         Spacer(modifier = Modifier.width(8.dp))
                                         Column {
@@ -521,13 +522,18 @@ fun MusicScreen(
                                 .background(PlayerSurfaceVariant),
                             contentAlignment = Alignment.Center
                         ) {
-                            AsyncImage(
-                                model = firstSong?.albumArtUri,
-                                contentDescription = albumName,
-                                contentScale = ContentScale.Crop,
-                                modifier = Modifier.fillMaxSize()
-                            )
-                            Icon(Icons.Default.Album, contentDescription = null, tint = NeonCyan, modifier = Modifier.size(36.dp))
+                            if (firstSong != null) {
+                                AudioAlbumArt(
+                                    audioUri = firstSong.uri,
+                                    albumId = firstSong.albumId,
+                                    contentDescription = albumName,
+                                    modifier = Modifier.fillMaxSize(),
+                                    iconTint = NeonCyan,
+                                    iconSize = 36.dp
+                                )
+                            } else {
+                                Icon(Icons.Default.Album, contentDescription = null, tint = NeonCyan, modifier = Modifier.size(36.dp))
+                            }
                         }
                         Column(modifier = Modifier.padding(10.dp)) {
                             Text(albumName, color = Color.White, fontWeight = FontWeight.Bold, fontSize = 13.sp, maxLines = 1)
@@ -794,17 +800,13 @@ fun SongListItem(
                 .background(PlayerSurfaceVariant),
             contentAlignment = Alignment.Center
         ) {
-            AsyncImage(
-                model = song.albumArtUri,
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxSize()
-            )
-            Icon(
-                imageVector = Icons.Default.MusicNote,
-                contentDescription = null,
-                tint = if (isPlayingNow) NeonCyan else Color.White.copy(alpha = 0.6f),
-                modifier = Modifier.size(22.dp)
+            AudioAlbumArt(
+                audioUri = song.uri,
+                albumId = song.albumId,
+                contentDescription = song.title,
+                modifier = Modifier.fillMaxSize(),
+                iconTint = if (isPlayingNow) NeonCyan else Color.White.copy(alpha = 0.6f),
+                iconSize = 22.dp
             )
         }
 

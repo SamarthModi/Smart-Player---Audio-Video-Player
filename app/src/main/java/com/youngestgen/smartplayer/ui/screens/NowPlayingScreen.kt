@@ -79,7 +79,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil3.compose.AsyncImage
+import com.youngestgen.smartplayer.util.AudioAlbumArt
 import com.youngestgen.smartplayer.data.PreferencesRepository
 import com.youngestgen.smartplayer.model.SmartRepeatMode
 import com.youngestgen.smartplayer.player.SmartAudioPlayerManager
@@ -213,17 +213,13 @@ fun NowPlayingScreen(
                     .background(Color(0xFF1B1E2E)),
                 contentAlignment = Alignment.Center
             ) {
-                AsyncImage(
-                    model = song.albumArtUri,
+                AudioAlbumArt(
+                    audioUri = song.uri,
+                    albumId = song.albumId,
                     contentDescription = song.title,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier.fillMaxSize()
-                )
-                Icon(
-                    imageVector = Icons.Default.MusicNote,
-                    contentDescription = null,
-                    tint = NeonCyan.copy(alpha = 0.35f),
-                    modifier = Modifier.size(80.dp)
+                    modifier = Modifier.fillMaxSize(),
+                    iconTint = NeonCyan.copy(alpha = 0.35f),
+                    iconSize = 80.dp
                 )
             }
 

@@ -81,7 +81,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil3.compose.AsyncImage
+import com.youngestgen.smartplayer.util.VideoThumbnail
 import com.youngestgen.smartplayer.R
 import com.youngestgen.smartplayer.data.PreferencesRepository
 import com.youngestgen.smartplayer.model.MediaFolder
@@ -363,10 +363,10 @@ fun VideoScreen(
                                     .background(Color.Black),
                                 contentAlignment = Alignment.BottomCenter
                             ) {
-                                AsyncImage(
-                                    model = video.uri,
+                                VideoThumbnail(
+                                    videoUri = video.uri,
+                                    videoPath = video.path,
                                     contentDescription = video.title,
-                                    contentScale = ContentScale.Crop,
                                     modifier = Modifier.fillMaxSize()
                                 )
                                 LinearProgressIndicator(
@@ -645,10 +645,10 @@ fun VideoListCard(
                 .background(Color.Black.copy(alpha = 0.5f)),
             contentAlignment = Alignment.BottomEnd
         ) {
-            AsyncImage(
-                model = video.uri,
+            VideoThumbnail(
+                videoUri = video.uri,
+                videoPath = video.path,
                 contentDescription = video.title,
-                contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxSize()
             )
 
@@ -830,10 +830,10 @@ fun VideoGridCard(
                 .background(Color.Black.copy(alpha = 0.5f)),
             contentAlignment = Alignment.BottomEnd
         ) {
-            AsyncImage(
-                model = video.uri,
+            VideoThumbnail(
+                videoUri = video.uri,
+                videoPath = video.path,
                 contentDescription = video.title,
-                contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxSize()
             )
 

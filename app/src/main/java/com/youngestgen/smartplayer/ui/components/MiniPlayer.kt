@@ -37,7 +37,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil3.compose.AsyncImage
+import com.youngestgen.smartplayer.util.AudioAlbumArt
 import com.youngestgen.smartplayer.model.AudioItem
 import com.youngestgen.smartplayer.ui.theme.NeonCyan
 import com.youngestgen.smartplayer.ui.theme.PlayerSurfaceVariant
@@ -86,17 +86,13 @@ fun MiniPlayer(
                         .background(Color.Black.copy(alpha = 0.3f)),
                     contentAlignment = Alignment.Center
                 ) {
-                    AsyncImage(
-                        model = currentSong.albumArtUri,
-                        contentDescription = "Album Art",
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier.size(48.dp)
-                    )
-                    Icon(
-                        imageVector = Icons.Default.MusicNote,
-                        contentDescription = null,
-                        tint = NeonCyan.copy(alpha = 0.6f),
-                        modifier = Modifier.size(24.dp)
+                    AudioAlbumArt(
+                        audioUri = currentSong.uri,
+                        albumId = currentSong.albumId,
+                        contentDescription = currentSong.title,
+                        modifier = Modifier.size(48.dp),
+                        iconTint = NeonCyan.copy(alpha = 0.6f),
+                        iconSize = 24.dp
                     )
                 }
 

@@ -61,7 +61,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil3.compose.AsyncImage
+import com.youngestgen.smartplayer.util.AudioAlbumArt
+import com.youngestgen.smartplayer.util.VideoThumbnail
 import com.youngestgen.smartplayer.R
 import com.youngestgen.smartplayer.data.PreferencesRepository
 import com.youngestgen.smartplayer.model.AudioItem
@@ -234,8 +235,14 @@ fun PlaylistsScreen(
                                         .background(Color.Black.copy(alpha = 0.3f)),
                                     contentAlignment = Alignment.Center
                                 ) {
-                                    AsyncImage(model = song.albumArtUri, contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize())
-                                    Icon(Icons.Default.MusicNote, contentDescription = null, tint = NeonCyan, modifier = Modifier.size(20.dp))
+                                    AudioAlbumArt(
+                                        audioUri = song.uri,
+                                        albumId = song.albumId,
+                                        contentDescription = song.title,
+                                        modifier = Modifier.fillMaxSize(),
+                                        iconTint = NeonCyan,
+                                        iconSize = 20.dp
+                                    )
                                 }
                                 Spacer(modifier = Modifier.width(12.dp))
                                 Column(modifier = Modifier.weight(1f)) {
@@ -286,8 +293,14 @@ fun PlaylistsScreen(
                                             .background(Color.Black.copy(alpha = 0.3f)),
                                         contentAlignment = Alignment.Center
                                     ) {
-                                        AsyncImage(model = song.albumArtUri, contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize())
-                                        Icon(Icons.Default.MusicNote, contentDescription = null, tint = NeonCyan)
+                                        AudioAlbumArt(
+                                            audioUri = song.uri,
+                                            albumId = song.albumId,
+                                            contentDescription = song.title,
+                                            modifier = Modifier.fillMaxSize(),
+                                            iconTint = NeonCyan,
+                                            iconSize = 20.dp
+                                        )
                                     }
                                     Spacer(modifier = Modifier.width(12.dp))
                                     Column(modifier = Modifier.weight(1f)) {
@@ -324,7 +337,12 @@ fun PlaylistsScreen(
                                             .clip(RoundedCornerShape(8.dp))
                                             .background(Color.Black.copy(alpha = 0.3f))
                                     ) {
-                                        AsyncImage(model = video.uri, contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize())
+                                        VideoThumbnail(
+                                            videoUri = video.uri,
+                                            videoPath = video.path,
+                                            contentDescription = video.title,
+                                            modifier = Modifier.fillMaxSize()
+                                        )
                                     }
                                     Spacer(modifier = Modifier.width(12.dp))
                                     Column(modifier = Modifier.weight(1f)) {
@@ -368,8 +386,14 @@ fun PlaylistsScreen(
                                             .background(Color.Black.copy(alpha = 0.3f)),
                                         contentAlignment = Alignment.Center
                                     ) {
-                                        AsyncImage(model = song.albumArtUri, contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize())
-                                        Icon(Icons.Default.History, contentDescription = null, tint = Color(0xFFFFB300))
+                                        AudioAlbumArt(
+                                            audioUri = song.uri,
+                                            albumId = song.albumId,
+                                            contentDescription = song.title,
+                                            modifier = Modifier.fillMaxSize(),
+                                            iconTint = Color(0xFFFFB300),
+                                            iconSize = 20.dp
+                                        )
                                     }
                                     Spacer(modifier = Modifier.width(12.dp))
                                     Column(modifier = Modifier.weight(1f)) {
