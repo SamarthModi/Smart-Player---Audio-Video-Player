@@ -48,6 +48,8 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.Saver
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -84,6 +86,10 @@ import kotlinx.coroutines.launch
 import android.content.Context
 
 class MainActivity : ComponentActivity() {
+
+    companion object {
+        var currentTab: NavigationTab = NavigationTab.VIDEOS
+    }
 
     override fun attachBaseContext(newBase: Context) {
         val prefs = PreferencesRepository.getInstance(newBase)
@@ -155,7 +161,18 @@ fun MainAppScreen(
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
 
-    var selectedTab by remember { mutableStateOf(NavigationTab.VIDEOS) }
+    var selectedTab by rememberSaveable(
+        stateSaver = Saver(
+            save = { it.name },
+            restore = {
+                try {
+                    NavigationTab.valueOf(it)
+                } catch (_: Exception) {
+                    MainActivity.currentTab
+                }
+            }
+        )
+    ) { mutableStateOf(MainActivity.currentTab) }
     var isNowPlayingOpen by remember { mutableStateOf(false) }
     var isEqualizerOpen by remember { mutableStateOf(false) }
 
@@ -244,7 +261,10 @@ fun MainAppScreen(
                         val isSelected = selectedTab == tab
                         NavigationBarItem(
                             selected = isSelected,
-                            onClick = { selectedTab = tab },
+                            onClick = {
+                                selectedTab = tab
+                                MainActivity.currentTab = tab
+                            },
                             icon = {
                                 Icon(
                                     imageVector = tab.icon,
