@@ -38,6 +38,9 @@ class PreferencesRepository(private val context: Context) {
     private val _vaultAudioIds = MutableStateFlow<Set<Long>>(emptySet())
     val vaultAudioIds: StateFlow<Set<Long>> = _vaultAudioIds.asStateFlow()
 
+    private val _themeStyleFlow = MutableStateFlow(prefs.getString("theme_style", "DARK") ?: "DARK")
+    val themeStyleFlow: StateFlow<String> = _themeStyleFlow.asStateFlow()
+
     init {
         loadData()
     }
@@ -275,7 +278,10 @@ class PreferencesRepository(private val context: Context) {
     // Theme style ("AMOLED", "DARK", "BLUE")
     var themeStyle: String
         get() = prefs.getString("theme_style", "DARK") ?: "DARK"
-        set(value) = prefs.edit().putString("theme_style", value).apply()
+        set(value) {
+            prefs.edit().putString("theme_style", value).apply()
+            _themeStyleFlow.value = value
+        }
 
     // Subtitle Customization
     var subtitleTextSize: Int

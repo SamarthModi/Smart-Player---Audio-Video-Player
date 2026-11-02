@@ -90,6 +90,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
@@ -191,7 +192,8 @@ class VideoPlayerActivity : ComponentActivity() {
         initPlayer(isSoftwareDecoder)
 
         setContent {
-            SmartPlayerTheme {
+            val themeStyle by preferencesRepository.themeStyleFlow.collectAsState()
+            SmartPlayerTheme(themeStyle = themeStyle) {
                 VideoPlayerScreen(
                     exoPlayer = exoPlayer,
                     videoTitle = videoTitle,

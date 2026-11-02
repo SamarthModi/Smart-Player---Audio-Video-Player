@@ -120,7 +120,8 @@ class MainActivity : ComponentActivity() {
         }
 
         setContent {
-            SmartPlayerTheme {
+            val themeStyle by preferencesRepository.themeStyleFlow.collectAsState()
+            SmartPlayerTheme(themeStyle = themeStyle) {
                 MainAppScreen(
                     mediaStoreRepository = mediaStoreRepository,
                     preferencesRepository = preferencesRepository,

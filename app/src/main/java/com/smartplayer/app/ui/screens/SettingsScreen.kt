@@ -42,6 +42,7 @@ import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
@@ -85,7 +86,7 @@ fun SettingsScreen(
     var doubleTapSeekSeconds by remember { mutableIntStateOf(preferencesRepository.doubleTapSeekSeconds) }
     var autoHideControlsSec by remember { mutableIntStateOf(preferencesRepository.autoHideControlsSec) }
     var gestureSensitivity by remember { mutableFloatStateOf(preferencesRepository.gestureSensitivity) }
-    var themeStyle by remember { mutableStateOf(preferencesRepository.themeStyle) }
+    val themeStyle by preferencesRepository.themeStyleFlow.collectAsState()
 
     var showLanguageDialog by remember { mutableStateOf(false) }
     var showDoubleTapDialog by remember { mutableStateOf(false) }
@@ -188,7 +189,15 @@ fun SettingsScreen(
                             fontWeight = FontWeight.SemiBold,
                             fontSize = 15.sp
                         )
-                        Text(themeStyle, color = Color.Gray, fontSize = 12.sp)
+                        Text(
+                            when {
+                                themeStyle.contains("AMOLED", ignoreCase = true) -> "AMOLED Pitch Black"
+                                themeStyle.contains("Blue", ignoreCase = true) || themeStyle.equals("BLUE", ignoreCase = true) -> "Midnight Blue"
+                                else -> "Dark Obsidian (Default)"
+                            },
+                            color = Color.Gray,
+                            fontSize = 12.sp
+                        )
                     }
                     Text("›", color = Color.Gray, fontSize = 22.sp, fontWeight = FontWeight.Bold)
                 }
@@ -655,30 +664,49 @@ fun SettingsScreen(
 
     // Theme Dialog
     if (showThemeDialog) {
-        val themes = listOf("Dark Obsidian (Default)", "AMOLED Pitch Black", "Midnight Blue")
+        val themes = listOf(
+            Triple("DARK", "Dark Obsidian (Default)", "Classic deep dark with neon cyan highlights"),
+            Triple("AMOLED", "AMOLED Pitch Black", "100% Pure OLED black for maximum battery savings"),
+            Triple("BLUE", "Midnight Blue", "Deep oceanic sapphire navy with cool accents")
+        )
         AlertDialog(
             onDismissRequest = { showThemeDialog = false },
             title = { Text(stringResource(R.string.theme_appearance), fontWeight = FontWeight.Bold) },
             text = {
                 Column {
-                    themes.forEach { t ->
+                    themes.forEach { (key, title, desc) ->
+                        val isSelected = when (key) {
+                            "AMOLED" -> themeStyle.contains("AMOLED", ignoreCase = true)
+                            "BLUE" -> themeStyle.contains("Blue", ignoreCase = true) || themeStyle.equals("BLUE", ignoreCase = true)
+                            else -> !themeStyle.contains("AMOLED", ignoreCase = true) && !themeStyle.contains("Blue", ignoreCase = true) && !themeStyle.equals("BLUE", ignoreCase = true)
+                        }
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .clickable {
-                                    themeStyle = t
-                                    preferencesRepository.themeStyle = t
+                                    preferencesRepository.themeStyle = key
                                     showThemeDialog = false
                                 }
                                 .padding(vertical = 10.dp),
-                            horizontalArrangement = Arrangement.SpaceBetween
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Text(
-                                t,
-                                color = if (themeStyle == t) NeonCyan else Color.White,
-                                fontWeight = if (themeStyle == t) FontWeight.Bold else FontWeight.Normal
-                            )
-                            if (themeStyle == t) Text("✓", color = NeonCyan)
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text(
+                                    title,
+                                    color = if (isSelected) NeonCyan else Color.White,
+                                    fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
+                                    fontSize = 15.sp
+                                )
+                                Text(
+                                    desc,
+                                    color = Color.Gray,
+                                    fontSize = 12.sp
+                                )
+                            }
+                            if (isSelected) {
+                                Text("✓", color = NeonCyan, fontWeight = FontWeight.Bold, fontSize = 18.sp)
+                            }
                         }
                     }
                 }
