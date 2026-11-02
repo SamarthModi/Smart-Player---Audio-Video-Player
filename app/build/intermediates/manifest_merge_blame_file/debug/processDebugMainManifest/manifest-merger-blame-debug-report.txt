@@ -1,6 +1,6 @@
 1<?xml version="1.0" encoding="utf-8"?>
 2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-3    package="com.smartplayer.app"
+3    package="com.youngestgen.smartplayer"
 4    android:versionCode="1"
 5    android:versionName="1.0.0" >
 6
@@ -53,18 +53,18 @@
 29
 30    <permission
 30-->[androidx.core:core:1.17.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/82a87227b83727758ed8d0cfa78ff3f9/transformed/core-1.17.0/AndroidManifest.xml:22:5-24:47
-31        android:name="com.smartplayer.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+31        android:name="com.youngestgen.smartplayer.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
 31-->[androidx.core:core:1.17.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/82a87227b83727758ed8d0cfa78ff3f9/transformed/core-1.17.0/AndroidManifest.xml:23:9-81
 32        android:protectionLevel="signature" />
 32-->[androidx.core:core:1.17.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/82a87227b83727758ed8d0cfa78ff3f9/transformed/core-1.17.0/AndroidManifest.xml:24:9-44
 33
-34    <uses-permission android:name="com.smartplayer.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+34    <uses-permission android:name="com.youngestgen.smartplayer.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
 34-->[androidx.core:core:1.17.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/82a87227b83727758ed8d0cfa78ff3f9/transformed/core-1.17.0/AndroidManifest.xml:26:5-97
 34-->[androidx.core:core:1.17.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/82a87227b83727758ed8d0cfa78ff3f9/transformed/core-1.17.0/AndroidManifest.xml:26:22-94
 35
 36    <application
 36-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:24:5-73:19
-37        android:name="com.smartplayer.app.SmartPlayerApplication"
+37        android:name="com.youngestgen.smartplayer.SmartPlayerApplication"
 37-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:25:9-47
 38        android:allowBackup="true"
 38-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:26:9-35
@@ -86,7 +86,7 @@
 48        <!-- Main Media Hub Activity -->
 49        <activity
 49-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:35:9-44:20
-50            android:name="com.smartplayer.app.MainActivity"
+50            android:name="com.youngestgen.smartplayer.MainActivity"
 50-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:36:13-41
 51            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
 51-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:38:13-91
@@ -109,7 +109,7 @@
 61        <!-- Pro Fullscreen Video Player Activity (Supports PiP, Gesture Controls) -->
 62        <activity
 62-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:47:9-60:20
-63            android:name="com.smartplayer.app.ui.player.VideoPlayerActivity"
+63            android:name="com.youngestgen.smartplayer.ui.player.VideoPlayerActivity"
 63-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:48:13-58
 64            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden"
 64-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:51:13-106
@@ -143,7 +143,7 @@
 79        <!-- AndroidX Media3 MediaSession Foreground Service -->
 80        <service
 80-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:63:9-71:19
-81            android:name="com.smartplayer.app.service.SmartAudioService"
+81            android:name="com.youngestgen.smartplayer.service.SmartAudioService"
 81-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:64:13-54
 82            android:exported="true"
 82-->/home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:65:13-36
@@ -213,7 +213,7 @@
 118-->[androidx.emoji2:emoji2:1.4.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/ab604a72a0cb3526d920c930d5d750e0/transformed/emoji2-1.4.0/AndroidManifest.xml:24:9-32:20
 119            android:name="androidx.startup.InitializationProvider"
 119-->[androidx.emoji2:emoji2:1.4.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/ab604a72a0cb3526d920c930d5d750e0/transformed/emoji2-1.4.0/AndroidManifest.xml:25:13-67
-120            android:authorities="com.smartplayer.app.androidx-startup"
+120            android:authorities="com.youngestgen.smartplayer.androidx-startup"
 120-->[androidx.emoji2:emoji2:1.4.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/ab604a72a0cb3526d920c930d5d750e0/transformed/emoji2-1.4.0/AndroidManifest.xml:26:13-68
 121            android:exported="false" >
 121-->[androidx.emoji2:emoji2:1.4.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/ab604a72a0cb3526d920c930d5d750e0/transformed/emoji2-1.4.0/AndroidManifest.xml:27:13-37

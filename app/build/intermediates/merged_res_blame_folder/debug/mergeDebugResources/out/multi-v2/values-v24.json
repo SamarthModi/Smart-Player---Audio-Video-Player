@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.smartplayer.app-mergeDebugResources-53:/values-v24/values-v24.xml",
+            "outputFile": "com.youngestgen.smartplayer.app-mergeDebugResources-53:/values-v24/values-v24.xml",
             "map": [
                 {
                     "source": "/home/serpentcs/.gradle/caches/9.8.2/transforms/d103e78fe85e02a5542c8fd3a860353a/transformed/media-1.7.0/res/values-v24/values-v24.xml",

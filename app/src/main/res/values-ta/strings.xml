@@ -1,6 +1,6 @@
 <resources>
     <!-- App Details -->
-    <string name="app_name">Smart Player</string>
+    <string name="app_name">SmartAV Media Player</string>
     <string name="app_description">தொழில்முறை வீடியோ மற்றும் இசை பிளேயர்</string>
     <string name="channel_name">ஸ்மார்ட் மீடியா பின்னணி</string>
     <string name="channel_desc">பின்னணி இசை மற்றும் வீடியோ கட்டுப்பாடுகள்</string>
@@ -95,7 +95,7 @@
     <string name="clear_history">வரலாற்றை அழி</string>
     <string name="clear_history_desc">இயக்கப்பட்ட வீடியோ மற்றும் ஆடியோ பட்டியலை அழிக்கவும்</string>
     <string name="section_about">SMART PLAYER PRO பற்றி</string>
-    <string name="app_version_info">Smart Player Pro • பதிப்பு 2.0.0</string>
+    <string name="app_version_info">SmartAV Media Player Pro • பதிப்பு 2.0.0</string>
     <string name="choose_language">மொழியைத் தேர்வுசெய்க</string>
     <string name="seconds">விநாடிகள்</string>
     <string name="system_default">கணினி இயல்புநிலை</string>

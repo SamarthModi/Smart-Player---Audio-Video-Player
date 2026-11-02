@@ -1,8 +1,18 @@
-com.smartplayer.app
+com.youngestgen.smartplayer
 drawable ic_launcher_background
 drawable ic_launcher_foreground
+drawable ic_notification_close
+drawable ic_notification_next
+drawable ic_notification_pause
+drawable ic_notification_play
+drawable ic_notification_prev
 mipmap ic_launcher
 mipmap ic_launcher_round
+string action_next
+string action_pause
+string action_play
+string action_prev
+string action_stop
 string add_to_favorites
 string add_to_playlist
 string add_to_queue

@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.smartplayer.app-mergeDebugResources-53:/values-watch-v20/values-watch-v20.xml",
+            "outputFile": "com.youngestgen.smartplayer.app-mergeDebugResources-53:/values-watch-v20/values-watch-v20.xml",
             "map": [
                 {
                     "source": "/home/serpentcs/.gradle/caches/9.8.2/transforms/76c4ea77aea27ead6ecddc30e39370bb/transformed/appcompat-1.7.0/res/values-watch-v20/values-watch-v20.xml",

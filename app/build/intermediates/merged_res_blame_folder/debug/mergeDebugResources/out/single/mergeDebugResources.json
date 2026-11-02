@@ -1,58 +1,78 @@
 [
     {
-        "merged": "com.smartplayer.app-debug-55:/mipmap-mdpi_ic_launcher.png.flat",
-        "source": "com.smartplayer.app-main-57:/mipmap-mdpi/ic_launcher.png"
+        "merged": "com.youngestgen.smartplayer.app-debug-55:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "com.youngestgen.smartplayer.app-main-57:/mipmap-anydpi-v26/ic_launcher_round.xml"
     },
     {
-        "merged": "com.smartplayer.app-debug-55:/drawable_ic_launcher_background.xml.flat",
-        "source": "com.smartplayer.app-main-57:/drawable/ic_launcher_background.xml"
+        "merged": "com.youngestgen.smartplayer.app-debug-55:/mipmap-mdpi_ic_launcher_round.png.flat",
+        "source": "com.youngestgen.smartplayer.app-main-57:/mipmap-mdpi/ic_launcher_round.png"
     },
     {
-        "merged": "com.smartplayer.app-debug-55:/mipmap-xxhdpi_ic_launcher_round.png.flat",
-        "source": "com.smartplayer.app-main-57:/mipmap-xxhdpi/ic_launcher_round.png"
+        "merged": "com.youngestgen.smartplayer.app-debug-55:/drawable_ic_notification_pause.xml.flat",
+        "source": "com.youngestgen.smartplayer.app-main-57:/drawable/ic_notification_pause.xml"
     },
     {
-        "merged": "com.smartplayer.app-debug-55:/mipmap-hdpi_ic_launcher_round.png.flat",
-        "source": "com.smartplayer.app-main-57:/mipmap-hdpi/ic_launcher_round.png"
+        "merged": "com.youngestgen.smartplayer.app-debug-55:/mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "com.youngestgen.smartplayer.app-main-57:/mipmap-xxxhdpi/ic_launcher.png"
     },
     {
-        "merged": "com.smartplayer.app-debug-55:/mipmap-anydpi-v26_ic_launcher.xml.flat",
-        "source": "com.smartplayer.app-main-57:/mipmap-anydpi-v26/ic_launcher.xml"
+        "merged": "com.youngestgen.smartplayer.app-debug-55:/drawable_ic_notification_next.xml.flat",
+        "source": "com.youngestgen.smartplayer.app-main-57:/drawable/ic_notification_next.xml"
     },
     {
-        "merged": "com.smartplayer.app-debug-55:/mipmap-xhdpi_ic_launcher_round.png.flat",
-        "source": "com.smartplayer.app-main-57:/mipmap-xhdpi/ic_launcher_round.png"
+        "merged": "com.youngestgen.smartplayer.app-debug-55:/mipmap-xhdpi_ic_launcher_round.png.flat",
+        "source": "com.youngestgen.smartplayer.app-main-57:/mipmap-xhdpi/ic_launcher_round.png"
     },
     {
-        "merged": "com.smartplayer.app-debug-55:/drawable-nodpi_ic_launcher_foreground.png.flat",
-        "source": "com.smartplayer.app-main-57:/drawable-nodpi/ic_launcher_foreground.png"
+        "merged": "com.youngestgen.smartplayer.app-debug-55:/drawable_ic_notification_prev.xml.flat",
+        "source": "com.youngestgen.smartplayer.app-main-57:/drawable/ic_notification_prev.xml"
     },
     {
-        "merged": "com.smartplayer.app-debug-55:/mipmap-hdpi_ic_launcher.png.flat",
-        "source": "com.smartplayer.app-main-57:/mipmap-hdpi/ic_launcher.png"
+        "merged": "com.youngestgen.smartplayer.app-debug-55:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "com.youngestgen.smartplayer.app-main-57:/mipmap-anydpi-v26/ic_launcher.xml"
     },
     {
-        "merged": "com.smartplayer.app-debug-55:/mipmap-xhdpi_ic_launcher.png.flat",
-        "source": "com.smartplayer.app-main-57:/mipmap-xhdpi/ic_launcher.png"
+        "merged": "com.youngestgen.smartplayer.app-debug-55:/mipmap-xxhdpi_ic_launcher_round.png.flat",
+        "source": "com.youngestgen.smartplayer.app-main-57:/mipmap-xxhdpi/ic_launcher_round.png"
     },
     {
-        "merged": "com.smartplayer.app-debug-55:/mipmap-xxhdpi_ic_launcher.png.flat",
-        "source": "com.smartplayer.app-main-57:/mipmap-xxhdpi/ic_launcher.png"
+        "merged": "com.youngestgen.smartplayer.app-debug-55:/mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "com.youngestgen.smartplayer.app-main-57:/mipmap-xhdpi/ic_launcher.png"
     },
     {
-        "merged": "com.smartplayer.app-debug-55:/mipmap-xxxhdpi_ic_launcher_round.png.flat",
-        "source": "com.smartplayer.app-main-57:/mipmap-xxxhdpi/ic_launcher_round.png"
+        "merged": "com.youngestgen.smartplayer.app-debug-55:/mipmap-hdpi_ic_launcher.png.flat",
+        "source": "com.youngestgen.smartplayer.app-main-57:/mipmap-hdpi/ic_launcher.png"
     },
     {
-        "merged": "com.smartplayer.app-debug-55:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
-        "source": "com.smartplayer.app-main-57:/mipmap-anydpi-v26/ic_launcher_round.xml"
+        "merged": "com.youngestgen.smartplayer.app-debug-55:/mipmap-mdpi_ic_launcher.png.flat",
+        "source": "com.youngestgen.smartplayer.app-main-57:/mipmap-mdpi/ic_launcher.png"
     },
     {
-        "merged": "com.smartplayer.app-debug-55:/mipmap-xxxhdpi_ic_launcher.png.flat",
-        "source": "com.smartplayer.app-main-57:/mipmap-xxxhdpi/ic_launcher.png"
+        "merged": "com.youngestgen.smartplayer.app-debug-55:/drawable_ic_launcher_background.xml.flat",
+        "source": "com.youngestgen.smartplayer.app-main-57:/drawable/ic_launcher_background.xml"
     },
     {
-        "merged": "com.smartplayer.app-debug-55:/mipmap-mdpi_ic_launcher_round.png.flat",
-        "source": "com.smartplayer.app-main-57:/mipmap-mdpi/ic_launcher_round.png"
+        "merged": "com.youngestgen.smartplayer.app-debug-55:/drawable_ic_notification_play.xml.flat",
+        "source": "com.youngestgen.smartplayer.app-main-57:/drawable/ic_notification_play.xml"
+    },
+    {
+        "merged": "com.youngestgen.smartplayer.app-debug-55:/drawable_ic_notification_close.xml.flat",
+        "source": "com.youngestgen.smartplayer.app-main-57:/drawable/ic_notification_close.xml"
+    },
+    {
+        "merged": "com.youngestgen.smartplayer.app-debug-55:/mipmap-xxxhdpi_ic_launcher_round.png.flat",
+        "source": "com.youngestgen.smartplayer.app-main-57:/mipmap-xxxhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "com.youngestgen.smartplayer.app-debug-55:/mipmap-hdpi_ic_launcher_round.png.flat",
+        "source": "com.youngestgen.smartplayer.app-main-57:/mipmap-hdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "com.youngestgen.smartplayer.app-debug-55:/drawable-nodpi_ic_launcher_foreground.png.flat",
+        "source": "com.youngestgen.smartplayer.app-main-57:/drawable-nodpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "com.youngestgen.smartplayer.app-debug-55:/mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "com.youngestgen.smartplayer.app-main-57:/mipmap-xxhdpi/ic_launcher.png"
     }
 ]

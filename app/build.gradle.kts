@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.smartplayer.app"
+    namespace = "com.youngestgen.smartplayer"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.smartplayer.app"
+        applicationId = "com.youngestgen.smartplayer"
         minSdk = 26
         targetSdk = 36
         versionCode = 1

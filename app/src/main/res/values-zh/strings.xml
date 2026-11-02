@@ -1,6 +1,6 @@
 <resources>
     <!-- App Details -->
-    <string name="app_name">Smart Player</string>
+    <string name="app_name">SmartAV Media Player</string>
     <string name="app_description">专业智能音视频播放器</string>
     <string name="channel_name">智能媒体播放</string>
     <string name="channel_desc">后台音乐和视频播放控制</string>
@@ -13,7 +13,7 @@
 
     <!-- Permissions -->
     <string name="permission_required">需要存储权限</string>
-    <string name="permission_desc">为了播放本地视频和音乐，Smart Player 需要访问您的媒体文件。</string>
+    <string name="permission_desc">为了播放本地视频和音乐，SmartAV Media Player 需要访问您的媒体文件。</string>
     <string name="grant_permission">授予权限</string>
 
     <!-- General / Common -->
@@ -95,7 +95,7 @@
     <string name="clear_history">清除播放历史</string>
     <string name="clear_history_desc">清除最近播放的音视频历史记录</string>
     <string name="section_about">关于 SMART PLAYER PRO</string>
-    <string name="app_version_info">Smart Player Pro • 版本 2.0.0</string>
+    <string name="app_version_info">SmartAV Media Player Pro • 版本 2.0.0</string>
     <string name="choose_language">选择语言</string>
     <string name="seconds">秒</string>
     <string name="system_default">系统默认</string>

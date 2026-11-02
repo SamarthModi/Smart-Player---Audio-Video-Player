@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.smartplayer.app-mergeDebugResources-53:/values-en-rAU/values-en-rAU.xml",
+            "outputFile": "com.youngestgen.smartplayer.app-mergeDebugResources-53:/values-en-rAU/values-en-rAU.xml",
             "map": [
                 {
                     "source": "/home/serpentcs/.gradle/caches/9.8.2/transforms/82a87227b83727758ed8d0cfa78ff3f9/transformed/core-1.17.0/res/values-en-rAU/values-en-rAU.xml",

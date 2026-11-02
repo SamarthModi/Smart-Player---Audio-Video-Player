@@ -1,6 +1,6 @@
 <resources>
     <!-- App Details -->
-    <string name="app_name">Smart Player</string>
+    <string name="app_name">SmartAV Media Player</string>
     <string name="app_description">プロフェッショナルなスマート動画・音楽プレーヤー</string>
     <string name="channel_name">スマートメディア再生</string>
     <string name="channel_desc">バックグラウンド音楽・動画の再生コントロール</string>
@@ -95,7 +95,7 @@
     <string name="clear_history">再生履歴を消去</string>
     <string name="clear_history_desc">最近再生した動画・音声の履歴を消去</string>
     <string name="section_about">SMART PLAYER PRO について</string>
-    <string name="app_version_info">Smart Player Pro • バージョン 2.0.0</string>
+    <string name="app_version_info">SmartAV Media Player Pro • バージョン 2.0.0</string>
     <string name="choose_language">言語を選択</string>
     <string name="seconds">秒</string>
     <string name="system_default">システムデフォルト</string>

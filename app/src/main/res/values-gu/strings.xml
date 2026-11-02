@@ -1,6 +1,6 @@
 <resources>
     <!-- App Details -->
-    <string name="app_name">Smart Player</string>
+    <string name="app_name">SmartAV Media Player</string>
     <string name="app_description">પ્રોફેશનલ સ્માર્ટ વિડીયો અને મ્યુઝિક પ્લેયર</string>
     <string name="channel_name">સ્માર્ટ મીડિયા પ્લેબેક</string>
     <string name="channel_desc">બેકગ્રાઉન્ડ મ્યુઝિક અને વિડીયો કંટ્રોલ્સ</string>
@@ -13,7 +13,7 @@
 
     <!-- Permissions -->
     <string name="permission_required">સ્ટોરેજ પરમિશન જરૂરી છે</string>
-    <string name="permission_desc">તમારા લોકલ વિડીયો અને ગીતો વગાડવા માટે, Smart Player ને સ્ટોરેજ ઍક્સેસની જરૂર છે.</string>
+    <string name="permission_desc">તમારા લોકલ વિડીયો અને ગીતો વગાડવા માટે, SmartAV Media Player ને સ્ટોરેજ ઍક્સેસની જરૂર છે.</string>
     <string name="grant_permission">પરમિશન આપો</string>
 
     <!-- General / Common -->
@@ -95,7 +95,7 @@
     <string name="clear_history">પ્લેબેક હિસ્ટ્રી સાફ કરો</string>
     <string name="clear_history_desc">તાજેતરમાં વગાડેલા વિડીયો અને ગીતોની યાદી સાફ કરો</string>
     <string name="section_about">SMART PLAYER PRO વિશે</string>
-    <string name="app_version_info">Smart Player Pro • વર્ઝન 2.0.0</string>
+    <string name="app_version_info">SmartAV Media Player Pro • વર્ઝન 2.0.0</string>
     <string name="choose_language">ભાષા પસંદ કરો</string>
     <string name="system_default">સિસ્ટમ ડિફોલ્ટ</string>
     <string name="seconds">સેકન્ડ</string>

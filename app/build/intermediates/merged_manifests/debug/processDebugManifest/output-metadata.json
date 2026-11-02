@@ -4,7 +4,7 @@
     "type": "MERGED_MANIFESTS",
     "kind": "Directory"
   },
-  "applicationId": "com.smartplayer.app",
+  "applicationId": "com.youngestgen.smartplayer",
   "variantName": "debug",
   "elements": [
     {

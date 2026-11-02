@@ -1,6 +1,6 @@
 <resources>
     <!-- App Details -->
-    <string name="app_name">Smart Player</string>
+    <string name="app_name">SmartAV Media Player</string>
     <string name="app_description">Professional Smart Video &amp; Music Player</string>
     <string name="channel_name">Smart Media Playback</string>
     <string name="channel_desc">Playback controls for background music and videos</string>
@@ -13,7 +13,7 @@
 
     <!-- Permissions -->
     <string name="permission_required">Storage Permission Required</string>
-    <string name="permission_desc">To play your local videos and music, Smart Player needs access to your media files.</string>
+    <string name="permission_desc">To play your local videos and music, SmartAV Media Player needs access to your media files.</string>
     <string name="grant_permission">Grant Permission</string>
 
     <!-- General / Common -->
@@ -100,7 +100,7 @@
     <string name="clear_history">Clear Playback History</string>
     <string name="clear_history_desc">Clear recently played video and audio list</string>
     <string name="section_about">ABOUT SMART PLAYER PRO</string>
-    <string name="app_version_info">Smart Player Pro • Version 2.0.0</string>
+    <string name="app_version_info">SmartAV Media Player Pro • Version 2.0.0</string>
     <string name="choose_language">Choose Language</string>
     <string name="system_default">System Default</string>
     <string name="seconds">Seconds</string>

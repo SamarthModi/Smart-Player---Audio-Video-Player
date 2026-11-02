@@ -193,7 +193,7 @@ MERGED from [androidx.startup:startup-runtime:1.1.1] /home/serpentcs/.gradle/cac
 		ADDED from /home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:31:9-49
 	android:name
 		ADDED from /home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:25:9-47
-activity#com.smartplayer.app.MainActivity
+activity#com.youngestgen.smartplayer.MainActivity
 ADDED from /home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:35:9-44:20
 	android:windowSoftInputMode
 		ADDED from /home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:39:13-55
@@ -213,7 +213,7 @@ category#android.intent.category.LAUNCHER
 ADDED from /home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:42:17-77
 	android:name
 		ADDED from /home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:42:27-74
-activity#com.smartplayer.app.ui.player.VideoPlayerActivity
+activity#com.youngestgen.smartplayer.ui.player.VideoPlayerActivity
 ADDED from /home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:47:9-60:20
 	android:screenOrientation
 		ADDED from /home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:52:13-56
@@ -245,7 +245,7 @@ data
 ADDED from /home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:58:17-52
 	android:mimeType
 		ADDED from /home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:58:23-49
-service#com.smartplayer.app.service.SmartAudioService
+service#com.youngestgen.smartplayer.service.SmartAudioService
 ADDED from /home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:63:9-71:19
 	android:exported
 		ADDED from /home/serpentcs/Samarth/Projects/Android/SmartAudioVideoPlayer/app/src/main/AndroidManifest.xml:65:13-36
@@ -517,7 +517,7 @@ ADDED from [androidx.core:core:1.17.0] /home/serpentcs/.gradle/caches/9.8.2/tran
 		ADDED from [androidx.core:core:1.17.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/82a87227b83727758ed8d0cfa78ff3f9/transformed/core-1.17.0/AndroidManifest.xml:24:9-44
 	android:name
 		ADDED from [androidx.core:core:1.17.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/82a87227b83727758ed8d0cfa78ff3f9/transformed/core-1.17.0/AndroidManifest.xml:23:9-81
-permission#com.smartplayer.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+permission#com.youngestgen.smartplayer.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
 ADDED from [androidx.core:core:1.17.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/82a87227b83727758ed8d0cfa78ff3f9/transformed/core-1.17.0/AndroidManifest.xml:22:5-24:47
 	android:protectionLevel
 		ADDED from [androidx.core:core:1.17.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/82a87227b83727758ed8d0cfa78ff3f9/transformed/core-1.17.0/AndroidManifest.xml:24:9-44
@@ -527,7 +527,7 @@ uses-permission#${applicationId}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
 ADDED from [androidx.core:core:1.17.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/82a87227b83727758ed8d0cfa78ff3f9/transformed/core-1.17.0/AndroidManifest.xml:26:5-97
 	android:name
 		ADDED from [androidx.core:core:1.17.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/82a87227b83727758ed8d0cfa78ff3f9/transformed/core-1.17.0/AndroidManifest.xml:26:22-94
-uses-permission#com.smartplayer.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+uses-permission#com.youngestgen.smartplayer.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
 ADDED from [androidx.core:core:1.17.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/82a87227b83727758ed8d0cfa78ff3f9/transformed/core-1.17.0/AndroidManifest.xml:26:5-97
 	android:name
 		ADDED from [androidx.core:core:1.17.0] /home/serpentcs/.gradle/caches/9.8.2/transforms/82a87227b83727758ed8d0cfa78ff3f9/transformed/core-1.17.0/AndroidManifest.xml:26:22-94

@@ -1,6 +1,6 @@
 <resources>
     <!-- App Details -->
-    <string name="app_name">Smart Player</string>
+    <string name="app_name">SmartAV Media Player</string>
     <string name="app_description">व्यावसायिक स्मार्ट व्हिडिओ आणि संगीत प्लेयर</string>
     <string name="channel_name">स्मार्ट मीडिया प्लेबॅक</string>
     <string name="channel_desc">पार्श्वभूमी संगीत आणि व्हिडिओ नियंत्रणे</string>
@@ -95,7 +95,7 @@
     <string name="clear_history">इतिहास साफ करा</string>
     <string name="clear_history_desc">अलीकडील व्हिडिओ आणि गाण्यांची यादी साफ करा</string>
     <string name="section_about">SMART PLAYER PRO बद्दल</string>
-    <string name="app_version_info">Smart Player Pro • आवृत्ती 2.0.0</string>
+    <string name="app_version_info">SmartAV Media Player Pro • आवृत्ती 2.0.0</string>
     <string name="choose_language">भाषा निवडा</string>
     <string name="seconds">सेकंद</string>
     <string name="system_default">सिस्टम डीफॉल्ट</string>

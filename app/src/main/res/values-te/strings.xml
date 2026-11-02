@@ -1,6 +1,6 @@
 <resources>
     <!-- App Details -->
-    <string name="app_name">Smart Player</string>
+    <string name="app_name">SmartAV Media Player</string>
     <string name="app_description">ప్రొఫెషనల్ వీడియో మరియు మ్యూజిక్ ప్లేయర్</string>
     <string name="channel_name">స్మార్ట్ మీడియా ప్లేబ్యాక్</string>
     <string name="channel_desc">నేపథ్య సంగీతం మరియు వీడియో నియంత్రణలు</string>
@@ -95,7 +95,7 @@
     <string name="clear_history">చరిత్రను క్లియర్ చేయండి</string>
     <string name="clear_history_desc">ఇటీవలి వీడియోలు మరియు పాటల జాబితాను క్లియర్ చేయండి</string>
     <string name="section_about">SMART PLAYER PRO గురించి</string>
-    <string name="app_version_info">Smart Player Pro • వెర్షన్ 2.0.0</string>
+    <string name="app_version_info">SmartAV Media Player Pro • వెర్షన్ 2.0.0</string>
     <string name="choose_language">భాషను ఎంచుకోండి</string>
     <string name="seconds">సెకన్లు</string>
     <string name="system_default">సిస్టమ్ డిఫాల్ట్</string>

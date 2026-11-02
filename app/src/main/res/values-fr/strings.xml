@@ -1,6 +1,6 @@
 <resources>
     <!-- App Details -->
-    <string name="app_name">Smart Player</string>
+    <string name="app_name">SmartAV Media Player</string>
     <string name="app_description">Lecteur vidéo et audio intelligent professionnel</string>
     <string name="channel_name">Lecture Smart Media</string>
     <string name="channel_desc">Commandes de lecture pour la musique et la vidéo en arrière-plan</string>
@@ -13,7 +13,7 @@
 
     <!-- Permissions -->
     <string name="permission_required">Autorisation de stockage requise</string>
-    <string name="permission_desc">Pour lire vos vidéos et votre musique locales, Smart Player a besoin d’accéder à vos fichiers multimédias.</string>
+    <string name="permission_desc">Pour lire vos vidéos et votre musique locales, SmartAV Media Player a besoin d’accéder à vos fichiers multimédias.</string>
     <string name="grant_permission">Accorder l’autorisation</string>
 
     <!-- General / Common -->
@@ -95,7 +95,7 @@
     <string name="clear_history">Effacer l’historique de lecture</string>
     <string name="clear_history_desc">Effacer la liste des médias récemment lus</string>
     <string name="section_about">À PROPOS DE SMART PLAYER PRO</string>
-    <string name="app_version_info">Smart Player Pro • Version 2.0.0</string>
+    <string name="app_version_info">SmartAV Media Player Pro • Version 2.0.0</string>
     <string name="choose_language">Choisir la langue</string>
     <string name="seconds">Secondes</string>
     <string name="system_default">Par défaut du système</string>

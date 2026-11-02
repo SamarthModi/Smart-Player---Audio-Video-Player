@@ -1,0 +1,527 @@
+package com.youngestgen.smartplayer
+
+import android.Manifest
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.media.MediaScannerConnection
+import android.net.Uri
+import android.os.Build
+import android.os.Bundle
+import android.os.Environment
+import android.provider.Settings
+import java.io.File
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.MusicNote
+import androidx.compose.material.icons.filled.QueueMusic
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Videocam
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.Saver
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import com.youngestgen.smartplayer.data.MediaStoreRepository
+import com.youngestgen.smartplayer.data.PreferencesRepository
+import com.youngestgen.smartplayer.model.AudioItem
+import com.youngestgen.smartplayer.model.MediaFolder
+import com.youngestgen.smartplayer.model.VideoItem
+import com.youngestgen.smartplayer.player.SmartAudioPlayerManager
+import com.youngestgen.smartplayer.service.SmartAudioService
+import com.youngestgen.smartplayer.ui.components.MiniPlayer
+import com.youngestgen.smartplayer.ui.screens.EqualizerScreen
+import com.youngestgen.smartplayer.ui.screens.MusicScreen
+import com.youngestgen.smartplayer.ui.screens.NowPlayingScreen
+import com.youngestgen.smartplayer.ui.screens.PlaylistsScreen
+import com.youngestgen.smartplayer.ui.screens.SettingsScreen
+import com.youngestgen.smartplayer.ui.screens.VideoScreen
+import com.youngestgen.smartplayer.ui.theme.NeonCyan
+import com.youngestgen.smartplayer.ui.theme.PlayerBlack
+import com.youngestgen.smartplayer.ui.theme.PlayerSurface
+import com.youngestgen.smartplayer.ui.theme.SmartPlayerTheme
+import com.youngestgen.smartplayer.util.LocaleHelper
+import kotlinx.coroutines.launch
+import android.content.Context
+
+class MainActivity : ComponentActivity() {
+
+    companion object {
+        var currentTab: NavigationTab = NavigationTab.VIDEOS
+    }
+
+    override fun attachBaseContext(newBase: Context) {
+        val prefs = PreferencesRepository.getInstance(newBase)
+        val localizedContext = LocaleHelper.updateContextLocale(newBase, prefs.appLanguage)
+        super.attachBaseContext(localizedContext)
+    }
+
+    private lateinit var mediaStoreRepository: MediaStoreRepository
+    private lateinit var preferencesRepository: PreferencesRepository
+    private lateinit var playerManager: SmartAudioPlayerManager
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        mediaStoreRepository = MediaStoreRepository.getInstance(this)
+        preferencesRepository = PreferencesRepository.getInstance(this)
+        playerManager = SmartAudioPlayerManager.getInstance(this)
+
+        // Apply saved language
+        LocaleHelper.applyLanguage(this, preferencesRepository.appLanguage)
+
+        // Start Foreground Playback Service
+        val serviceIntent = Intent(this, SmartAudioService::class.java)
+        try {
+            startService(serviceIntent)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        setContent {
+            val themeStyle by preferencesRepository.themeStyleFlow.collectAsState()
+            SmartPlayerTheme(themeStyle = themeStyle) {
+                MainAppScreen(
+                    mediaStoreRepository = mediaStoreRepository,
+                    preferencesRepository = preferencesRepository,
+                    playerManager = playerManager
+                )
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val currentSong = playerManager.playbackState.value.currentSong
+        if (currentSong != null && currentSong.artist == "SmartAV Player (Video Audio)" && playerManager.playbackState.value.isPlaying) {
+            com.youngestgen.smartplayer.ui.player.VideoPlayerActivity.start(
+                this,
+                android.net.Uri.parse(currentSong.uriString),
+                currentSong.title,
+                currentSong.path,
+                currentSong.id
+            )
+        }
+    }
+}
+
+enum class NavigationTab(val titleRes: Int, val icon: ImageVector) {
+    VIDEOS(R.string.tab_videos, Icons.Default.Videocam),
+    MUSIC(R.string.tab_music, Icons.Default.MusicNote),
+    PLAYLISTS(R.string.tab_playlists, Icons.Default.QueueMusic),
+    SETTINGS(R.string.tab_settings, Icons.Default.Settings)
+}
+
+@Composable
+fun MainAppScreen(
+    mediaStoreRepository: MediaStoreRepository,
+    preferencesRepository: PreferencesRepository,
+    playerManager: SmartAudioPlayerManager
+) {
+    val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
+
+    var selectedTab by rememberSaveable(
+        stateSaver = Saver(
+            save = { it.name },
+            restore = {
+                try {
+                    NavigationTab.valueOf(it)
+                } catch (_: Exception) {
+                    MainActivity.currentTab
+                }
+            }
+        )
+    ) { mutableStateOf(MainActivity.currentTab) }
+    var isNowPlayingOpen by remember { mutableStateOf(false) }
+    var isEqualizerOpen by remember { mutableStateOf(false) }
+
+    // Media Data State
+    var videos by remember { mutableStateOf<List<VideoItem>>(emptyList()) }
+    var videoFolders by remember { mutableStateOf<List<MediaFolder>>(emptyList()) }
+    var audios by remember { mutableStateOf<List<AudioItem>>(emptyList()) }
+    var audioFolders by remember { mutableStateOf<List<MediaFolder>>(emptyList()) }
+
+    fun checkMediaPermissions(ctx: android.content.Context): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            val hasVideo = ContextCompat.checkSelfPermission(ctx, Manifest.permission.READ_MEDIA_VIDEO) == PackageManager.PERMISSION_GRANTED
+            val hasAudio = ContextCompat.checkSelfPermission(ctx, Manifest.permission.READ_MEDIA_AUDIO) == PackageManager.PERMISSION_GRANTED
+            val hasPartial = ContextCompat.checkSelfPermission(ctx, Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED) == PackageManager.PERMISSION_GRANTED
+            hasVideo || hasAudio || hasPartial
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            val hasVideo = ContextCompat.checkSelfPermission(ctx, Manifest.permission.READ_MEDIA_VIDEO) == PackageManager.PERMISSION_GRANTED
+            val hasAudio = ContextCompat.checkSelfPermission(ctx, Manifest.permission.READ_MEDIA_AUDIO) == PackageManager.PERMISSION_GRANTED
+            hasVideo || hasAudio
+        } else {
+            ContextCompat.checkSelfPermission(ctx, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+        }
+    }
+
+    // Initialize with real permission status immediately so PermissionRequestScreen is never flashed
+    var hasPermission by remember { mutableStateOf(checkMediaPermissions(context)) }
+
+    val requiredPermissions = remember {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            arrayOf(
+                Manifest.permission.READ_MEDIA_VIDEO,
+                Manifest.permission.READ_MEDIA_AUDIO,
+                Manifest.permission.POST_NOTIFICATIONS
+            )
+        } else {
+            arrayOf(
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+        }
+    }
+
+    fun reloadMedia() {
+        coroutineScope.launch {
+            try {
+                val extDir = Environment.getExternalStorageDirectory()
+                if (extDir != null && extDir.exists()) {
+                    val pathsToScan = mutableListOf<String>()
+                    listOf("Download", "Movies", "Music", "DCIM").forEach { folderName ->
+                        val dir = File(extDir, folderName)
+                        if (dir.exists()) {
+                            dir.listFiles()?.take(50)?.forEach { file ->
+                                if (file.isFile) pathsToScan.add(file.absolutePath)
+                            }
+                        }
+                    }
+                    if (pathsToScan.isNotEmpty()) {
+                        MediaScannerConnection.scanFile(context, pathsToScan.toTypedArray(), null, null)
+                    }
+                }
+            } catch (_: Exception) {}
+
+            val vids = mediaStoreRepository.getAllVideos()
+            videos = vids
+            videoFolders = mediaStoreRepository.groupVideosByFolders(vids)
+
+            val auds = mediaStoreRepository.getAllAudios()
+            audios = auds
+            audioFolders = mediaStoreRepository.groupAudiosByFolders(auds)
+        }
+    }
+
+    val permissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestMultiplePermissions()
+    ) { _ ->
+        val granted = checkMediaPermissions(context)
+        hasPermission = granted
+        if (granted) {
+            reloadMedia()
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        if (checkMediaPermissions(context)) {
+            hasPermission = true
+            reloadMedia()
+        } else {
+            hasPermission = false
+            permissionLauncher.launch(requiredPermissions)
+        }
+    }
+
+    // Automatically detect permission grant when returning from App Settings
+    val lifecycleOwner = LocalLifecycleOwner.current
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_RESUME) {
+                val granted = checkMediaPermissions(context)
+                if (granted) {
+                    if (!hasPermission) {
+                        hasPermission = true
+                    }
+                    reloadMedia()
+                }
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
+        }
+    }
+
+    val playbackState by playerManager.playbackState.collectAsState()
+
+    Scaffold(
+        containerColor = PlayerBlack,
+        bottomBar = {
+            Column {
+                // Floating MiniPlayer (appears when audio or background video is playing)
+                MiniPlayer(
+                    currentSong = playbackState.currentSong,
+                    isPlaying = playbackState.isPlaying,
+                    currentPosition = playbackState.currentPosition,
+                    duration = playbackState.duration,
+                    onPlayPauseClick = { playerManager.playPause() },
+                    onSkipNextClick = { playerManager.skipToNext() },
+                    onCloseClick = {
+                        playerManager.stopPlayback()
+                        val stopIntent = Intent(context, SmartAudioService::class.java).apply {
+                            action = SmartAudioService.ACTION_STOP_SERVICE
+                        }
+                        try {
+                            context.startService(stopIntent)
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                    },
+                    onPlayerClick = { isNowPlayingOpen = true }
+                )
+
+                // Bottom Navigation
+                NavigationBar(
+                    containerColor = PlayerSurface,
+                    contentColor = NeonCyan
+                ) {
+                    NavigationTab.entries.forEach { tab ->
+                        val isSelected = selectedTab == tab
+                        NavigationBarItem(
+                            selected = isSelected,
+                            onClick = {
+                                selectedTab = tab
+                                MainActivity.currentTab = tab
+                            },
+                            icon = {
+                                Icon(
+                                    imageVector = tab.icon,
+                                    contentDescription = stringResource(tab.titleRes)
+                                )
+                            },
+                            label = {
+                                Text(
+                                    text = stringResource(tab.titleRes),
+                                    fontSize = 11.sp,
+                                    fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal
+                                )
+                            },
+                            colors = NavigationBarItemDefaults.colors(
+                                selectedIconColor = NeonCyan,
+                                selectedTextColor = NeonCyan,
+                                indicatorColor = NeonCyan.copy(alpha = 0.15f),
+                                unselectedIconColor = Color.Gray,
+                                unselectedTextColor = Color.Gray
+                            )
+                        )
+                    }
+                }
+            }
+        }
+    ) { innerPadding ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+        ) {
+            if (!hasPermission) {
+                // Permission Explanation Screen
+                PermissionRequestScreen(
+                    onRequestPermission = { permissionLauncher.launch(requiredPermissions) }
+                )
+            } else {
+                when (selectedTab) {
+                    NavigationTab.VIDEOS -> {
+                        VideoScreen(
+                            videos = videos,
+                            folders = videoFolders,
+                            preferencesRepository = preferencesRepository
+                        )
+                    }
+                    NavigationTab.MUSIC -> {
+                        MusicScreen(
+                            audios = audios,
+                            audioFolders = audioFolders,
+                            playerManager = playerManager,
+                            preferencesRepository = preferencesRepository
+                        )
+                    }
+                    NavigationTab.PLAYLISTS -> {
+                        PlaylistsScreen(
+                            allAudios = audios,
+                            allVideos = videos,
+                            playerManager = playerManager,
+                            preferencesRepository = preferencesRepository
+                        )
+                    }
+                    NavigationTab.SETTINGS -> {
+                        SettingsScreen(
+                            preferencesRepository = preferencesRepository,
+                            onOpenEqualizer = { isEqualizerOpen = true },
+                            onRefreshMedia = { reloadMedia() }
+                        )
+                    }
+                }
+            }
+
+            // Fullscreen Now Playing Modal Sheet
+            AnimatedVisibility(
+                visible = isNowPlayingOpen && playbackState.currentSong != null,
+                enter = slideInVertically { it },
+                exit = slideOutVertically { it }
+            ) {
+                NowPlayingScreen(
+                    playerManager = playerManager,
+                    preferencesRepository = preferencesRepository,
+                    onCollapse = { isNowPlayingOpen = false },
+                    onOpenEqualizer = {
+                        isNowPlayingOpen = false
+                        isEqualizerOpen = true
+                    }
+                )
+            }
+
+            // Equalizer Screen Modal
+            AnimatedVisibility(
+                visible = isEqualizerOpen,
+                enter = slideInVertically { it },
+                exit = slideOutVertically { it }
+            ) {
+                EqualizerScreen(
+                    equalizerController = playerManager.equalizerController,
+                    onBackPress = { isEqualizerOpen = false }
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun PermissionRequestScreen(
+    onRequestPermission: () -> Unit
+) {
+    val context = LocalContext.current
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(28.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Box(
+            modifier = Modifier
+                .size(80.dp)
+                .clip(RoundedCornerShape(20.dp))
+                .background(NeonCyan.copy(alpha = 0.15f)),
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(
+                imageVector = Icons.Default.Lock,
+                contentDescription = null,
+                tint = NeonCyan,
+                modifier = Modifier.size(40.dp)
+            )
+        }
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        Text(
+            text = stringResource(R.string.permission_required),
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color.White
+        )
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Text(
+            text = stringResource(R.string.permission_desc),
+            fontSize = 14.sp,
+            color = Color.Gray,
+            textAlign = TextAlign.Center,
+            lineHeight = 20.sp
+        )
+
+        Spacer(modifier = Modifier.height(28.dp))
+
+        Button(
+            onClick = onRequestPermission,
+            colors = ButtonDefaults.buttonColors(containerColor = NeonCyan),
+            shape = RoundedCornerShape(12.dp),
+            modifier = Modifier
+                .fillMaxWidth(0.8f)
+                .height(48.dp)
+        ) {
+            Text(
+                text = stringResource(R.string.grant_permission),
+                color = PlayerBlack,
+                fontWeight = FontWeight.Bold,
+                fontSize = 15.sp
+            )
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Button(
+            onClick = {
+                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                    data = Uri.fromParts("package", context.packageName, null)
+                }
+                context.startActivity(intent)
+            },
+            colors = ButtonDefaults.buttonColors(containerColor = PlayerSurface),
+            shape = RoundedCornerShape(12.dp),
+            modifier = Modifier
+                .fillMaxWidth(0.8f)
+                .height(48.dp)
+        ) {
+            Text(
+                text = "Open App Settings",
+                color = Color.White,
+                fontWeight = FontWeight.SemiBold,
+                fontSize = 14.sp
+            )
+        }
+    }
+}

@@ -1,6 +1,6 @@
 <resources>
     <!-- App Details -->
-    <string name="app_name">Smart Player</string>
+    <string name="app_name">SmartAV Media Player</string>
     <string name="app_description">مشغل فيديو وموسيقى ذكي واحترافي</string>
     <string name="channel_name">تشغيل الوسائط الذكي</string>
     <string name="channel_desc">عناصر التحكم في تشغيل الموسيقى والفيديو في الخلفية</string>
@@ -13,7 +13,7 @@
 
     <!-- Permissions -->
     <string name="permission_required">إذن التخزين مطلوب</string>
-    <string name="permission_desc">لتشغيل مقاطع الفيديو والموسيقى المحلية، يحتاج Smart Player إلى إذن الوصول إلى ملفاتك.</string>
+    <string name="permission_desc">لتشغيل مقاطع الفيديو والموسيقى المحلية، يحتاج SmartAV Media Player إلى إذن الوصول إلى ملفاتك.</string>
     <string name="grant_permission">منح الإذن</string>
 
     <!-- General / Common -->
@@ -95,7 +95,7 @@
     <string name="clear_history">مسح سجل التشغيل</string>
     <string name="clear_history_desc">مسح قائمة مقاطع الفيديو والمقاطع الصوتية المشغلة مؤخراً</string>
     <string name="section_about">حول SMART PLAYER PRO</string>
-    <string name="app_version_info">Smart Player Pro • الإصدار 2.0.0</string>
+    <string name="app_version_info">SmartAV Media Player Pro • الإصدار 2.0.0</string>
     <string name="choose_language">اختر اللغة</string>
     <string name="seconds">ثوانٍ</string>
     <string name="system_default">افتراضي النظام</string>

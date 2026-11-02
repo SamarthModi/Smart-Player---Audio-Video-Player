@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.smartplayer.app"
+    package="com.youngestgen.smartplayer"
     android:versionCode="1"
     android:versionName="1.0.0" >
 
@@ -28,13 +28,13 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <permission
-        android:name="com.smartplayer.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+        android:name="com.youngestgen.smartplayer.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
         android:protectionLevel="signature" />
 
-    <uses-permission android:name="com.smartplayer.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+    <uses-permission android:name="com.youngestgen.smartplayer.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
 
     <application
-        android:name="com.smartplayer.app.SmartPlayerApplication"
+        android:name="com.youngestgen.smartplayer.SmartPlayerApplication"
         android:allowBackup="true"
         android:appComponentFactory="androidx.core.app.CoreComponentFactory"
         android:debuggable="true"
@@ -47,7 +47,7 @@
 
         <!-- Main Media Hub Activity -->
         <activity
-            android:name="com.smartplayer.app.MainActivity"
+            android:name="com.youngestgen.smartplayer.MainActivity"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
             android:exported="true"
             android:windowSoftInputMode="adjustResize" >
@@ -60,7 +60,7 @@
 
         <!-- Pro Fullscreen Video Player Activity (Supports PiP, Gesture Controls) -->
         <activity
-            android:name="com.smartplayer.app.ui.player.VideoPlayerActivity"
+            android:name="com.youngestgen.smartplayer.ui.player.VideoPlayerActivity"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden"
             android:exported="true"
             android:screenOrientation="sensorLandscape"
@@ -78,7 +78,7 @@
 
         <!-- AndroidX Media3 MediaSession Foreground Service -->
         <service
-            android:name="com.smartplayer.app.service.SmartAudioService"
+            android:name="com.youngestgen.smartplayer.service.SmartAudioService"
             android:exported="true"
             android:foregroundServiceType="mediaPlayback" >
             <intent-filter>
@@ -117,7 +117,7 @@
 
         <provider
             android:name="androidx.startup.InitializationProvider"
-            android:authorities="com.smartplayer.app.androidx-startup"
+            android:authorities="com.youngestgen.smartplayer.androidx-startup"
             android:exported="false" >
             <meta-data
                 android:name="androidx.emoji2.text.EmojiCompatInitializer"

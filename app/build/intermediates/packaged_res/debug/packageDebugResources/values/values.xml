@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="action_next">Next</string>
+    <string name="action_pause">Pause</string>
+    <string name="action_play">Play</string>
+    <string name="action_prev">Previous</string>
+    <string name="action_stop">Stop</string>
     <string name="add_to_favorites">Add to Favorites</string>
     <string name="add_to_playlist">Add to Playlist</string>
     <string name="add_to_queue">Add to Queue</string>
@@ -7,8 +12,8 @@
     <string name="all_videos">All Videos</string>
     <string name="app_description">Professional Smart Video &amp; Music Player</string>
     <string name="app_language">App Language</string>
-    <string name="app_name">Smart Player</string>
-    <string name="app_version_info">Smart Player Pro • Version 2.0.0</string>
+    <string name="app_name">SmartAV Media Player</string>
+    <string name="app_version_info">SmartAV Media Player Pro • Version 2.0.0</string>
     <string name="artists">Artists</string>
     <string name="audio_boost">Audio Boost (200%)</string>
     <string name="audio_boost_desc">Boost video volume beyond normal 100% maximum</string>
@@ -52,7 +57,7 @@
     <string name="open_equalizer">Open Equalizer &amp; Sound FX</string>
     <string name="pause_on_unplug">Pause on Headphone Disconnect</string>
     <string name="pause_on_unplug_desc">Auto-pause playback when headphones or Bluetooth disconnect</string>
-    <string name="permission_desc">To play your local videos and music, Smart Player needs access to your media files.</string>
+    <string name="permission_desc">To play your local videos and music, SmartAV Media Player needs access to your media files.</string>
     <string name="permission_required">Storage Permission Required</string>
     <string name="pin_incorrect">Incorrect PIN! Try again.</string>
     <string name="pin_saved">Private Vault PIN Saved</string>

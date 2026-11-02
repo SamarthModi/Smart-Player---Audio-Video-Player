@@ -1,6 +1,6 @@
 <resources>
     <!-- App Details -->
-    <string name="app_name">Smart Player</string>
+    <string name="app_name">SmartAV Media Player</string>
     <string name="app_description">전문가급 스마트 동영상 및 음악 플레이어</string>
     <string name="channel_name">스마트 미디어 재생</string>
     <string name="channel_desc">백그라운드 음악 및 동영상 재생 제어</string>
@@ -95,7 +95,7 @@
     <string name="clear_history">재생 기록 지우기</string>
     <string name="clear_history_desc">최근 재생한 동영상 및 음악 목록 삭제</string>
     <string name="section_about">SMART PLAYER PRO 정보</string>
-    <string name="app_version_info">Smart Player Pro • 버전 2.0.0</string>
+    <string name="app_version_info">SmartAV Media Player Pro • 버전 2.0.0</string>
     <string name="choose_language">언어 선택</string>
     <string name="seconds">초</string>
     <string name="system_default">시스템 기본값</string>

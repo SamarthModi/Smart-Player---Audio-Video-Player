@@ -1,6 +1,6 @@
 <resources>
     <!-- App Details -->
-    <string name="app_name">Smart Player</string>
+    <string name="app_name">SmartAV Media Player</string>
     <string name="app_description">পেশাদার স্মার্ট ভিডিও এবং মিউজিক প্লেয়ার</string>
     <string name="channel_name">স্মার্ট মিডিয়া প্লেব্যাক</string>
     <string name="channel_desc">ব্যাকগ্রাউন্ড মিউজিক এবং ভিডিও কন্ট্রোল</string>
@@ -95,7 +95,7 @@
     <string name="clear_history">ইতিহাস পরিষ্কার করুন</string>
     <string name="clear_history_desc">সম্প্রতি বাজানো ভিডিও এবং অডিও তালিকা মুছুন</string>
     <string name="section_about">SMART PLAYER PRO সম্পর্কে</string>
-    <string name="app_version_info">Smart Player Pro • সংস্করণ ২.০.০</string>
+    <string name="app_version_info">SmartAV Media Player Pro • সংস্করণ ২.০.০</string>
     <string name="choose_language">ভাষা নির্বাচন করুন</string>
     <string name="seconds">সেকেন্ড</string>
     <string name="system_default">সিস্টেম ডিফল্ট</string>

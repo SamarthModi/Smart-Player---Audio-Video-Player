@@ -1,6 +1,6 @@
 <resources>
     <!-- App Details -->
-    <string name="app_name">Smart Player</string>
+    <string name="app_name">SmartAV Media Player</string>
     <string name="app_description">Профессиональный умный видео и аудиоплеер</string>
     <string name="channel_name">Воспроизведение медиа</string>
     <string name="channel_desc">Элементы управления воспроизведением в фоновом режиме</string>
@@ -13,7 +13,7 @@
 
     <!-- Permissions -->
     <string name="permission_required">Требуется разрешение на доступ к хранилищу</string>
-    <string name="permission_desc">Для воспроизведения локальных видео и музыки Smart Player требуется доступ к файлам мультимедиа.</string>
+    <string name="permission_desc">Для воспроизведения локальных видео и музыки SmartAV Media Player требуется доступ к файлам мультимедиа.</string>
     <string name="grant_permission">Предоставить разрешение</string>
 
     <!-- General / Common -->
@@ -95,7 +95,7 @@
     <string name="clear_history">Очистить историю воспроизведения</string>
     <string name="clear_history_desc">Очистить список недавно воспроизведенных видео и аудио</string>
     <string name="section_about">О ПРОГРАММЕ SMART PLAYER PRO</string>
-    <string name="app_version_info">Smart Player Pro • Версия 2.0.0</string>
+    <string name="app_version_info">SmartAV Media Player Pro • Версия 2.0.0</string>
     <string name="choose_language">Выбрать язык</string>
     <string name="seconds">Секунд</string>
     <string name="system_default">По умолчанию системы</string>
