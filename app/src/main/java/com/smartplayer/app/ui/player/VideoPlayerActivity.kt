@@ -455,7 +455,9 @@ class VideoPlayerActivity : ComponentActivity() {
                 val audioMgr = com.smartplayer.app.player.SmartAudioPlayerManager.getInstance(applicationContext)
                 audioMgr.playSingleMedia(Uri.parse(videoUriString), videoTitle, videoPath, currentPos)
 
-                val serviceIntent = Intent(applicationContext, com.smartplayer.app.service.SmartAudioService::class.java)
+                val serviceIntent = Intent(applicationContext, com.smartplayer.app.service.SmartAudioService::class.java).apply {
+                    action = com.smartplayer.app.service.SmartAudioService.ACTION_PLAY_IN_BACKGROUND
+                }
                 try {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                         applicationContext.startForegroundService(serviceIntent)
@@ -1192,6 +1194,18 @@ fun VideoPlayerScreen(
                             videoPath,
                             currentPos
                         )
+                        val serviceIntent = Intent(context, com.smartplayer.app.service.SmartAudioService::class.java).apply {
+                            action = com.smartplayer.app.service.SmartAudioService.ACTION_PLAY_IN_BACKGROUND
+                        }
+                        try {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                context.startForegroundService(serviceIntent)
+                            } else {
+                                context.startService(serviceIntent)
+                            }
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
                         Toast.makeText(context, "Playing audio in background service", Toast.LENGTH_SHORT).show()
                         (context as? Activity)?.finish()
                     }) {

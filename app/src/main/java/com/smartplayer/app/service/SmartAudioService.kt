@@ -1,12 +1,15 @@
 package com.smartplayer.app.service
 
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ServiceInfo
 import android.os.Build
 import androidx.annotation.OptIn
+import androidx.core.app.NotificationCompat
 import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.session.MediaSession
@@ -66,8 +69,32 @@ class SmartAudioService : MediaSessionService() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        val playerManager = SmartAudioPlayerManager.getInstance(this)
+        val isBackgroundAction = intent?.action == ACTION_PLAY_IN_BACKGROUND || intent?.action == ACTION_START_FOREGROUND
+        val isPlaying = playerManager.exoPlayer.isPlaying || playerManager.exoPlayer.playWhenReady
+
+        if (isBackgroundAction || isPlaying) {
+            val song = playerManager.playbackState.value.currentSong
+            val title = song?.title ?: getString(R.string.app_name)
+            val artist = song?.artist ?: getString(R.string.bg_video_playback)
+            val notification = createForegroundNotification(title, artist)
+
+            try {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    startForeground(
+                        NOTIFICATION_ID,
+                        notification,
+                        ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK
+                    )
+                } else {
+                    startForeground(NOTIFICATION_ID, notification)
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
         super.onStartCommand(intent, flags, startId)
-        // Ensure the service restarts if terminated by system
         return START_STICKY
     }
 
@@ -77,8 +104,40 @@ class SmartAudioService : MediaSessionService() {
         // BUT if playback is actively running (playWhenReady == true), DO NOT stopSelf()!
         // Sound continues playing uninterrupted in the foreground until user pauses from notification!
         if (player == null || !player.playWhenReady || player.playbackState == Player.STATE_ENDED || player.playbackState == Player.STATE_IDLE) {
+            try {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    stopForeground(STOP_FOREGROUND_REMOVE)
+                } else {
+                    @Suppress("DEPRECATION")
+                    stopForeground(true)
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
             stopSelf()
         }
+    }
+
+    private fun createForegroundNotification(title: String, artist: String): Notification {
+        createNotificationChannel()
+        val sessionActivityIntent = Intent(this, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
+        }
+        val pendingIntent = PendingIntent.getActivity(
+            this,
+            0,
+            sessionActivityIntent,
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        )
+        return NotificationCompat.Builder(this, CHANNEL_ID)
+            .setContentTitle(title)
+            .setContentText(artist.ifBlank { getString(R.string.app_name) })
+            .setSmallIcon(R.mipmap.ic_launcher)
+            .setContentIntent(pendingIntent)
+            .setOngoing(true)
+            .setPriority(NotificationCompat.PRIORITY_LOW)
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+            .build()
     }
 
     private fun createNotificationChannel() {
@@ -100,6 +159,16 @@ class SmartAudioService : MediaSessionService() {
         try {
             unregisterReceiver(noisyReceiver)
         } catch (_: Exception) {}
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                stopForeground(STOP_FOREGROUND_REMOVE)
+            } else {
+                @Suppress("DEPRECATION")
+                stopForeground(true)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
         mediaSession?.run {
             release()
             mediaSession = null
@@ -110,5 +179,7 @@ class SmartAudioService : MediaSessionService() {
     companion object {
         const val CHANNEL_ID = "smart_player_playback_channel"
         const val NOTIFICATION_ID = 1001
+        const val ACTION_PLAY_IN_BACKGROUND = "com.smartplayer.app.action.PLAY_IN_BACKGROUND"
+        const val ACTION_START_FOREGROUND = "com.smartplayer.app.action.START_FOREGROUND"
     }
 }

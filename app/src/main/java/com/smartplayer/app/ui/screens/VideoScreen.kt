@@ -2,6 +2,7 @@ package com.smartplayer.app.ui.screens
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
@@ -454,6 +455,18 @@ fun VideoScreen(
                             onPlayAsAudio = {
                                 val mgr = SmartAudioPlayerManager.getInstance(context)
                                 mgr.playSingleMedia(video.uri, video.title, video.path, lastPos)
+                                val serviceIntent = Intent(context, com.smartplayer.app.service.SmartAudioService::class.java).apply {
+                                    action = com.smartplayer.app.service.SmartAudioService.ACTION_PLAY_IN_BACKGROUND
+                                }
+                                try {
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                        context.startForegroundService(serviceIntent)
+                                    } else {
+                                        context.startService(serviceIntent)
+                                    }
+                                } catch (e: Exception) {
+                                    e.printStackTrace()
+                                }
                                 Toast.makeText(context, "Playing video audio in background", Toast.LENGTH_SHORT).show()
                             },
                             onDelete = { videoToDelete = video },
@@ -491,6 +504,18 @@ fun VideoScreen(
                             onPlayAsAudio = {
                                 val mgr = SmartAudioPlayerManager.getInstance(context)
                                 mgr.playSingleMedia(video.uri, video.title, video.path, lastPos)
+                                val serviceIntent = Intent(context, com.smartplayer.app.service.SmartAudioService::class.java).apply {
+                                    action = com.smartplayer.app.service.SmartAudioService.ACTION_PLAY_IN_BACKGROUND
+                                }
+                                try {
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                        context.startForegroundService(serviceIntent)
+                                    } else {
+                                        context.startService(serviceIntent)
+                                    }
+                                } catch (e: Exception) {
+                                    e.printStackTrace()
+                                }
                                 Toast.makeText(context, "Playing video audio in background", Toast.LENGTH_SHORT).show()
                             },
                             onDelete = { videoToDelete = video },
