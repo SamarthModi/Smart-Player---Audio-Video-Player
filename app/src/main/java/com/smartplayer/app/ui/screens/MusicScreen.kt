@@ -80,11 +80,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
+import com.smartplayer.app.R
 import com.smartplayer.app.data.PreferencesRepository
 import com.smartplayer.app.model.AudioItem
 import com.smartplayer.app.model.MediaFolder
@@ -200,7 +202,7 @@ fun MusicScreen(
                 OutlinedTextField(
                     value = searchQuery,
                     onValueChange = { searchQuery = it },
-                    placeholder = { Text("Search songs, artists...", color = Color.Gray) },
+                    placeholder = { Text(stringResource(R.string.search_hint_music), color = Color.Gray) },
                     modifier = Modifier.weight(1f),
                     singleLine = true,
                     colors = TextFieldDefaults.colors(
@@ -215,18 +217,18 @@ fun MusicScreen(
                             searchQuery = ""
                             isSearchActive = false
                         }) {
-                            Icon(Icons.Default.Close, contentDescription = "Close", tint = Color.White)
+                            Icon(Icons.Default.Close, contentDescription = stringResource(R.string.close), tint = Color.White)
                         }
                     }
                 )
             } else {
                 Text(
                     text = when {
-                        isVaultOpen -> "🔒 Private Music Vault"
+                        isVaultOpen -> "🔒 " + stringResource(R.string.private_vault)
                         selectedAlbum != null -> selectedAlbum!!
                         selectedArtist != null -> selectedArtist!!
                         selectedFolder != null -> selectedFolder!!
-                        else -> "Music"
+                        else -> stringResource(R.string.tab_music)
                     },
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Bold,
@@ -245,7 +247,7 @@ fun MusicScreen(
                 }) {
                     Icon(
                         imageVector = if (isVaultOpen) Icons.Default.LockOpen else Icons.Default.Lock,
-                        contentDescription = "Private Vault",
+                        contentDescription = stringResource(R.string.private_vault),
                         tint = if (isVaultOpen) ElectricViolet else Color.White
                     )
                 }
@@ -273,13 +275,13 @@ fun MusicScreen(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "Secret Music: ${displayedTracks.size} private tracks",
+                    text = "${stringResource(R.string.secret_vault_active)}: ${displayedTracks.size}",
                     color = ElectricViolet,
                     fontWeight = FontWeight.Bold,
                     fontSize = 13.sp
                 )
                 TextButton(onClick = { isVaultOpen = false }) {
-                    Text("Exit Vault", color = Color.White, fontSize = 12.sp, fontWeight = FontWeight.SemiBold)
+                    Text(stringResource(R.string.exit_vault), color = Color.White, fontSize = 12.sp, fontWeight = FontWeight.SemiBold)
                 }
             }
         }
@@ -291,7 +293,12 @@ fun MusicScreen(
                 containerColor = MaterialTheme.colorScheme.background,
                 contentColor = NeonCyan
             ) {
-                val tabs = listOf("Tracks (${activeAudiosPool.size})", "Albums", "Artists", "Folders")
+                val tabs = listOf(
+                    "${stringResource(R.string.tracks)} (${activeAudiosPool.size})",
+                    stringResource(R.string.albums),
+                    stringResource(R.string.artists),
+                    stringResource(R.string.folders)
+                )
                 tabs.forEachIndexed { index, title ->
                     Tab(
                         selected = selectedTab == index,
@@ -320,10 +327,10 @@ fun MusicScreen(
                     selectedArtist = null
                     selectedFolder = null
                 }) {
-                    Text("← Back", color = NeonCyan, fontWeight = FontWeight.SemiBold)
+                    Text("← " + stringResource(R.string.close), color = NeonCyan, fontWeight = FontWeight.SemiBold)
                 }
                 Spacer(modifier = Modifier.weight(1f))
-                Text("${displayedTracks.size} Songs", color = Color.Gray, fontSize = 13.sp)
+                Text("${displayedTracks.size} ${stringResource(R.string.tracks)}", color = Color.Gray, fontSize = 13.sp)
             }
         }
 
@@ -346,7 +353,7 @@ fun MusicScreen(
                             ) {
                                 Icon(Icons.Default.QueueMusic, contentDescription = null, tint = NeonCyan, modifier = Modifier.size(18.dp))
                                 Spacer(modifier = Modifier.width(6.dp))
-                                Text("Recently Played", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                                Text(stringResource(R.string.recently_played), color = Color.White, fontWeight = FontWeight.Bold, fontSize = 14.sp)
                             }
                             Spacer(modifier = Modifier.height(8.dp))
                             LazyRow(
@@ -419,7 +426,7 @@ fun MusicScreen(
                             shape = RoundedCornerShape(20.dp),
                             modifier = Modifier.height(38.dp)
                         ) {
-                            Text("Play All (${displayedTracks.size})", color = Color.Black, fontWeight = FontWeight.Bold, fontSize = 13.sp)
+                            Text("${stringResource(R.string.play_all)} (${displayedTracks.size})", color = Color.Black, fontWeight = FontWeight.Bold, fontSize = 13.sp)
                         }
 
                         Button(
@@ -433,7 +440,7 @@ fun MusicScreen(
                         ) {
                             Icon(Icons.Default.Shuffle, contentDescription = null, tint = NeonCyan, modifier = Modifier.size(16.dp))
                             Spacer(modifier = Modifier.width(6.dp))
-                            Text("Shuffle", color = Color.White, fontSize = 13.sp)
+                            Text(stringResource(R.string.shuffle), color = Color.White, fontSize = 13.sp)
                         }
                     }
                 }
@@ -447,7 +454,7 @@ fun MusicScreen(
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
-                                text = if (isVaultOpen) "No hidden songs in Private Vault.\nMove songs here using the 3-dot menu." else "No songs found",
+                                text = if (isVaultOpen) stringResource(R.string.no_vault_songs) else stringResource(R.string.no_songs_found),
                                 color = Color.Gray,
                                 fontSize = 15.sp
                             )
@@ -637,8 +644,8 @@ fun MusicScreen(
     songToDelete?.let { song ->
         AlertDialog(
             onDismissRequest = { songToDelete = null },
-            title = { Text("Delete Song", fontWeight = FontWeight.Bold) },
-            text = { Text("Are you sure you want to delete '${song.title}' from your device? This cannot be undone.") },
+            title = { Text(stringResource(R.string.delete_track), fontWeight = FontWeight.Bold) },
+            text = { Text(stringResource(R.string.delete_confirm)) },
             confirmButton = {
                 Button(
                     onClick = {
@@ -646,7 +653,7 @@ fun MusicScreen(
                             val f = File(song.path)
                             if (f.exists()) f.delete()
                             context.contentResolver.delete(song.uri, null, null)
-                            Toast.makeText(context, "Song deleted", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, context.getString(R.string.file_deleted), Toast.LENGTH_SHORT).show()
                         } catch (e: Exception) {
                             Toast.makeText(context, "Could not delete song", Toast.LENGTH_SHORT).show()
                         }
@@ -654,12 +661,12 @@ fun MusicScreen(
                     },
                     colors = ButtonDefaults.buttonColors(containerColor = Color.Red)
                 ) {
-                    Text("Delete", color = Color.White)
+                    Text(stringResource(R.string.delete), color = Color.White)
                 }
             },
             dismissButton = {
                 TextButton(onClick = { songToDelete = null }) {
-                    Text("Cancel", color = Color.Gray)
+                    Text(stringResource(R.string.cancel), color = Color.Gray)
                 }
             }
         )
@@ -669,7 +676,7 @@ fun MusicScreen(
     showPlaylistChooserForSong?.let { song ->
         AlertDialog(
             onDismissRequest = { showPlaylistChooserForSong = null },
-            title = { Text("Add to Playlist", fontWeight = FontWeight.Bold) },
+            title = { Text(stringResource(R.string.add_to_playlist), fontWeight = FontWeight.Bold) },
             text = {
                 if (playlists.isEmpty()) {
                     Text("No playlists created yet. Create one in the Playlists tab!")
@@ -696,7 +703,7 @@ fun MusicScreen(
             },
             confirmButton = {
                 TextButton(onClick = { showPlaylistChooserForSong = null }) {
-                    Text("Cancel", color = NeonCyan)
+                    Text(stringResource(R.string.cancel), color = NeonCyan)
                 }
             }
         )
@@ -844,7 +851,7 @@ fun SongListItem(
                 onDismissRequest = { showMenu = false }
             ) {
                 DropdownMenuItem(
-                    text = { Text(if (isVaultItem) "Unhide / Remove from Vault" else "Move to Private Vault (Hide)") },
+                    text = { Text(if (isVaultItem) stringResource(R.string.remove_from_vault) else stringResource(R.string.move_to_vault)) },
                     onClick = {
                         onToggleVault()
                         showMenu = false
@@ -858,7 +865,7 @@ fun SongListItem(
                     }
                 )
                 DropdownMenuItem(
-                    text = { Text("Set as Phone Ringtone") },
+                    text = { Text(stringResource(R.string.set_as_ringtone)) },
                     onClick = {
                         onSetAsRingtone()
                         showMenu = false
@@ -866,7 +873,7 @@ fun SongListItem(
                     leadingIcon = { Icon(Icons.Default.PhoneAndroid, contentDescription = null, tint = NeonCyan) }
                 )
                 DropdownMenuItem(
-                    text = { Text("Add to Queue") },
+                    text = { Text(stringResource(R.string.add_to_queue)) },
                     onClick = {
                         onAddToQueue()
                         showMenu = false
@@ -874,7 +881,7 @@ fun SongListItem(
                     leadingIcon = { Icon(Icons.Default.QueueMusic, contentDescription = null) }
                 )
                 DropdownMenuItem(
-                    text = { Text("Add to Playlist") },
+                    text = { Text(stringResource(R.string.add_to_playlist)) },
                     onClick = {
                         onAddToPlaylist()
                         showMenu = false
@@ -882,7 +889,7 @@ fun SongListItem(
                     leadingIcon = { Icon(Icons.Default.PlaylistAdd, contentDescription = null) }
                 )
                 DropdownMenuItem(
-                    text = { Text("Share Track") },
+                    text = { Text(stringResource(R.string.share)) },
                     onClick = {
                         val shareIntent = Intent(Intent.ACTION_SEND).apply {
                             type = "audio/*"
@@ -894,7 +901,7 @@ fun SongListItem(
                     leadingIcon = { Icon(Icons.Default.Share, contentDescription = null) }
                 )
                 DropdownMenuItem(
-                    text = { Text("Delete Track") },
+                    text = { Text(stringResource(R.string.delete_track)) },
                     onClick = {
                         onDelete()
                         showMenu = false
@@ -902,7 +909,7 @@ fun SongListItem(
                     leadingIcon = { Icon(Icons.Default.Delete, contentDescription = null, tint = Color.Red) }
                 )
                 DropdownMenuItem(
-                    text = { Text("Details") },
+                    text = { Text(stringResource(R.string.details)) },
                     onClick = {
                         onShowDetails()
                         showMenu = false

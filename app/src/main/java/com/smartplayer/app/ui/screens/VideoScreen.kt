@@ -75,11 +75,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
+import com.smartplayer.app.R
 import com.smartplayer.app.data.PreferencesRepository
 import com.smartplayer.app.model.MediaFolder
 import com.smartplayer.app.model.SortDirection
@@ -185,7 +187,7 @@ fun VideoScreen(
                 OutlinedTextField(
                     value = searchQuery,
                     onValueChange = { searchQuery = it },
-                    placeholder = { Text("Search videos...", color = Color.Gray) },
+                    placeholder = { Text(stringResource(R.string.search_hint_video), color = Color.Gray) },
                     modifier = Modifier.weight(1f),
                     singleLine = true,
                     colors = TextFieldDefaults.colors(
@@ -200,16 +202,16 @@ fun VideoScreen(
                             searchQuery = ""
                             isSearchActive = false
                         }) {
-                            Icon(Icons.Default.Close, contentDescription = "Close", tint = Color.White)
+                            Icon(Icons.Default.Close, contentDescription = stringResource(R.string.close), tint = Color.White)
                         }
                     }
                 )
             } else {
                 Text(
                     text = when {
-                        isVaultOpen -> "🔒 Private Vault"
+                        isVaultOpen -> "🔒 " + stringResource(R.string.private_vault)
                         selectedFolder != null -> selectedFolder!!.name
-                        else -> "Videos"
+                        else -> stringResource(R.string.tab_videos)
                     },
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Bold,
@@ -228,7 +230,7 @@ fun VideoScreen(
                 }) {
                     Icon(
                         imageVector = if (isVaultOpen) Icons.Default.LockOpen else Icons.Default.Lock,
-                        contentDescription = "Private Vault",
+                        contentDescription = stringResource(R.string.private_vault),
                         tint = if (isVaultOpen) ElectricViolet else Color.White
                     )
                 }
@@ -264,13 +266,13 @@ fun VideoScreen(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "Secret Folder: ${displayedVideos.size} private items",
+                    text = "${stringResource(R.string.secret_vault_active)}: ${displayedVideos.size}",
                     color = ElectricViolet,
                     fontWeight = FontWeight.Bold,
                     fontSize = 13.sp
                 )
                 TextButton(onClick = { isVaultOpen = false }) {
-                    Text("Exit Vault", color = Color.White, fontSize = 12.sp, fontWeight = FontWeight.SemiBold)
+                    Text(stringResource(R.string.exit_vault), color = Color.White, fontSize = 12.sp, fontWeight = FontWeight.SemiBold)
                 }
             }
         }
@@ -287,7 +289,7 @@ fun VideoScreen(
                     onClick = { selectedTab = 0 },
                     text = {
                         Text(
-                            "All Videos (${activeVideosPool.size})",
+                            "${stringResource(R.string.all_videos)} (${activeVideosPool.size})",
                             fontWeight = if (selectedTab == 0) FontWeight.Bold else FontWeight.Normal,
                             color = if (selectedTab == 0) NeonCyan else Color.Gray
                         )
@@ -298,7 +300,7 @@ fun VideoScreen(
                     onClick = { selectedTab = 1 },
                     text = {
                         Text(
-                            "Folders (${folders.size})",
+                            "${stringResource(R.string.folders)} (${folders.size})",
                             fontWeight = if (selectedTab == 1) FontWeight.Bold else FontWeight.Normal,
                             color = if (selectedTab == 1) NeonCyan else Color.Gray
                         )
@@ -314,10 +316,10 @@ fun VideoScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 TextButton(onClick = { selectedFolder = null }) {
-                    Text("← Back to Folders", color = NeonCyan, fontWeight = FontWeight.SemiBold)
+                    Text("← " + stringResource(R.string.folders), color = NeonCyan, fontWeight = FontWeight.SemiBold)
                 }
                 Spacer(modifier = Modifier.weight(1f))
-                Text("${displayedVideos.size} Videos", color = Color.Gray, fontSize = 13.sp)
+                Text("${displayedVideos.size} ${stringResource(R.string.tab_videos)}", color = Color.Gray, fontSize = 13.sp)
             }
         }
 
@@ -332,7 +334,7 @@ fun VideoScreen(
                 ) {
                     Icon(Icons.Default.PlayArrow, contentDescription = null, tint = NeonCyan, modifier = Modifier.size(18.dp))
                     Spacer(modifier = Modifier.width(6.dp))
-                    Text("Continue Watching", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                    Text(stringResource(R.string.continue_watching), color = Color.White, fontWeight = FontWeight.Bold, fontSize = 14.sp)
                 }
                 Spacer(modifier = Modifier.height(8.dp))
                 LazyRow(
@@ -414,7 +416,7 @@ fun VideoScreen(
             if (displayedVideos.isEmpty()) {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                     Text(
-                        text = if (isVaultOpen) "No hidden videos in Private Vault.\nMove videos here using the 3-dot menu." else "No videos found",
+                        text = if (isVaultOpen) stringResource(R.string.no_vault_videos) else stringResource(R.string.no_videos_found),
                         color = Color.Gray,
                         fontSize = 15.sp
                     )
@@ -529,8 +531,8 @@ fun VideoScreen(
     videoToDelete?.let { video ->
         AlertDialog(
             onDismissRequest = { videoToDelete = null },
-            title = { Text("Delete Video", fontWeight = FontWeight.Bold) },
-            text = { Text("Are you sure you want to delete '${video.title}' from your device? This cannot be undone.") },
+            title = { Text(stringResource(R.string.delete_video), fontWeight = FontWeight.Bold) },
+            text = { Text(stringResource(R.string.delete_confirm)) },
             confirmButton = {
                 Button(
                     onClick = {
@@ -538,7 +540,7 @@ fun VideoScreen(
                             val f = File(video.path)
                             if (f.exists()) f.delete()
                             context.contentResolver.delete(video.uri, null, null)
-                            Toast.makeText(context, "Video deleted", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, context.getString(R.string.file_deleted), Toast.LENGTH_SHORT).show()
                         } catch (e: Exception) {
                             Toast.makeText(context, "Could not delete file", Toast.LENGTH_SHORT).show()
                         }
@@ -546,12 +548,12 @@ fun VideoScreen(
                     },
                     colors = ButtonDefaults.buttonColors(containerColor = Color.Red)
                 ) {
-                    Text("Delete", color = Color.White)
+                    Text(stringResource(R.string.delete), color = Color.White)
                 }
             },
             dismissButton = {
                 TextButton(onClick = { videoToDelete = null }) {
-                    Text("Cancel", color = Color.Gray)
+                    Text(stringResource(R.string.cancel), color = Color.Gray)
                 }
             }
         )
@@ -577,7 +579,7 @@ fun VideoScreen(
             },
             confirmButton = {
                 TextButton(onClick = { detailVideo = null }) {
-                    Text("Close", color = NeonCyan)
+                    Text(stringResource(R.string.close), color = NeonCyan)
                 }
             }
         )
@@ -704,7 +706,7 @@ fun VideoListCard(
                 onDismissRequest = { showMenu = false }
             ) {
                 DropdownMenuItem(
-                    text = { Text("Play as Audio (Background)") },
+                    text = { Text(stringResource(R.string.play_as_audio)) },
                     onClick = {
                         onPlayAsAudio()
                         showMenu = false
@@ -712,7 +714,7 @@ fun VideoListCard(
                     leadingIcon = { Icon(Icons.Default.Headphones, contentDescription = null, tint = NeonCyan) }
                 )
                 DropdownMenuItem(
-                    text = { Text(if (isVaultItem) "Unhide / Remove from Vault" else "Move to Private Vault (Hide)") },
+                    text = { Text(if (isVaultItem) stringResource(R.string.remove_from_vault) else stringResource(R.string.move_to_vault)) },
                     onClick = {
                         onToggleVault()
                         showMenu = false
@@ -726,7 +728,7 @@ fun VideoListCard(
                     }
                 )
                 DropdownMenuItem(
-                    text = { Text(if (isFavorite) "Remove Favorite" else "Add to Favorites") },
+                    text = { Text(if (isFavorite) stringResource(R.string.remove_favorite) else stringResource(R.string.add_to_favorites)) },
                     onClick = {
                         onToggleFavorite()
                         showMenu = false
@@ -740,7 +742,7 @@ fun VideoListCard(
                     }
                 )
                 DropdownMenuItem(
-                    text = { Text("Share") },
+                    text = { Text(stringResource(R.string.share)) },
                     onClick = {
                         val shareIntent = Intent(Intent.ACTION_SEND).apply {
                             type = "video/*"
@@ -752,7 +754,7 @@ fun VideoListCard(
                     leadingIcon = { Icon(Icons.Default.Share, contentDescription = null) }
                 )
                 DropdownMenuItem(
-                    text = { Text("Delete Video") },
+                    text = { Text(stringResource(R.string.delete_video)) },
                     onClick = {
                         onDelete()
                         showMenu = false
@@ -760,7 +762,7 @@ fun VideoListCard(
                     leadingIcon = { Icon(Icons.Default.Delete, contentDescription = null, tint = Color.Red) }
                 )
                 DropdownMenuItem(
-                    text = { Text("Details") },
+                    text = { Text(stringResource(R.string.details)) },
                     onClick = {
                         onShowDetails()
                         showMenu = false
@@ -884,7 +886,7 @@ fun VideoGridCard(
                     onDismissRequest = { showMenu = false }
                 ) {
                     DropdownMenuItem(
-                        text = { Text("Play as Audio (Background)") },
+                        text = { Text(stringResource(R.string.play_as_audio)) },
                         onClick = {
                             onPlayAsAudio()
                             showMenu = false
@@ -892,7 +894,7 @@ fun VideoGridCard(
                         leadingIcon = { Icon(Icons.Default.Headphones, contentDescription = null, tint = NeonCyan) }
                     )
                     DropdownMenuItem(
-                        text = { Text(if (isVaultItem) "Unhide from Vault" else "Move to Private Vault") },
+                        text = { Text(if (isVaultItem) stringResource(R.string.remove_from_vault) else stringResource(R.string.move_to_vault)) },
                         onClick = {
                             onToggleVault()
                             showMenu = false
@@ -906,7 +908,7 @@ fun VideoGridCard(
                         }
                     )
                     DropdownMenuItem(
-                        text = { Text(if (isFavorite) "Remove Favorite" else "Add to Favorites") },
+                        text = { Text(if (isFavorite) stringResource(R.string.remove_favorite) else stringResource(R.string.add_to_favorites)) },
                         onClick = {
                             onToggleFavorite()
                             showMenu = false
@@ -920,7 +922,7 @@ fun VideoGridCard(
                         }
                     )
                     DropdownMenuItem(
-                        text = { Text("Share") },
+                        text = { Text(stringResource(R.string.share)) },
                         onClick = {
                             val shareIntent = Intent(Intent.ACTION_SEND).apply {
                                 type = "video/*"
@@ -932,7 +934,7 @@ fun VideoGridCard(
                         leadingIcon = { Icon(Icons.Default.Share, contentDescription = null) }
                     )
                     DropdownMenuItem(
-                        text = { Text("Delete Video") },
+                        text = { Text(stringResource(R.string.delete_video)) },
                         onClick = {
                             onDelete()
                             showMenu = false
@@ -940,7 +942,7 @@ fun VideoGridCard(
                         leadingIcon = { Icon(Icons.Default.Delete, contentDescription = null, tint = Color.Red) }
                     )
                     DropdownMenuItem(
-                        text = { Text("Details") },
+                        text = { Text(stringResource(R.string.details)) },
                         onClick = {
                             onShowDetails()
                             showMenu = false

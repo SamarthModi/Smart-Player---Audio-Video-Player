@@ -1,0 +1,101 @@
+<resources>
+    <!-- App Details -->
+    <string name="app_name">Smart Player</string>
+    <string name="app_description">Профессиональный умный видео и аудиоплеер</string>
+    <string name="channel_name">Воспроизведение медиа</string>
+    <string name="channel_desc">Элементы управления воспроизведением в фоновом режиме</string>
+
+    <!-- Navigation Tabs -->
+    <string name="tab_videos">Видео</string>
+    <string name="tab_music">Музыка</string>
+    <string name="tab_playlists">Плейлисты</string>
+    <string name="tab_settings">Настройки</string>
+
+    <!-- Permissions -->
+    <string name="permission_required">Требуется разрешение на доступ к хранилищу</string>
+    <string name="permission_desc">Для воспроизведения локальных видео и музыки Smart Player требуется доступ к файлам мультимедиа.</string>
+    <string name="grant_permission">Предоставить разрешение</string>
+
+    <!-- General / Common -->
+    <string name="all_videos">Все видео</string>
+    <string name="folders">Папки</string>
+    <string name="tracks">Треки</string>
+    <string name="albums">Альбомы</string>
+    <string name="artists">Исполнители</string>
+    <string name="favorites">Избранное</string>
+    <string name="history">История</string>
+    <string name="custom_playlists">Свои</string>
+    <string name="equalizer">Эквалайзер</string>
+    <string name="sleep_timer">Таймер сна</string>
+    <string name="app_language">Язык приложения</string>
+    <string name="search_hint_video">Поиск видео...</string>
+    <string name="search_hint_music">Поиск песен, артистов, альбомов...</string>
+    <string name="continue_watching">Продолжить просмотр</string>
+    <string name="recently_played">Недавно воспроизведенные</string>
+    <string name="private_vault">Личный сейф</string>
+    <string name="secret_vault_active">Секретная папка</string>
+    <string name="exit_vault">Выйти из сейфа</string>
+    <string name="play_as_audio">Воспроизвести как аудио (В фоне)</string>
+    <string name="move_to_vault">Переместить в сейф (Скрыть)</string>
+    <string name="remove_from_vault">Показать / Убрать из сейфа</string>
+    <string name="add_to_favorites">Добавить в избранное</string>
+    <string name="remove_favorite">Удалить из избранного</string>
+    <string name="share">Поделиться</string>
+    <string name="details">Сведения</string>
+    <string name="delete_file">Удалить файл</string>
+    <string name="delete_video">Удалить видео</string>
+    <string name="delete_track">Удалить трек</string>
+    <string name="delete_confirm">Вы уверены, что хотите удалить этот файл с устройства? Это действие нельзя отменить.</string>
+    <string name="file_deleted">Файл успешно удален</string>
+    <string name="enter_pin">Введите 4-значный PIN</string>
+    <string name="set_pin">Задать 4-значный PIN</string>
+    <string name="pin_incorrect">Неверный PIN! Попробуйте снова.</string>
+    <string name="pin_saved">PIN личного сейфа сохранен</string>
+    <string name="unlock_vault">Разблокировать сейф</string>
+    <string name="play_all">Воспроизвести все</string>
+    <string name="shuffle">В случайном порядке</string>
+    <string name="add_to_queue">Добавить в очередь</string>
+    <string name="add_to_playlist">Добавить в плейлист</string>
+    <string name="set_as_ringtone">Установить как рингтон</string>
+    <string name="speed_2x_active">СКОРОСТЬ 2X &gt;&gt;</string>
+    <string name="subtitle_style">Стиль субтитров</string>
+    <string name="no_videos_found">Видео не найдены</string>
+    <string name="no_songs_found">Песни не найдены</string>
+    <string name="no_vault_videos">В личном сейфе нет скрытых видео.\nПереместите видео сюда из трехточечного меню.</string>
+    <string name="no_vault_songs">В личном сейфе нет скрытых песен.\nПереместите песни сюда из трехточечного меню.</string>
+    <string name="cancel">Отмена</string>
+    <string name="close">Закрыть</string>
+    <string name="done">Готово</string>
+    <string name="ok">ОК</string>
+    <string name="delete">Удалить</string>
+
+    <!-- Settings Screen -->
+    <string name="settings_title">Настройки</string>
+    <string name="section_general">ОБЩИЕ И ЯЗЫК</string>
+    <string name="theme_appearance">Тема оформления</string>
+    <string name="section_video_player">ВИДЕОПЛЕЕР (В СТИЛЕ MX PLAYER)</string>
+    <string name="default_decoder">Декодер по умолчанию</string>
+    <string name="decoder_hw_desc">Аппаратный (HW) - Максимальная производительность GPU</string>
+    <string name="decoder_sw_desc">Программный (SW) - Высокая совместимость</string>
+    <string name="resume_playback">Продолжать воспроизведение</string>
+    <string name="resume_playback_desc">Автоматически продолжать видео с места остановки</string>
+    <string name="audio_boost">Усиление звука (200%)</string>
+    <string name="audio_boost_desc">Увеличение громкости видео выше стандартных 100%</string>
+    <string name="double_tap_seek">Интервал перемотки двойным нажатием</string>
+    <string name="auto_hide_controls">Автоскрытие элементов управления</string>
+    <string name="bg_video_playback">Фоновое воспроизведение видео</string>
+    <string name="bg_video_playback_desc">Продолжать воспроизводить звук в фоне, пока не будет остановлен в уведомлении</string>
+    <string name="section_audio_player">АУДИОПЛЕЕР И ЗВУК</string>
+    <string name="open_equalizer">Открыть эквалайзер и звуковые эффекты</string>
+    <string name="pause_on_unplug">Пауза при отключении наушников</string>
+    <string name="pause_on_unplug_desc">Автопауза при отключении проводных или Bluetooth наушников</string>
+    <string name="section_library_storage">ХРАНИЛИЩЕ И ПЕРЕСКАНИРОВАНИЕ</string>
+    <string name="rescan_media">Пересканировать медиафайлы</string>
+    <string name="rescan_media_desc">Сканировать память устройства на наличие новых видео и музыки</string>
+    <string name="clear_history">Очистить историю воспроизведения</string>
+    <string name="clear_history_desc">Очистить список недавно воспроизведенных видео и аудио</string>
+    <string name="section_about">О ПРОГРАММЕ SMART PLAYER PRO</string>
+    <string name="app_version_info">Smart Player Pro • Версия 2.0.0</string>
+    <string name="choose_language">Выбрать язык</string>
+    <string name="seconds">Секунд</string>
+</resources>

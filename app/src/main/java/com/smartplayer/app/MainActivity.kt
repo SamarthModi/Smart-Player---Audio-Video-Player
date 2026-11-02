@@ -55,6 +55,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -80,8 +81,15 @@ import com.smartplayer.app.ui.theme.PlayerSurface
 import com.smartplayer.app.ui.theme.SmartPlayerTheme
 import com.smartplayer.app.util.LocaleHelper
 import kotlinx.coroutines.launch
+import android.content.Context
 
 class MainActivity : ComponentActivity() {
+
+    override fun attachBaseContext(newBase: Context) {
+        val prefs = PreferencesRepository.getInstance(newBase)
+        val localizedContext = LocaleHelper.updateContextLocale(newBase, prefs.appLanguage)
+        super.attachBaseContext(localizedContext)
+    }
 
     private lateinit var mediaStoreRepository: MediaStoreRepository
     private lateinit var preferencesRepository: PreferencesRepository
@@ -131,11 +139,11 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-enum class NavigationTab(val title: String, val icon: ImageVector) {
-    VIDEOS("Videos", Icons.Default.Videocam),
-    MUSIC("Music", Icons.Default.MusicNote),
-    PLAYLISTS("Playlists", Icons.Default.QueueMusic),
-    SETTINGS("Settings", Icons.Default.Settings)
+enum class NavigationTab(val titleRes: Int, val icon: ImageVector) {
+    VIDEOS(R.string.tab_videos, Icons.Default.Videocam),
+    MUSIC(R.string.tab_music, Icons.Default.MusicNote),
+    PLAYLISTS(R.string.tab_playlists, Icons.Default.QueueMusic),
+    SETTINGS(R.string.tab_settings, Icons.Default.Settings)
 }
 
 @Composable
@@ -240,12 +248,12 @@ fun MainAppScreen(
                             icon = {
                                 Icon(
                                     imageVector = tab.icon,
-                                    contentDescription = tab.title
+                                    contentDescription = stringResource(tab.titleRes)
                                 )
                             },
                             label = {
                                 Text(
-                                    text = tab.title,
+                                    text = stringResource(tab.titleRes),
                                     fontSize = 11.sp,
                                     fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal
                                 )
@@ -371,7 +379,7 @@ fun PermissionRequestScreen(
         Spacer(modifier = Modifier.height(24.dp))
 
         Text(
-            text = "Storage Access Required",
+            text = stringResource(R.string.permission_required),
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
             color = Color.White
@@ -380,7 +388,7 @@ fun PermissionRequestScreen(
         Spacer(modifier = Modifier.height(12.dp))
 
         Text(
-            text = "Smart Player needs access to your local media to display and play your videos and music files with hardware acceleration.",
+            text = stringResource(R.string.permission_desc),
             fontSize = 14.sp,
             color = Color.Gray,
             textAlign = TextAlign.Center,
@@ -398,7 +406,7 @@ fun PermissionRequestScreen(
                 .height(48.dp)
         ) {
             Text(
-                text = "Grant Permission",
+                text = stringResource(R.string.grant_permission),
                 color = PlayerBlack,
                 fontWeight = FontWeight.Bold,
                 fontSize = 15.sp

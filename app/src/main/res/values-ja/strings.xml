@@ -1,0 +1,101 @@
+<resources>
+    <!-- App Details -->
+    <string name="app_name">Smart Player</string>
+    <string name="app_description">プロフェッショナルなスマート動画・音楽プレーヤー</string>
+    <string name="channel_name">スマートメディア再生</string>
+    <string name="channel_desc">バックグラウンド音楽・動画の再生コントロール</string>
+
+    <!-- Navigation Tabs -->
+    <string name="tab_videos">動画</string>
+    <string name="tab_music">音楽</string>
+    <string name="tab_playlists">リスト</string>
+    <string name="tab_settings">設定</string>
+
+    <!-- Permissions -->
+    <string name="permission_required">ストレージの権限が必要です</string>
+    <string name="permission_desc">デバイス内の動画や音楽を再生するには、メディアファイルへのアクセス権限が必要です。</string>
+    <string name="grant_permission">権限を許可する</string>
+
+    <!-- General / Common -->
+    <string name="all_videos">すべての動画</string>
+    <string name="folders">フォルダ</string>
+    <string name="tracks">曲</string>
+    <string name="albums">アルバム</string>
+    <string name="artists">アーティスト</string>
+    <string name="favorites">お気に入り</string>
+    <string name="history">履歴</string>
+    <string name="custom_playlists">カスタム</string>
+    <string name="equalizer">イコライザー</string>
+    <string name="sleep_timer">スリープタイマー</string>
+    <string name="app_language">アプリの言語</string>
+    <string name="search_hint_video">動画を検索...</string>
+    <string name="search_hint_music">曲、アーティスト、アルバムを検索...</string>
+    <string name="continue_watching">続きから再生</string>
+    <string name="recently_played">最近再生したファイル</string>
+    <string name="private_vault">プライベート保管庫</string>
+    <string name="secret_vault_active">秘密フォルダ</string>
+    <string name="exit_vault">保管庫を終了</string>
+    <string name="play_as_audio">音声として再生 (バックグラウンド)</string>
+    <string name="move_to_vault">保管庫に移動 (非表示)</string>
+    <string name="remove_from_vault">保管庫から解除</string>
+    <string name="add_to_favorites">お気に入りに追加</string>
+    <string name="remove_favorite">お気に入りから削除</string>
+    <string name="share">共有</string>
+    <string name="details">詳細情報</string>
+    <string name="delete_file">ファイルを削除</string>
+    <string name="delete_video">動画を削除</string>
+    <string name="delete_track">曲を削除</string>
+    <string name="delete_confirm">このファイルを端末から削除してもよろしいですか？この操作は元に戻せません。</string>
+    <string name="file_deleted">ファイルを削除しました</string>
+    <string name="enter_pin">4桁のPINを入力</string>
+    <string name="set_pin">4桁のPINを設定</string>
+    <string name="pin_incorrect">PINが間違っています！再試行してください。</string>
+    <string name="pin_saved">保管庫のPINが保存されました</string>
+    <string name="unlock_vault">保管庫のロックを解除</string>
+    <string name="play_all">すべて再生</string>
+    <string name="shuffle">シャッフル</string>
+    <string name="add_to_queue">再生キューに追加</string>
+    <string name="add_to_playlist">プレイリストに追加</string>
+    <string name="set_as_ringtone">着信音に設定</string>
+    <string name="speed_2x_active">2倍速 &gt;&gt;</string>
+    <string name="subtitle_style">字幕スタイル</string>
+    <string name="no_videos_found">動画が見つかりません</string>
+    <string name="no_songs_found">曲が見つかりません</string>
+    <string name="no_vault_videos">保管庫に非表示の動画はありません。\n3点メニューから動画を移動してください。</string>
+    <string name="no_vault_songs">保管庫に非表示の曲はありません。\n3点メニューから曲を移動してください。</string>
+    <string name="cancel">キャンセル</string>
+    <string name="close">閉じる</string>
+    <string name="done">完了</string>
+    <string name="ok">OK</string>
+    <string name="delete">削除</string>
+
+    <!-- Settings Screen -->
+    <string name="settings_title">設定</string>
+    <string name="section_general">全般と言語</string>
+    <string name="theme_appearance">テーマの外観</string>
+    <string name="section_video_player">動画プレーヤー (MX PLAYER スタイル)</string>
+    <string name="default_decoder">デフォルトデコーダー</string>
+    <string name="decoder_hw_desc">ハードウェア (HW) - GPUの最大性能</string>
+    <string name="decoder_sw_desc">ソフトウェア (SW) - 高い互換性モード</string>
+    <string name="resume_playback">再生を再開</string>
+    <string name="resume_playback_desc">前回中断した場所から自動的に再開</string>
+    <string name="audio_boost">音声ブースト (200%)</string>
+    <string name="audio_boost_desc">通常の最大100%を超えて音量をブースト</string>
+    <string name="double_tap_seek">ダブルタップスキップ間隔</string>
+    <string name="auto_hide_controls">コントロール自動非表示時間</string>
+    <string name="bg_video_playback">バックグラウンド動画再生</string>
+    <string name="bg_video_playback_desc">通知から一時停止するまで音声をバックグラウンドで再生</string>
+    <string name="section_audio_player">オーディオプレーヤーとサウンド</string>
+    <string name="open_equalizer">イコライザーと音響効果を開く</string>
+    <string name="pause_on_unplug">ヘッドフォン取り外し時に一時停止</string>
+    <string name="pause_on_unplug_desc">イヤホンやBluetoothの接続解除時に自動一時停止</string>
+    <string name="section_library_storage">メディアストレージと再スキャン</string>
+    <string name="rescan_media">メディアストレージを再スキャン</string>
+    <string name="rescan_media_desc">新しく追加された動画や曲を端末から検索</string>
+    <string name="clear_history">再生履歴を消去</string>
+    <string name="clear_history_desc">最近再生した動画・音声の履歴を消去</string>
+    <string name="section_about">SMART PLAYER PRO について</string>
+    <string name="app_version_info">Smart Player Pro • バージョン 2.0.0</string>
+    <string name="choose_language">言語を選択</string>
+    <string name="seconds">秒</string>
+</resources>

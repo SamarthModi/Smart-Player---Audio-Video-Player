@@ -26,11 +26,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.smartplayer.app.R
 import com.smartplayer.app.data.PreferencesRepository
 import com.smartplayer.app.ui.theme.NeonCyan
 import com.smartplayer.app.ui.theme.PlayerSurface
@@ -44,6 +46,7 @@ fun PrivateVaultPinDialog(
     val isConfigured = preferencesRepository.isVaultConfigured
     var pinText by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf<String?>(null) }
+    val invalidPinMessage = stringResource(R.string.pin_incorrect)
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -52,7 +55,7 @@ fun PrivateVaultPinDialog(
                 Icon(Icons.Default.Lock, contentDescription = null, tint = NeonCyan)
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
-                    text = if (isConfigured) "Private Vault" else "Set Vault PIN",
+                    text = if (isConfigured) stringResource(R.string.private_vault) else stringResource(R.string.set_pin),
                     fontWeight = FontWeight.Bold,
                     fontSize = 18.sp
                 )
@@ -61,7 +64,7 @@ fun PrivateVaultPinDialog(
         text = {
             Column {
                 Text(
-                    text = if (isConfigured) "Enter your secret 4-digit PIN to access private media:" else "Create a 4-digit PIN to secure your private videos & music:",
+                    text = if (isConfigured) stringResource(R.string.enter_pin) else stringResource(R.string.set_pin),
                     color = Color.LightGray,
                     fontSize = 13.sp
                 )
@@ -74,7 +77,7 @@ fun PrivateVaultPinDialog(
                             errorMessage = null
                         }
                     },
-                    label = { Text("4-Digit PIN") },
+                    label = { Text(stringResource(R.string.enter_pin)) },
                     singleLine = true,
                     visualTransformation = PasswordVisualTransformation(),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
@@ -95,12 +98,12 @@ fun PrivateVaultPinDialog(
             Button(
                 onClick = {
                     if (pinText.length < 4) {
-                        errorMessage = "PIN must be at least 4 digits"
+                        errorMessage = invalidPinMessage
                     } else if (isConfigured) {
                         if (preferencesRepository.verifyVaultPin(pinText)) {
                             onSuccess()
                         } else {
-                            errorMessage = "Incorrect PIN! Try again."
+                            errorMessage = invalidPinMessage
                         }
                     } else {
                         preferencesRepository.vaultPin = pinText
@@ -111,7 +114,7 @@ fun PrivateVaultPinDialog(
                 shape = RoundedCornerShape(8.dp)
             ) {
                 Text(
-                    text = if (isConfigured) "Unlock Vault" else "Set PIN & Unlock",
+                    text = if (isConfigured) stringResource(R.string.unlock_vault) else stringResource(R.string.done),
                     color = Color.Black,
                     fontWeight = FontWeight.Bold
                 )
@@ -119,7 +122,7 @@ fun PrivateVaultPinDialog(
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text("Cancel", color = Color.Gray)
+                Text(stringResource(R.string.cancel), color = Color.Gray)
             }
         }
     )

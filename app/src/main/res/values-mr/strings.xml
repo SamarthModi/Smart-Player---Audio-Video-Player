@@ -1,0 +1,101 @@
+<resources>
+    <!-- App Details -->
+    <string name="app_name">Smart Player</string>
+    <string name="app_description">व्यावसायिक स्मार्ट व्हिडिओ आणि संगीत प्लेयर</string>
+    <string name="channel_name">स्मार्ट मीडिया प्लेबॅक</string>
+    <string name="channel_desc">पार्श्वभूमी संगीत आणि व्हिडिओ नियंत्रणे</string>
+
+    <!-- Navigation Tabs -->
+    <string name="tab_videos">व्हिडिओ</string>
+    <string name="tab_music">संगीत</string>
+    <string name="tab_playlists">प्लेलिस्ट</string>
+    <string name="tab_settings">सेटिंग्ज</string>
+
+    <!-- Permissions -->
+    <string name="permission_required">स्टोरेज परवानगी आवश्यक आहे</string>
+    <string name="permission_desc">तुमचे स्थानिक व्हिडिओ आणि संगीत प्ले करण्यासाठी स्मार्ट प्लेयरला स्टोरेज परवानगी आवश्यक आहे.</string>
+    <string name="grant_permission">परवानगी द्या</string>
+
+    <!-- General / Common -->
+    <string name="all_videos">सर्व व्हिडिओ</string>
+    <string name="folders">फोल्डर्स</string>
+    <string name="tracks">गाणी</string>
+    <string name="albums">अल्बम</string>
+    <string name="artists">कलाकार</string>
+    <string name="favorites">आवडते</string>
+    <string name="history">इतिहास</string>
+    <string name="custom_playlists">सानुकूल</string>
+    <string name="equalizer">इक्वलायझर</string>
+    <string name="sleep_timer">स्लीप टाइमर</string>
+    <string name="app_language">ॲप भाषा</string>
+    <string name="search_hint_video">व्हिडिओ शोधा...</string>
+    <string name="search_hint_music">गाणी, कलाकार शोधा...</string>
+    <string name="continue_watching">पाहणे सुरू ठेवा</string>
+    <string name="recently_played">अलीकडे वाजवले</string>
+    <string name="private_vault">खाजगी व्हॉल्ट</string>
+    <string name="secret_vault_active">गुप्त फोल्डर</string>
+    <string name="exit_vault">व्हॉल्टमधून बाहेर पडा</string>
+    <string name="play_as_audio">ऑडिओ म्हणून प्ले करा (पार्श्वभूमी)</string>
+    <string name="move_to_vault">खाजगी व्हॉल्टमध्ये हलवा (लपवा)</string>
+    <string name="remove_from_vault">व्हॉल्टमधून बाहेर काढा</string>
+    <string name="add_to_favorites">आवडत्यामध्ये जोडा</string>
+    <string name="remove_favorite">आवडत्यामधून काढा</string>
+    <string name="share">शेअर करा</string>
+    <string name="details">तपशील</string>
+    <string name="delete_file">फाइल हटवा</string>
+    <string name="delete_video">व्हिडिओ हटवा</string>
+    <string name="delete_track">गाणे हटवा</string>
+    <string name="delete_confirm">तुम्हाला खात्री आहे की ही फाईल हटवायची आहे?</string>
+    <string name="file_deleted">फाइल यशस्वीरित्या हटवली</string>
+    <string name="enter_pin">४-अंकी पिन प्रविष्ट करा</string>
+    <string name="set_pin">नवीन ४-अंकी पिन सेट करा</string>
+    <string name="pin_incorrect">चुकीचा पिन! पुन्हा प्रयत्न करा.</string>
+    <string name="pin_saved">खाजगी व्हॉल्ट पिन सेट झाला</string>
+    <string name="unlock_vault">व्हॉल्ट अनलॉक करा</string>
+    <string name="play_all">सर्व प्ले करा</string>
+    <string name="shuffle">शफल करा</string>
+    <string name="add_to_queue">रांगेत जोडा</string>
+    <string name="add_to_playlist">प्लेलिस्टमध्ये जोडा</string>
+    <string name="set_as_ringtone">फोन रिंगटोन म्हणून सेट करा</string>
+    <string name="speed_2x_active">२ पट गती &gt;&gt;</string>
+    <string name="subtitle_style">सबटायटल शैली</string>
+    <string name="no_videos_found">कोणतेही व्हिडिओ आढळले नाहीत</string>
+    <string name="no_songs_found">कोणतीही गाणी आढळली नाहीत</string>
+    <string name="no_vault_videos">व्हॉल्टमध्ये व्हिडिओ नाहीत.</string>
+    <string name="no_vault_songs">व्हॉल्टमध्ये गाणी नाहीत.</string>
+    <string name="cancel">रद्द करा</string>
+    <string name="close">बंद करा</string>
+    <string name="done">पूर्ण</string>
+    <string name="ok">ठीक आहे</string>
+    <string name="delete">हटवा</string>
+
+    <!-- Settings Screen -->
+    <string name="settings_title">सेटिंग्ज</string>
+    <string name="section_general">सामान्य आणि भाषा</string>
+    <string name="theme_appearance">थीम स्वरूप</string>
+    <string name="section_video_player">व्हिडिओ प्लेयर (MX PLAYER शैली)</string>
+    <string name="default_decoder">डीफॉल्ट डीकोडर</string>
+    <string name="decoder_hw_desc">हार्डवेअर (HW) - कमाल GPU कार्यप्रदर्शन</string>
+    <string name="decoder_sw_desc">सॉफ्टवेअर (SW) - उच्च सुसंगतता</string>
+    <string name="resume_playback">पुन्हा सुरू करा</string>
+    <string name="resume_playback_desc">सोडलेल्या ठिकाणावरून व्हिडिओ सुरू करा</string>
+    <string name="audio_boost">ऑडिओ बूस्ट (200%)</string>
+    <string name="audio_boost_desc">सामान्य 100% पेक्षा जास्त आवाज वाढवा</string>
+    <string name="double_tap_seek">डबल-टॅप सीक वेळ</string>
+    <string name="auto_hide_controls">नियंत्रणे लपवण्याची वेळ</string>
+    <string name="bg_video_playback">पार्श्वभूमी व्हिडिओ प्लेबॅक</string>
+    <string name="bg_video_playback_desc">सूचनांमधून थांबवेपर्यंत आवाज चालू ठेवा</string>
+    <string name="section_audio_player">ऑडिओ प्लेयर आणि आवाज</string>
+    <string name="open_equalizer">इक्वलायझर उघडा</string>
+    <string name="pause_on_unplug">हेडफोन काढल्यावर थांबवा</string>
+    <string name="pause_on_unplug_desc">हेडफोन किंवा ब्लूटूथ डिस्कनेक्ट झाल्यावर आपोआप थांबवा</string>
+    <string name="section_library_storage">स्टोरेज आणि पुन्हा स्कॅन</string>
+    <string name="rescan_media">मीडिया स्टोरेज पुन्हा स्कॅन करा</string>
+    <string name="rescan_media_desc">नवीन व्हिडिओ आणि गाण्यांसाठी स्टोरेज स्कॅन करा</string>
+    <string name="clear_history">इतिहास साफ करा</string>
+    <string name="clear_history_desc">अलीकडील व्हिडिओ आणि गाण्यांची यादी साफ करा</string>
+    <string name="section_about">SMART PLAYER PRO बद्दल</string>
+    <string name="app_version_info">Smart Player Pro • आवृत्ती 2.0.0</string>
+    <string name="choose_language">भाषा निवडा</string>
+    <string name="seconds">सेकंद</string>
+</resources>

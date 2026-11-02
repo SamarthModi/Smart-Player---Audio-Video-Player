@@ -1,5 +1,6 @@
 package com.smartplayer.app.ui.screens
 
+import android.app.Activity
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -51,9 +52,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.smartplayer.app.R
 import com.smartplayer.app.data.PreferencesRepository
 import com.smartplayer.app.ui.theme.ElectricViolet
 import com.smartplayer.app.ui.theme.NeonCyan
@@ -75,6 +78,7 @@ fun SettingsScreen(
     var isAudioBoost by remember { mutableStateOf(preferencesRepository.isAudioBoostEnabled) }
     var isAutoResume by remember { mutableStateOf(preferencesRepository.isAutoResumeEnabled) }
     var isPauseOnUnplug by remember { mutableStateOf(preferencesRepository.isPauseOnUnplugEnabled) }
+    var isBgPlay by remember { mutableStateOf(preferencesRepository.isBackgroundVideoPlayEnabled) }
     var doubleTapSeekSeconds by remember { mutableIntStateOf(preferencesRepository.doubleTapSeekSeconds) }
     var autoHideControlsSec by remember { mutableIntStateOf(preferencesRepository.autoHideControlsSec) }
     var gestureSensitivity by remember { mutableFloatStateOf(preferencesRepository.gestureSensitivity) }
@@ -93,7 +97,7 @@ fun SettingsScreen(
             .verticalScroll(rememberScrollState())
     ) {
         Text(
-            text = "Settings",
+            text = stringResource(R.string.settings_title),
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
             color = Color.White
@@ -103,7 +107,7 @@ fun SettingsScreen(
 
         // 1. GENERAL & LANGUAGE
         Text(
-            text = "GENERAL & LANGUAGE",
+            text = stringResource(R.string.section_general),
             color = NeonCyan,
             fontSize = 12.sp,
             fontWeight = FontWeight.Bold,
@@ -128,12 +132,30 @@ fun SettingsScreen(
                     Icon(Icons.Default.Language, contentDescription = null, tint = NeonCyan)
                     Spacer(modifier = Modifier.width(12.dp))
                     Column(modifier = Modifier.weight(1f)) {
-                        Text("App Language / ભાષા / भाषा", color = Color.White, fontWeight = FontWeight.SemiBold, fontSize = 15.sp)
+                        Text(
+                            stringResource(R.string.app_language),
+                            color = Color.White,
+                            fontWeight = FontWeight.SemiBold,
+                            fontSize = 15.sp
+                        )
                         Text(
                             when (appLanguage) {
                                 "gu" -> "ગુજરાતી (Gujarati)"
                                 "hi" -> "हिन्दी (Hindi)"
+                                "mr" -> "मराठी (Marathi)"
+                                "bn" -> "বাংলা (Bengali)"
+                                "ta" -> "தமிழ் (Tamil)"
+                                "te" -> "తెలుగు (Telugu)"
                                 "en" -> "English"
+                                "es" -> "Español (Spanish)"
+                                "fr" -> "Français (French)"
+                                "de" -> "Deutsch (German)"
+                                "ar" -> "العربية (Arabic)"
+                                "ru" -> "Русский (Russian)"
+                                "pt" -> "Português (Portuguese)"
+                                "ja" -> "日本語 (Japanese)"
+                                "ko" -> "한국어 (Korean)"
+                                "zh" -> "中文 (Chinese)"
                                 else -> "System Default"
                             },
                             color = NeonCyan,
@@ -156,7 +178,12 @@ fun SettingsScreen(
                     Icon(Icons.Default.Palette, contentDescription = null, tint = ElectricViolet)
                     Spacer(modifier = Modifier.width(12.dp))
                     Column(modifier = Modifier.weight(1f)) {
-                        Text("Theme Appearance", color = Color.White, fontWeight = FontWeight.SemiBold, fontSize = 15.sp)
+                        Text(
+                            stringResource(R.string.theme_appearance),
+                            color = Color.White,
+                            fontWeight = FontWeight.SemiBold,
+                            fontSize = 15.sp
+                        )
                         Text(themeStyle, color = Color.Gray, fontSize = 12.sp)
                     }
                     Text("›", color = Color.Gray, fontSize = 22.sp, fontWeight = FontWeight.Bold)
@@ -168,7 +195,7 @@ fun SettingsScreen(
 
         // 2. VIDEO PLAYER SETTINGS (MX PLAYER PRO STYLE)
         Text(
-            text = "VIDEO PLAYER (MX PLAYER STYLE)",
+            text = stringResource(R.string.section_video_player),
             color = Color(0xFFFFB300),
             fontSize = 12.sp,
             fontWeight = FontWeight.Bold,
@@ -189,9 +216,9 @@ fun SettingsScreen(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Column(modifier = Modifier.weight(1f)) {
-                        Text("Default Decoder", color = Color.White, fontWeight = FontWeight.SemiBold, fontSize = 15.sp)
+                        Text(stringResource(R.string.default_decoder), color = Color.White, fontWeight = FontWeight.SemiBold, fontSize = 15.sp)
                         Text(
-                            if (decoderMode == "HW") "Hardware (HW) - Maximum GPU Performance" else "Software (SW) - High Compatibility Mode",
+                            if (decoderMode == "HW") stringResource(R.string.decoder_hw_desc) else stringResource(R.string.decoder_sw_desc),
                             color = Color.Gray,
                             fontSize = 12.sp
                         )
@@ -215,8 +242,8 @@ fun SettingsScreen(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Column(modifier = Modifier.weight(1f)) {
-                        Text("Resume Playback", color = Color.White, fontWeight = FontWeight.SemiBold, fontSize = 15.sp)
-                        Text("Automatically resume videos where you left off", color = Color.Gray, fontSize = 12.sp)
+                        Text(stringResource(R.string.resume_playback), color = Color.White, fontWeight = FontWeight.SemiBold, fontSize = 15.sp)
+                        Text(stringResource(R.string.resume_playback_desc), color = Color.Gray, fontSize = 12.sp)
                     }
                     Switch(
                         checked = isAutoResume,
@@ -237,14 +264,36 @@ fun SettingsScreen(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Column(modifier = Modifier.weight(1f)) {
-                        Text("Audio Boost (200%)", color = Color.White, fontWeight = FontWeight.SemiBold, fontSize = 15.sp)
-                        Text("Boost video volume beyond normal 100% maximum", color = Color.Gray, fontSize = 12.sp)
+                        Text(stringResource(R.string.audio_boost), color = Color.White, fontWeight = FontWeight.SemiBold, fontSize = 15.sp)
+                        Text(stringResource(R.string.audio_boost_desc), color = Color.Gray, fontSize = 12.sp)
                     }
                     Switch(
                         checked = isAudioBoost,
                         onCheckedChange = {
                             isAudioBoost = it
                             preferencesRepository.isAudioBoostEnabled = it
+                        },
+                        colors = SwitchDefaults.colors(checkedThumbColor = PlayerBlack, checkedTrackColor = NeonCyan)
+                    )
+                }
+
+                HorizontalDivider(modifier = Modifier.padding(vertical = 10.dp), color = Color.White.copy(alpha = 0.08f))
+
+                // Background Video Playback
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(stringResource(R.string.bg_video_playback), color = Color.White, fontWeight = FontWeight.SemiBold, fontSize = 15.sp)
+                        Text(stringResource(R.string.bg_video_playback_desc), color = Color.Gray, fontSize = 12.sp)
+                    }
+                    Switch(
+                        checked = isBgPlay,
+                        onCheckedChange = {
+                            isBgPlay = it
+                            preferencesRepository.isBackgroundVideoPlayEnabled = it
                         },
                         colors = SwitchDefaults.colors(checkedThumbColor = PlayerBlack, checkedTrackColor = NeonCyan)
                     )
@@ -263,8 +312,8 @@ fun SettingsScreen(
                     Icon(Icons.Default.Speed, contentDescription = null, tint = NeonCyan)
                     Spacer(modifier = Modifier.width(12.dp))
                     Column(modifier = Modifier.weight(1f)) {
-                        Text("Double-Tap Seek Interval", color = Color.White, fontWeight = FontWeight.SemiBold, fontSize = 15.sp)
-                        Text("$doubleTapSeekSeconds seconds", color = Color.Gray, fontSize = 12.sp)
+                        Text(stringResource(R.string.double_tap_seek), color = Color.White, fontWeight = FontWeight.SemiBold, fontSize = 15.sp)
+                        Text("$doubleTapSeekSeconds ${stringResource(R.string.seconds)}", color = Color.Gray, fontSize = 12.sp)
                     }
                     Text("›", color = Color.Gray, fontSize = 22.sp, fontWeight = FontWeight.Bold)
                 }
@@ -282,8 +331,8 @@ fun SettingsScreen(
                     Icon(Icons.Default.Timer, contentDescription = null, tint = ElectricViolet)
                     Spacer(modifier = Modifier.width(12.dp))
                     Column(modifier = Modifier.weight(1f)) {
-                        Text("Auto-Hide Controls Timeout", color = Color.White, fontWeight = FontWeight.SemiBold, fontSize = 15.sp)
-                        Text("$autoHideControlsSec seconds", color = Color.Gray, fontSize = 12.sp)
+                        Text(stringResource(R.string.auto_hide_controls), color = Color.White, fontWeight = FontWeight.SemiBold, fontSize = 15.sp)
+                        Text("$autoHideControlsSec ${stringResource(R.string.seconds)}", color = Color.Gray, fontSize = 12.sp)
                     }
                     Text("›", color = Color.Gray, fontSize = 22.sp, fontWeight = FontWeight.Bold)
                 }
@@ -316,7 +365,7 @@ fun SettingsScreen(
 
         // 3. AUDIO & MUSIC PLAYER SETTINGS
         Text(
-            text = "AUDIO & MUSIC PLAYER",
+            text = stringResource(R.string.section_audio_player),
             color = ElectricViolet,
             fontSize = 12.sp,
             fontWeight = FontWeight.Bold,
@@ -341,7 +390,7 @@ fun SettingsScreen(
                     Icon(Icons.Default.Equalizer, contentDescription = null, tint = ElectricViolet)
                     Spacer(modifier = Modifier.width(12.dp))
                     Column(modifier = Modifier.weight(1f)) {
-                        Text("5-Band Audio Equalizer", color = Color.White, fontWeight = FontWeight.SemiBold, fontSize = 15.sp)
+                        Text(stringResource(R.string.open_equalizer), color = Color.White, fontWeight = FontWeight.SemiBold, fontSize = 15.sp)
                         Text("Bass Boost, 3D Surround Virtualizer, Presets", color = Color.Gray, fontSize = 12.sp)
                     }
                     Text("›", color = Color.Gray, fontSize = 22.sp, fontWeight = FontWeight.Bold)
@@ -356,8 +405,8 @@ fun SettingsScreen(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Column(modifier = Modifier.weight(1f)) {
-                        Text("Pause on Headset Disconnect", color = Color.White, fontWeight = FontWeight.SemiBold, fontSize = 15.sp)
-                        Text("Automatically pause music when headphones are unplugged", color = Color.Gray, fontSize = 12.sp)
+                        Text(stringResource(R.string.pause_on_unplug), color = Color.White, fontWeight = FontWeight.SemiBold, fontSize = 15.sp)
+                        Text(stringResource(R.string.pause_on_unplug_desc), color = Color.Gray, fontSize = 12.sp)
                     }
                     Switch(
                         checked = isPauseOnUnplug,
@@ -375,7 +424,7 @@ fun SettingsScreen(
 
         // 4. STORAGE & MAINTENANCE
         Text(
-            text = "STORAGE & MAINTENANCE",
+            text = stringResource(R.string.section_library_storage),
             color = Color.LightGray,
             fontSize = 12.sp,
             fontWeight = FontWeight.Bold,
@@ -403,8 +452,8 @@ fun SettingsScreen(
                     Icon(Icons.Default.Refresh, contentDescription = null, tint = NeonCyan)
                     Spacer(modifier = Modifier.width(12.dp))
                     Column(modifier = Modifier.weight(1f)) {
-                        Text("Rescan Media Files", color = Color.White, fontWeight = FontWeight.SemiBold, fontSize = 15.sp)
-                        Text("Refresh local video and music library", color = Color.Gray, fontSize = 12.sp)
+                        Text(stringResource(R.string.rescan_media), color = Color.White, fontWeight = FontWeight.SemiBold, fontSize = 15.sp)
+                        Text(stringResource(R.string.rescan_media_desc), color = Color.Gray, fontSize = 12.sp)
                     }
                 }
 
@@ -424,8 +473,8 @@ fun SettingsScreen(
                     Icon(Icons.Default.DeleteSweep, contentDescription = null, tint = Color.Red)
                     Spacer(modifier = Modifier.width(12.dp))
                     Column(modifier = Modifier.weight(1f)) {
-                        Text("Clear Playback History", color = Color.Red, fontWeight = FontWeight.SemiBold, fontSize = 15.sp)
-                        Text("Remove all songs from recently played history", color = Color.Gray, fontSize = 12.sp)
+                        Text(stringResource(R.string.clear_history), color = Color.Red, fontWeight = FontWeight.SemiBold, fontSize = 15.sp)
+                        Text(stringResource(R.string.clear_history_desc), color = Color.Gray, fontSize = 12.sp)
                     }
                 }
             }
@@ -444,8 +493,8 @@ fun SettingsScreen(
                     Icon(Icons.Default.Info, contentDescription = null, tint = NeonCyan)
                     Spacer(modifier = Modifier.width(12.dp))
                     Column {
-                        Text("Smart Player Pro", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 16.sp)
-                        Text("Version 1.1.0 • Hardware Accelerated MX & VLC Engine", color = Color.Gray, fontSize = 12.sp)
+                        Text(stringResource(R.string.app_name), color = Color.White, fontWeight = FontWeight.Bold, fontSize = 16.sp)
+                        Text(stringResource(R.string.app_version_info), color = Color.Gray, fontSize = 12.sp)
                     }
                 }
                 Spacer(modifier = Modifier.height(10.dp))
@@ -466,16 +515,29 @@ fun SettingsScreen(
     // Language Selection Dialog
     if (showLanguageDialog) {
         val langs = listOf(
-            Pair("system", "System Default (Default)"),
+            Pair("system", "System Default"),
             Pair("gu", "ગુજરાતી (Gujarati)"),
             Pair("hi", "हिन्दी (Hindi)"),
-            Pair("en", "English")
+            Pair("mr", "मराठी (Marathi)"),
+            Pair("bn", "বাংলা (Bengali)"),
+            Pair("ta", "தமிழ் (Tamil)"),
+            Pair("te", "తెలుగు (Telugu)"),
+            Pair("en", "English"),
+            Pair("es", "Español (Spanish)"),
+            Pair("fr", "Français (French)"),
+            Pair("de", "Deutsch (German)"),
+            Pair("ar", "العربية (Arabic)"),
+            Pair("ru", "Русский (Russian)"),
+            Pair("pt", "Português (Portuguese)"),
+            Pair("ja", "日本語 (Japanese)"),
+            Pair("ko", "한국어 (Korean)"),
+            Pair("zh", "中文 (Chinese)")
         )
         AlertDialog(
             onDismissRequest = { showLanguageDialog = false },
-            title = { Text("Choose Language", fontWeight = FontWeight.Bold) },
+            title = { Text(stringResource(R.string.choose_language), fontWeight = FontWeight.Bold) },
             text = {
-                Column {
+                Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
                     langs.forEach { (code, name) ->
                         Row(
                             modifier = Modifier
@@ -485,7 +547,7 @@ fun SettingsScreen(
                                     preferencesRepository.appLanguage = code
                                     LocaleHelper.applyLanguage(code)
                                     showLanguageDialog = false
-                                    Toast.makeText(context, "Language changed to $name", Toast.LENGTH_SHORT).show()
+                                    (context as? Activity)?.recreate()
                                 }
                                 .padding(vertical = 10.dp),
                             horizontalArrangement = Arrangement.SpaceBetween
@@ -501,7 +563,7 @@ fun SettingsScreen(
                 }
             },
             confirmButton = {
-                TextButton(onClick = { showLanguageDialog = false }) { Text("Close", color = NeonCyan) }
+                TextButton(onClick = { showLanguageDialog = false }) { Text(stringResource(R.string.close), color = NeonCyan) }
             }
         )
     }
@@ -511,7 +573,7 @@ fun SettingsScreen(
         val intervals = listOf(5, 10, 15, 30)
         AlertDialog(
             onDismissRequest = { showDoubleTapDialog = false },
-            title = { Text("Double-Tap Seek Interval", fontWeight = FontWeight.Bold) },
+            title = { Text(stringResource(R.string.double_tap_seek), fontWeight = FontWeight.Bold) },
             text = {
                 Column {
                     intervals.forEach { sec ->
@@ -527,7 +589,7 @@ fun SettingsScreen(
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Text(
-                                "$sec Seconds",
+                                "$sec ${context.getString(R.string.seconds)}",
                                 color = if (doubleTapSeekSeconds == sec) NeonCyan else Color.White,
                                 fontWeight = if (doubleTapSeekSeconds == sec) FontWeight.Bold else FontWeight.Normal
                             )
@@ -537,7 +599,7 @@ fun SettingsScreen(
                 }
             },
             confirmButton = {
-                TextButton(onClick = { showDoubleTapDialog = false }) { Text("Close", color = NeonCyan) }
+                TextButton(onClick = { showDoubleTapDialog = false }) { Text(stringResource(R.string.close), color = NeonCyan) }
             }
         )
     }
@@ -547,7 +609,7 @@ fun SettingsScreen(
         val delays = listOf(2, 4, 6, 8)
         AlertDialog(
             onDismissRequest = { showAutoHideDialog = false },
-            title = { Text("Auto-Hide Controls Delay", fontWeight = FontWeight.Bold) },
+            title = { Text(stringResource(R.string.auto_hide_controls), fontWeight = FontWeight.Bold) },
             text = {
                 Column {
                     delays.forEach { sec ->
@@ -563,7 +625,7 @@ fun SettingsScreen(
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Text(
-                                "$sec Seconds",
+                                "$sec ${context.getString(R.string.seconds)}",
                                 color = if (autoHideControlsSec == sec) NeonCyan else Color.White,
                                 fontWeight = if (autoHideControlsSec == sec) FontWeight.Bold else FontWeight.Normal
                             )
@@ -573,7 +635,7 @@ fun SettingsScreen(
                 }
             },
             confirmButton = {
-                TextButton(onClick = { showAutoHideDialog = false }) { Text("Close", color = NeonCyan) }
+                TextButton(onClick = { showAutoHideDialog = false }) { Text(stringResource(R.string.close), color = NeonCyan) }
             }
         )
     }
@@ -583,7 +645,7 @@ fun SettingsScreen(
         val themes = listOf("Dark Obsidian (Default)", "AMOLED Pitch Black", "Midnight Blue")
         AlertDialog(
             onDismissRequest = { showThemeDialog = false },
-            title = { Text("Theme Appearance", fontWeight = FontWeight.Bold) },
+            title = { Text(stringResource(R.string.theme_appearance), fontWeight = FontWeight.Bold) },
             text = {
                 Column {
                     themes.forEach { t ->
@@ -609,7 +671,7 @@ fun SettingsScreen(
                 }
             },
             confirmButton = {
-                TextButton(onClick = { showThemeDialog = false }) { Text("Close", color = NeonCyan) }
+                TextButton(onClick = { showThemeDialog = false }) { Text(stringResource(R.string.close), color = NeonCyan) }
             }
         )
     }

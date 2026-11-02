@@ -305,8 +305,9 @@ class PreferencesRepository(private val context: Context) {
         private var instance: PreferencesRepository? = null
 
         fun getInstance(context: Context): PreferencesRepository {
+            val appContext = context.applicationContext ?: context
             return instance ?: synchronized(this) {
-                instance ?: PreferencesRepository(context.applicationContext).also { instance = it }
+                instance ?: PreferencesRepository(appContext).also { instance = it }
             }
         }
     }

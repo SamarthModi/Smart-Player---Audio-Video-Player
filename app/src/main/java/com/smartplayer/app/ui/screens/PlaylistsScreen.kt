@@ -56,11 +56,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
+import com.smartplayer.app.R
 import com.smartplayer.app.data.PreferencesRepository
 import com.smartplayer.app.model.AudioItem
 import com.smartplayer.app.model.Playlist
@@ -119,7 +121,7 @@ fun PlaylistsScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = if (selectedPlaylist != null) selectedPlaylist!!.name else "Playlists & Library",
+                    text = if (selectedPlaylist != null) selectedPlaylist!!.name else stringResource(R.string.tab_playlists),
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.White,
@@ -144,7 +146,7 @@ fun PlaylistsScreen(
                         onClick = { selectedTab = 0 },
                         text = {
                             Text(
-                                "Favorites (${favoriteSongs.size + favoriteVideos.size})",
+                                "${stringResource(R.string.favorites)} (${favoriteSongs.size + favoriteVideos.size})",
                                 fontWeight = if (selectedTab == 0) FontWeight.Bold else FontWeight.Normal,
                                 color = if (selectedTab == 0) NeonCyan else Color.Gray,
                                 fontSize = 13.sp
@@ -156,7 +158,7 @@ fun PlaylistsScreen(
                         onClick = { selectedTab = 1 },
                         text = {
                             Text(
-                                "History (${recentSongs.size})",
+                                "${stringResource(R.string.history)} (${recentSongs.size})",
                                 fontWeight = if (selectedTab == 1) FontWeight.Bold else FontWeight.Normal,
                                 color = if (selectedTab == 1) NeonCyan else Color.Gray,
                                 fontSize = 13.sp
@@ -168,7 +170,7 @@ fun PlaylistsScreen(
                         onClick = { selectedTab = 2 },
                         text = {
                             Text(
-                                "Custom (${playlists.size})",
+                                "${stringResource(R.string.custom_playlists)} (${playlists.size})",
                                 fontWeight = if (selectedTab == 2) FontWeight.Bold else FontWeight.Normal,
                                 color = if (selectedTab == 2) NeonCyan else Color.Gray,
                                 fontSize = 13.sp
@@ -185,7 +187,7 @@ fun PlaylistsScreen(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     TextButton(onClick = { selectedPlaylist = null }) {
-                        Text("← Back to Playlists", color = NeonCyan, fontWeight = FontWeight.SemiBold)
+                        Text("← " + stringResource(R.string.tab_playlists), color = NeonCyan, fontWeight = FontWeight.SemiBold)
                     }
                     Spacer(modifier = Modifier.weight(1f))
                     IconButton(onClick = {
@@ -470,7 +472,7 @@ fun PlaylistsScreen(
                         }
                     }
                 ) {
-                    Text("Create", color = NeonCyan, fontWeight = FontWeight.Bold)
+                    Text(stringResource(R.string.ok), color = NeonCyan, fontWeight = FontWeight.Bold)
                 }
             },
             dismissButton = {
@@ -478,7 +480,7 @@ fun PlaylistsScreen(
                     showCreateDialog = false
                     newPlaylistName = ""
                 }) {
-                    Text("Cancel", color = Color.Gray)
+                    Text(stringResource(R.string.cancel), color = Color.Gray)
                 }
             }
         )

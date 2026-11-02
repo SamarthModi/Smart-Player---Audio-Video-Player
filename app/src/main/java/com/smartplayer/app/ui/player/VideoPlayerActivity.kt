@@ -134,6 +134,7 @@ import com.smartplayer.app.ui.theme.PlayerSurface
 import com.smartplayer.app.ui.theme.PlayerSurfaceVariant
 import com.smartplayer.app.ui.theme.SmartPlayerTheme
 import com.smartplayer.app.util.FormatUtils
+import com.smartplayer.app.util.LocaleHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -146,6 +147,12 @@ import kotlin.math.abs
 
 @OptIn(UnstableApi::class)
 class VideoPlayerActivity : ComponentActivity() {
+
+    override fun attachBaseContext(newBase: Context) {
+        val prefs = PreferencesRepository.getInstance(newBase)
+        val localizedContext = LocaleHelper.updateContextLocale(newBase, prefs.appLanguage)
+        super.attachBaseContext(localizedContext)
+    }
 
     private var exoPlayer: ExoPlayer? = null
     private lateinit var preferencesRepository: PreferencesRepository

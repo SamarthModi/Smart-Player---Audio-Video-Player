@@ -1,0 +1,101 @@
+<resources>
+    <!-- App Details -->
+    <string name="app_name">Smart Player</string>
+    <string name="app_description">Reprodutor inteligente profissional de vídeo e áudio</string>
+    <string name="channel_name">Reprodução inteligente</string>
+    <string name="channel_desc">Controles de reprodução para música e vídeo em segundo plano</string>
+
+    <!-- Navigation Tabs -->
+    <string name="tab_videos">Vídeos</string>
+    <string name="tab_music">Músicas</string>
+    <string name="tab_playlists">Playlists</string>
+    <string name="tab_settings">Configurações</string>
+
+    <!-- Permissions -->
+    <string name="permission_required">Permissão de armazenamento necessária</string>
+    <string name="permission_desc">Para reproduzir seus vídeos e músicas locais, o Smart Player precisa de acesso aos seus arquivos.</string>
+    <string name="grant_permission">Conceder permissão</string>
+
+    <!-- General / Common -->
+    <string name="all_videos">Todos os vídeos</string>
+    <string name="folders">Pastas</string>
+    <string name="tracks">Faixas</string>
+    <string name="albums">Álbuns</string>
+    <string name="artists">Artistas</string>
+    <string name="favorites">Favoritos</string>
+    <string name="history">Histórico</string>
+    <string name="custom_playlists">Personalizado</string>
+    <string name="equalizer">Equalizador</string>
+    <string name="sleep_timer">Temporizador</string>
+    <string name="app_language">Idioma do aplicativo</string>
+    <string name="search_hint_video">Pesquisar vídeos...</string>
+    <string name="search_hint_music">Pesquisar músicas, artistas, álbuns...</string>
+    <string name="continue_watching">Continuar assistindo</string>
+    <string name="recently_played">Reproduzidos recentemente</string>
+    <string name="private_vault">Cofre privado</string>
+    <string name="secret_vault_active">Pasta secreta</string>
+    <string name="exit_vault">Sair do cofre</string>
+    <string name="play_as_audio">Reproduzir como áudio (Segundo plano)</string>
+    <string name="move_to_vault">Mover para o cofre (Ocultar)</string>
+    <string name="remove_from_vault">Remover do cofre</string>
+    <string name="add_to_favorites">Adicionar aos favoritos</string>
+    <string name="remove_favorite">Remover dos favoritos</string>
+    <string name="share">Compartilhar</string>
+    <string name="details">Detalhes</string>
+    <string name="delete_file">Excluir arquivo</string>
+    <string name="delete_video">Excluir vídeo</string>
+    <string name="delete_track">Excluir faixa</string>
+    <string name="delete_confirm">Tem certeza de que deseja excluir este arquivo? Esta ação não pode ser desfeita.</string>
+    <string name="file_deleted">Arquivo excluído com sucesso</string>
+    <string name="enter_pin">Digite o PIN de 4 dígitos</string>
+    <string name="set_pin">Definir PIN de 4 dígitos</string>
+    <string name="pin_incorrect">PIN incorreto! Tente novamente.</string>
+    <string name="pin_saved">PIN do cofre salvo</string>
+    <string name="unlock_vault">Desbloquear cofre</string>
+    <string name="play_all">Reproduzir tudo</string>
+    <string name="shuffle">Ordem aleatória</string>
+    <string name="add_to_queue">Adicionar à fila</string>
+    <string name="add_to_playlist">Adicionar à playlist</string>
+    <string name="set_as_ringtone">Definir como toque de chamada</string>
+    <string name="speed_2x_active">VELOCIDADE 2X &gt;&gt;</string>
+    <string name="subtitle_style">Estilo de legendas</string>
+    <string name="no_videos_found">Nenhum vídeo encontrado</string>
+    <string name="no_songs_found">Nenhuma música encontrada</string>
+    <string name="no_vault_videos">Nenhum vídeo oculto no cofre.\nAdicione vídeos aqui pelo menu de 3 pontos.</string>
+    <string name="no_vault_songs">Nenhuma música oculta no cofre.\nAdicione músicas aqui pelo menu de 3 pontos.</string>
+    <string name="cancel">Cancelar</string>
+    <string name="close">Fechar</string>
+    <string name="done">Concluído</string>
+    <string name="ok">OK</string>
+    <string name="delete">Excluir</string>
+
+    <!-- Settings Screen -->
+    <string name="settings_title">Configurações</string>
+    <string name="section_general">GERAL E IDIOMA</string>
+    <string name="theme_appearance">Aparência do tema</string>
+    <string name="section_video_player">REPRODUTOR DE VÍDEO (ESTILO MX PLAYER)</string>
+    <string name="default_decoder">Decodificador padrão</string>
+    <string name="decoder_hw_desc">Hardware (HW) - Desempenho máximo de GPU</string>
+    <string name="decoder_sw_desc">Software (SW) - Modo de alta compatibilidade</string>
+    <string name="resume_playback">Retomar reprodução</string>
+    <string name="resume_playback_desc">Continuar vídeos automaticamente de onde parou</string>
+    <string name="audio_boost">Aumento de volume (200%)</string>
+    <string name="audio_boost_desc">Aumentar o volume além do limite máximo normal de 100%</string>
+    <string name="double_tap_seek">Intervalo de toque duplo para buscar</string>
+    <string name="auto_hide_controls">Ocultação automática dos controles</string>
+    <string name="bg_video_playback">Reprodução de vídeo em segundo plano</string>
+    <string name="bg_video_playback_desc">Manter som no fundo até ser pausado na notificação</string>
+    <string name="section_audio_player">REPRODUTOR DE ÁUDIO E SOM</string>
+    <string name="open_equalizer">Abrir equalizador e efeitos sonoros</string>
+    <string name="pause_on_unplug">Pausar ao desconectar fone</string>
+    <string name="pause_on_unplug_desc">Pausar automaticamente ao desconectar fones ou Bluetooth</string>
+    <string name="section_library_storage">ARMAZENAMENTO E REVERIFICAÇÃO</string>
+    <string name="rescan_media">Reverificar armazenamento de mídia</string>
+    <string name="rescan_media_desc">Procurar novos vídeos e músicas adicionados no dispositivo</string>
+    <string name="clear_history">Limpar histórico de reprodução</string>
+    <string name="clear_history_desc">Limpar lista de vídeos e músicas reproduzidos recentemente</string>
+    <string name="section_about">SOBRE O SMART PLAYER PRO</string>
+    <string name="app_version_info">Smart Player Pro • Versão 2.0.0</string>
+    <string name="choose_language">Escolher idioma</string>
+    <string name="seconds">Segundos</string>
+</resources>

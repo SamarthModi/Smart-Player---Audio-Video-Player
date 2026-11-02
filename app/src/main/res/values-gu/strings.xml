@@ -1,19 +1,22 @@
 <resources>
+    <!-- App Details -->
     <string name="app_name">Smart Player</string>
     <string name="app_description">પ્રોફેશનલ સ્માર્ટ વિડીયો અને મ્યુઝિક પ્લેયર</string>
+    <string name="channel_name">સ્માર્ટ મીડિયા પ્લેબેક</string>
+    <string name="channel_desc">બેકગ્રાઉન્ડ મ્યુઝિક અને વિડીયો કંટ્રોલ્સ</string>
+
+    <!-- Navigation Tabs -->
     <string name="tab_videos">વિડીયો</string>
     <string name="tab_music">મ્યુઝિક</string>
     <string name="tab_playlists">પ્લેલિસ્ટ</string>
     <string name="tab_settings">સેટિંગ્સ</string>
+
+    <!-- Permissions -->
     <string name="permission_required">સ્ટોરેજ પરમિશન જરૂરી છે</string>
     <string name="permission_desc">તમારા લોકલ વિડીયો અને ગીતો વગાડવા માટે, Smart Player ને સ્ટોરેજ ઍક્સેસની જરૂર છે.</string>
     <string name="grant_permission">પરમિશન આપો</string>
-    <string name="channel_name">સ્માર્ટ મીડિયા પ્લેબેક</string>
-    <string name="channel_desc">બેકગ્રાઉન્ડ મ્યુઝિક અને વિડીયો કંટ્રોલ્સ</string>
 
-    <!-- General -->
-    <string name="search_hint_video">વિડીયો શોધો...</string>
-    <string name="search_hint_music">ગીતો, આર્ટિસ્ટ શોધો...</string>
+    <!-- General / Common -->
     <string name="all_videos">બધા વિડીયો</string>
     <string name="folders">ફોલ્ડર્સ</string>
     <string name="tracks">ગીતો</string>
@@ -24,23 +27,75 @@
     <string name="custom_playlists">કસ્ટમ</string>
     <string name="equalizer">ઇક્વલાઇઝર</string>
     <string name="sleep_timer">સ્લીપ ટાઇમર</string>
-    <string name="audio_boost">ઓડિયો બૂસ્ટ (200%)</string>
     <string name="app_language">એપ ભાષા</string>
-
-    <!-- New Top-Tier Features -->
+    <string name="search_hint_video">વિડીયો શોધો...</string>
+    <string name="search_hint_music">ગીતો, આર્ટિસ્ટ શોધો...</string>
     <string name="continue_watching">જોવાનું ચાલુ રાખો</string>
     <string name="recently_played">તાજેતરમાં વગાડેલા</string>
-    <string name="private_vault">પ્રાઇવેટ વોલ્ટ (ગુપ્ત ફોલ્ડર)</string>
-    <string name="play_as_audio">ઓડિયો તરીકે વગાડો</string>
+    <string name="private_vault">પ્રાઇવેટ વોલ્ટ</string>
+    <string name="secret_vault_active">ગુપ્ત ફોલ્ડર</string>
+    <string name="exit_vault">વોલ્ટમાંથી બહાર નીકળો</string>
+    <string name="play_as_audio">ઓડિયો તરીકે વગાડો (બેકગ્રાઉન્ડ)</string>
     <string name="move_to_vault">પ્રાઇવેટ વોલ્ટમાં ખસેડો (છુપાવો)</string>
     <string name="remove_from_vault">વોલ્ટમાંથી બહાર કાઢો</string>
+    <string name="add_to_favorites">ફેવરિટ્સમાં ઉમેરો</string>
+    <string name="remove_favorite">ફેવરિટમાંથી દૂર કરો</string>
+    <string name="share">શેર કરો</string>
+    <string name="details">વિગતો</string>
+    <string name="delete_file">ફાઇલ ડિલીટ કરો</string>
+    <string name="delete_video">વિડીયો ડિલીટ કરો</string>
+    <string name="delete_track">ગીત ડિલીટ કરો</string>
+    <string name="delete_confirm">શું તમે ખરેખર આ ફાઇલ તમારા ઉપકરણમાંથી ડિલીટ કરવા માંગો છો? આ રદ કરી શકાશે નહીં.</string>
+    <string name="file_deleted">ફાઇલ સફળતાપૂર્વક ડિલીટ થઈ</string>
     <string name="enter_pin">૪-અંકનો PIN દાખલ કરો</string>
     <string name="set_pin">નવો ૪-અંકનો PIN સેટ કરો</string>
     <string name="pin_incorrect">ખોટો PIN! ફરી પ્રયાસ કરો.</string>
     <string name="pin_saved">પ્રાઇવેટ વોલ્ટ PIN સેટ થઈ ગયો</string>
-    <string name="delete_file">ફાઇલ ડિલીટ કરો</string>
-    <string name="delete_confirm">શું તમે ખરેખર આ ફાઇલ તમારા ઉપકરણમાંથી ડિલીટ કરવા માંગો છો?</string>
-    <string name="file_deleted">ફાઇલ સફળતાપૂર્વક ડિલીટ થઈ</string>
+    <string name="unlock_vault">વોલ્ટ ખોલો</string>
+    <string name="play_all">બધા વગાડો</string>
+    <string name="shuffle">શફલ કરો</string>
+    <string name="add_to_queue">કતારમાં ઉમેરો</string>
+    <string name="add_to_playlist">પ્લેલિસ્ટમાં ઉમેરો</string>
+    <string name="set_as_ringtone">ફોન રિંગટોન તરીકે સેટ કરો</string>
     <string name="speed_2x_active">૨ ગણી ઝડપ &gt;&gt;</string>
     <string name="subtitle_style">સબટાઈટલ સ્ટાઇલ</string>
+    <string name="no_videos_found">કોઈ વિડીયો મળ્યા નથી</string>
+    <string name="no_songs_found">કોઈ ગીતો મળ્યા નથી</string>
+    <string name="no_vault_videos">પ્રાઇવેટ વોલ્ટમાં કોઈ છુપાયેલા વિડીયો નથી.\n૩-ડૉટ મેનૂમાંથી અહીં વિડીયો ખસેડો.</string>
+    <string name="no_vault_songs">પ્રાઇવેટ વોલ્ટમાં કોઈ છુપાયેલા ગીતો નથી.\n૩-ડૉટ મેનૂમાંથી અહીં ગીતો ખસેડો.</string>
+    <string name="cancel">રદ કરો</string>
+    <string name="close">બંધ કરો</string>
+    <string name="done">પૂર્ણ</string>
+    <string name="ok">બરાબર</string>
+    <string name="delete">ડિલીટ</string>
+
+    <!-- Settings Screen -->
+    <string name="settings_title">સેટિંગ્સ</string>
+    <string name="section_general">સામાન્ય અને ભાષા</string>
+    <string name="theme_appearance">થીમ દેખાવ</string>
+    <string name="section_video_player">વિડીયો પ્લેયર (MX PLAYER શૈલી)</string>
+    <string name="default_decoder">ડિફોલ્ટ ડીકોડર</string>
+    <string name="decoder_hw_desc">હાર્ડવેર (HW) - શ્રેષ્ઠ GPU પરફોર્મન્સ</string>
+    <string name="decoder_sw_desc">સોફ્ટવેર (SW) - ઉચ્ચ સુસંગતતા મોડ</string>
+    <string name="resume_playback">પ્લેબેક ફરી શરૂ કરો</string>
+    <string name="resume_playback_desc">તમે જ્યાંથી છોડ્યું હતું ત્યાંથી વિડીયો આપમેળે ચાલુ કરો</string>
+    <string name="audio_boost">ઓડિયો બૂસ્ટ (200%)</string>
+    <string name="audio_boost_desc">સામાન્ય 100% કરતાં વધુ અવાજ બૂસ્ટ કરો</string>
+    <string name="double_tap_seek">ડબલ-ટેપ સીક સમયગાળો</string>
+    <string name="auto_hide_controls">કંટ્રોલ્સ છુપાવવાનો સમય</string>
+    <string name="bg_video_playback">બેકગ્રાઉન્ડ વિડીયો પ્લેબેક</string>
+    <string name="bg_video_playback_desc">નોટિફિકેશનમાંથી થોભાવવામાં ન આવે ત્યાં સુધી બેકગ્રાઉન્ડમાં અવાજ ચાલુ રાખો</string>
+    <string name="section_audio_player">ઓડિયો પ્લેયર અને સાઉન્ડ</string>
+    <string name="open_equalizer">ઇક્વલાઇઝર અને સાઉન્ડ FX ખોલો</string>
+    <string name="pause_on_unplug">હેડફોન નીકળતાં અટકાવો</string>
+    <string name="pause_on_unplug_desc">હેડફોન અથવા બ્લૂટૂથ ડિસ્કનેક્ટ થાય ત્યારે આપમેળે અટકાવો</string>
+    <string name="section_library_storage">મીડિયા સ્ટોરેજ અને રીસ્કેન</string>
+    <string name="rescan_media">મીડિયા સ્ટોરેજ રીસ્કેન કરો</string>
+    <string name="rescan_media_desc">નવા ઉમેરાયેલા વિડીયો અને ગીતો માટે સ્ટોરેજ સ્કેન કરો</string>
+    <string name="clear_history">પ્લેબેક હિસ્ટ્રી સાફ કરો</string>
+    <string name="clear_history_desc">તાજેતરમાં વગાડેલા વિડીયો અને ગીતોની યાદી સાફ કરો</string>
+    <string name="section_about">SMART PLAYER PRO વિશે</string>
+    <string name="app_version_info">Smart Player Pro • વર્ઝન 2.0.0</string>
+    <string name="choose_language">ભાષા પસંદ કરો</string>
+    <string name="seconds">સેકન્ડ</string>
 </resources>

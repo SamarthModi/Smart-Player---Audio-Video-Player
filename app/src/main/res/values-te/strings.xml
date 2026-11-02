@@ -1,0 +1,101 @@
+<resources>
+    <!-- App Details -->
+    <string name="app_name">Smart Player</string>
+    <string name="app_description">ప్రొఫెషనల్ వీడియో మరియు మ్యూజిక్ ప్లేయర్</string>
+    <string name="channel_name">స్మార్ట్ మీడియా ప్లేబ్యాక్</string>
+    <string name="channel_desc">నేపథ్య సంగీతం మరియు వీడియో నియంత్రణలు</string>
+
+    <!-- Navigation Tabs -->
+    <string name="tab_videos">వీడియోలు</string>
+    <string name="tab_music">సంగీతం</string>
+    <string name="tab_playlists">ప్లేలిస్ట్‌లు</string>
+    <string name="tab_settings">సెట్టింగ్‌లు</string>
+
+    <!-- Permissions -->
+    <string name="permission_required">స్టోరేజ్ అనుమతి అవసరం</string>
+    <string name="permission_desc">మీ వీడియోలు మరియు పాటలను ప్లే చేయడానికి స్టోరేజ్ అనుమతి అవసరం.</string>
+    <string name="grant_permission">అనుమతి ఇవ్వండి</string>
+
+    <!-- General / Common -->
+    <string name="all_videos">అన్ని వీడియోలు</string>
+    <string name="folders">ఫోల్డర్‌లు</string>
+    <string name="tracks">పాటలు</string>
+    <string name="albums">ఆల్బమ్‌లు</string>
+    <string name="artists">కళాకారులు</string>
+    <string name="favorites">ఇష్టమైనవి</string>
+    <string name="history">చరిత్ర</string>
+    <string name="custom_playlists">అనుకూల</string>
+    <string name="equalizer">ఈక్వలైజర్</string>
+    <string name="sleep_timer">స్లీప్ టైమర్</string>
+    <string name="app_language">యాప్ భాష</string>
+    <string name="search_hint_video">వీడియోలను శోధించండి...</string>
+    <string name="search_hint_music">పాటలు, కళాకారులను శోధించండి...</string>
+    <string name="continue_watching">చూడటం కొనసాగించండి</string>
+    <string name="recently_played">ఇటీవల ప్లే చేసినవి</string>
+    <string name="private_vault">ప్రైవేట్ వాల్ట్</string>
+    <string name="secret_vault_active">రహస్య ఫోల్డర్</string>
+    <string name="exit_vault">వాల్ట్ నుండి నిష్క్రమించు</string>
+    <string name="play_as_audio">ఆడియోగా ప్లే చేయండి (నేపథ్యం)</string>
+    <string name="move_to_vault">వాల్ట్‌లో దాచండి</string>
+    <string name="remove_from_vault">వాల్ట్ నుండి తీసివేయండి</string>
+    <string name="add_to_favorites">ఇష్టమైన వాటిలో చేర్చండి</string>
+    <string name="remove_favorite">ఇష్టమైన వాటి నుండి తీసివేయండి</string>
+    <string name="share">భాగస్వామ్యం చేయండి</string>
+    <string name="details">వివరాలు</string>
+    <string name="delete_file">ఫైల్ తొలగించండి</string>
+    <string name="delete_video">వీడియో తొలగించండి</string>
+    <string name="delete_track">పాట తొలగించండి</string>
+    <string name="delete_confirm">మీరు ఖచ్చితంగా ఈ ఫైల్‌ను తొలగించాలనుకుంటున్నారా?</string>
+    <string name="file_deleted">ఫైల్ విజయవంతంగా తొలగించబడింది</string>
+    <string name="enter_pin">4-అంకెల పిన్ నమోదు చేయండి</string>
+    <string name="set_pin">కొత్త 4-అంకెల పిన్ సెట్ చేయండి</string>
+    <string name="pin_incorrect">తప్పు పిన్! మళ్ళీ ప్రయత్నించండి.</string>
+    <string name="pin_saved">పిన్ సేవ్ చేయబడింది</string>
+    <string name="unlock_vault">వాల్ట్ అన్‌లాక్ చేయండి</string>
+    <string name="play_all">అన్నీ ప్లే చేయండి</string>
+    <string name="shuffle">షఫుల్</string>
+    <string name="add_to_queue">క్యూలో చేర్చండి</string>
+    <string name="add_to_playlist">ప్లేలిస్ట్‌కు చేర్చండి</string>
+    <string name="set_as_ringtone">రింగ్‌టోన్‌గా సెట్ చేయండి</string>
+    <string name="speed_2x_active">2X వేగం &gt;&gt;</string>
+    <string name="subtitle_style">ఉపశీర్షిక శైలి</string>
+    <string name="no_videos_found">వీడియోలు కనుగొనబడలేదు</string>
+    <string name="no_songs_found">పాటలు కనుగొనబడలేదు</string>
+    <string name="no_vault_videos">వాల్ట్‌లో వీడియోలు లేవు.</string>
+    <string name="no_vault_songs">వాల్ట్‌లో పాటలు లేవు.</string>
+    <string name="cancel">రద్దు చేయండి</string>
+    <string name="close">మూసివేయండి</string>
+    <string name="done">పూర్తయింది</string>
+    <string name="ok">సరే</string>
+    <string name="delete">తొలగించండి</string>
+
+    <!-- Settings Screen -->
+    <string name="settings_title">సెట్టింగ్‌లు</string>
+    <string name="section_general">సాధారణ &amp; భాష</string>
+    <string name="theme_appearance">థీమ్ రూపం</string>
+    <string name="section_video_player">వీడియో ప్లేయర్ (MX PLAYER శైలి)</string>
+    <string name="default_decoder">డిఫాల్ట్ డీకోడర్</string>
+    <string name="decoder_hw_desc">హార్డ్‌వేర్ (HW) - గరిష్ట GPU పనితీరు</string>
+    <string name="decoder_sw_desc">సాఫ్ట్‌వేర్ (SW) - అధిక అనుకూలత</string>
+    <string name="resume_playback">మళ్ళీ ప్రారంభించండి</string>
+    <string name="resume_playback_desc">ఆపివేసిన ప్రదేశం నుండి వీడియోలను కొనసాగించండి</string>
+    <string name="audio_boost">ఆడియో బూస్ట్ (200%)</string>
+    <string name="audio_boost_desc">సాధారణ 100% కంటే ఎక్కువ వాల్యూమ్ పెంచండి</string>
+    <string name="double_tap_seek">డబుల్-ట్యాప్ సీక్ సమయం</string>
+    <string name="auto_hide_controls">నియంత్రణల దాగి ఉండే సమయం</string>
+    <string name="bg_video_playback">నేపథ్య వీడియో ప్లేబ్యాక్</string>
+    <string name="bg_video_playback_desc">నోటిఫికేషన్ నుండి పాజ్ చేసే వరకు ధ్వనిని ప్లే చేయండి</string>
+    <string name="section_audio_player">ఆడియో ప్లేయర్ &amp; ధ్వని</string>
+    <string name="open_equalizer">ఈక్వలైజర్ తెరవండి</string>
+    <string name="pause_on_unplug">హెడ్‌ఫోన్ తీసివేస్తే పాజ్ చేయండి</string>
+    <string name="pause_on_unplug_desc">హెడ్‌ఫోన్ డిస్‌కనెక్ట్ అయినప్పుడు స్వయంచాలకంగా పాజ్ చేయండి</string>
+    <string name="section_library_storage">స్టోరేజ్ &amp; రీస్కాన్</string>
+    <string name="rescan_media">మీడియా స్టోరేజ్‌ని రీస్కాన్ చేయండి</string>
+    <string name="rescan_media_desc">కొత్త వీడియోలు మరియు పాటల కోసం స్కాన్ చేయండి</string>
+    <string name="clear_history">చరిత్రను క్లియర్ చేయండి</string>
+    <string name="clear_history_desc">ఇటీవలి వీడియోలు మరియు పాటల జాబితాను క్లియర్ చేయండి</string>
+    <string name="section_about">SMART PLAYER PRO గురించి</string>
+    <string name="app_version_info">Smart Player Pro • వెర్షన్ 2.0.0</string>
+    <string name="choose_language">భాషను ఎంచుకోండి</string>
+    <string name="seconds">సెకన్లు</string>
+</resources>

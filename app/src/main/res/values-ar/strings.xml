@@ -1,0 +1,101 @@
+<resources>
+    <!-- App Details -->
+    <string name="app_name">Smart Player</string>
+    <string name="app_description">مشغل فيديو وموسيقى ذكي واحترافي</string>
+    <string name="channel_name">تشغيل الوسائط الذكي</string>
+    <string name="channel_desc">عناصر التحكم في تشغيل الموسيقى والفيديو في الخلفية</string>
+
+    <!-- Navigation Tabs -->
+    <string name="tab_videos">الفيديوهات</string>
+    <string name="tab_music">الموسيقى</string>
+    <string name="tab_playlists">قوائم التشغيل</string>
+    <string name="tab_settings">الإعدادات</string>
+
+    <!-- Permissions -->
+    <string name="permission_required">إذن التخزين مطلوب</string>
+    <string name="permission_desc">لتشغيل مقاطع الفيديو والموسيقى المحلية، يحتاج Smart Player إلى إذن الوصول إلى ملفاتك.</string>
+    <string name="grant_permission">منح الإذن</string>
+
+    <!-- General / Common -->
+    <string name="all_videos">جميع الفيديوهات</string>
+    <string name="folders">المجلدات</string>
+    <string name="tracks">المقاطع</string>
+    <string name="albums">الألبومات</string>
+    <string name="artists">الفنانون</string>
+    <string name="favorites">المفضلة</string>
+    <string name="history">السجل</string>
+    <string name="custom_playlists">مخصص</string>
+    <string name="equalizer">معادل الصوت</string>
+    <string name="sleep_timer">مؤقت النوم</string>
+    <string name="app_language">لغة التطبيق</string>
+    <string name="search_hint_video">البحث عن مقاطع الفيديو...</string>
+    <string name="search_hint_music">البحث عن الأغاني، الفنانين، الألبومات...</string>
+    <string name="continue_watching">متابعة المشاهدة</string>
+    <string name="recently_played">تم تشغيلها مؤخراً</string>
+    <string name="private_vault">الخزنة الخاصة</string>
+    <string name="secret_vault_active">المجلد السري</string>
+    <string name="exit_vault">الخروج من الخزنة</string>
+    <string name="play_as_audio">تشغيل كصوت (في الخلفية)</string>
+    <string name="move_to_vault">نقل إلى الخزنة الخاصة (إخفاء)</string>
+    <string name="remove_from_vault">إلغاء الإخفاء / إزالة من الخزنة</string>
+    <string name="add_to_favorites">إضافة إلى المفضلة</string>
+    <string name="remove_favorite">إزالة من المفضلة</string>
+    <string name="share">مشاركة</string>
+    <string name="details">التفاصيل</string>
+    <string name="delete_file">حذف الملف</string>
+    <string name="delete_video">حذف الفيديو</string>
+    <string name="delete_track">حذف المقطع</string>
+    <string name="delete_confirm">هل أنت متأكد أنك تريد حذف هذا الملف من جهازك؟ لا يمكن التراجع عن هذا الإجراء.</string>
+    <string name="file_deleted">تم حذف الملف بنجاح</string>
+    <string name="enter_pin">أدخل رمز PIN المكون من 4 أرقام</string>
+    <string name="set_pin">تعيين رمز PIN من 4 أرقام</string>
+    <string name="pin_incorrect">رمز PIN غير صحيح! حاول مرة أخرى.</string>
+    <string name="pin_saved">تم حفظ رمز الخزنة الخاصة</string>
+    <string name="unlock_vault">إلغاء قفل الخزنة</string>
+    <string name="play_all">تشغيل الكل</string>
+    <string name="shuffle">خلط عشوائي</string>
+    <string name="add_to_queue">إضافة إلى قائمة الانتظار</string>
+    <string name="add_to_playlist">إضافة إلى قائمة التشغيل</string>
+    <string name="set_as_ringtone">تعيين كنغمة رنين للهاتف</string>
+    <string name="speed_2x_active">سرعة 2X &gt;&gt;</string>
+    <string name="subtitle_style">نمط الترجمة</string>
+    <string name="no_videos_found">لم يتم العثور على فيديوهات</string>
+    <string name="no_songs_found">لم يتم العثور على أغانٍ</string>
+    <string name="no_vault_videos">لا توجد مقاطع مخفية في الخزنة الخاصة.\nانقل مقاطع الفيديو هنا عبر قائمة النقاط الثلاث.</string>
+    <string name="no_vault_songs">لا توجد أغانٍ مخفية في الخزنة الخاصة.\nانقل الأغاني هنا عبر قائمة النقاط الثلاث.</string>
+    <string name="cancel">إلغاء</string>
+    <string name="close">إغلاق</string>
+    <string name="done">تم</string>
+    <string name="ok">موافق</string>
+    <string name="delete">حذف</string>
+
+    <!-- Settings Screen -->
+    <string name="settings_title">الإعدادات</string>
+    <string name="section_general">عام واللغة</string>
+    <string name="theme_appearance">مظهر السمة</string>
+    <string name="section_video_player">مشغل الفيديو (نمط MX PLAYER)</string>
+    <string name="default_decoder">برنامج فك الترميز الافتراضي</string>
+    <string name="decoder_hw_desc">الأجهزة (HW) - أقصى أداء لوحدة معالجة الرسوميات</string>
+    <string name="decoder_sw_desc">البرامج (SW) - وضع التوافق العالي</string>
+    <string name="resume_playback">استئناف التشغيل</string>
+    <string name="resume_playback_desc">استئناف تشغيل مقاطع الفيديو تلقائياً من حيث توقفت</string>
+    <string name="audio_boost">تعزيز الصوت (200%)</string>
+    <string name="audio_boost_desc">رفع مستوى صوت الفيديو لأكثر من 100% كحد أقصى</string>
+    <string name="double_tap_seek">الفاصل الزمني للتقديم بالنقر المزدوج</string>
+    <string name="auto_hide_controls">مهلة الإخفاء التلقائي لعناصر التحكم</string>
+    <string name="bg_video_playback">تشغيل الفيديو في الخلفية</string>
+    <string name="bg_video_playback_desc">الاستمرار في تشغيل الصوت في الخلفية حتى يتم إيقافه مؤقتاً من الإشعار</string>
+    <string name="section_audio_player">مشغل الصوت والصوتيات</string>
+    <string name="open_equalizer">فتح معادل الصوت وتأثيرات الصوت</string>
+    <string name="pause_on_unplug">إيقاف مؤقت عند فصل سماعة الرأس</string>
+    <string name="pause_on_unplug_desc">إيقاف التشغيل تلقائياً عند فصل سماعات الرأس أو البلوتوث</string>
+    <string name="section_library_storage">تخزين الوسائط وإعادة الفحص</string>
+    <string name="rescan_media">إعادة فحص تخزين الوسائط</string>
+    <string name="rescan_media_desc">فحص تخزين الجهاز بحثاً عن مقاطع فيديو وأغانٍ مضافة حديثاً</string>
+    <string name="clear_history">مسح سجل التشغيل</string>
+    <string name="clear_history_desc">مسح قائمة مقاطع الفيديو والمقاطع الصوتية المشغلة مؤخراً</string>
+    <string name="section_about">حول SMART PLAYER PRO</string>
+    <string name="app_version_info">Smart Player Pro • الإصدار 2.0.0</string>
+    <string name="choose_language">اختر اللغة</string>
+    <string name="seconds">ثوانٍ</string>
+</resources>

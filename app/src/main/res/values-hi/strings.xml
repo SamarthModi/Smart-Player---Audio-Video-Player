@@ -1,19 +1,22 @@
 <resources>
+    <!-- App Details -->
     <string name="app_name">Smart Player</string>
     <string name="app_description">प्रोफेशनल स्मार्ट वीडियो और म्यूजिक प्लेयर</string>
+    <string name="channel_name">स्मार्ट मीडिया प्लेबैक</string>
+    <string name="channel_desc">पृष्ठभूमि संगीत और वीडियो नियंत्रण</string>
+
+    <!-- Navigation Tabs -->
     <string name="tab_videos">वीडियो</string>
-    <string name="tab_music">म्यूजिक</string>
+    <string name="tab_music">संगीत</string>
     <string name="tab_playlists">प्लेलिस्ट</string>
     <string name="tab_settings">सेटिंग्स</string>
-    <string name="permission_required">स्टोरेज अनुमति आवश्यक है</string>
-    <string name="permission_desc">आपके लोकल वीडियो और म्यूजिक चलाने के लिए, Smart Player को स्टोरेज एक्सेस की जरूरत है।</string>
-    <string name="grant_permission">अनुमति दें</string>
-    <string name="channel_name">स्मार्ट मीडिया प्लेबैक</string>
-    <string name="channel_desc">बैकग्राउंड म्यूजिक और वीडियो कंट्रोल्स</string>
 
-    <!-- General -->
-    <string name="search_hint_video">वीडियो खोजें...</string>
-    <string name="search_hint_music">गाने, कलाकार खोजें...</string>
+    <!-- Permissions -->
+    <string name="permission_required">स्टोरेज अनुमति आवश्यक है</string>
+    <string name="permission_desc">अपने स्थानीय वीडियो और संगीत चलाने के लिए स्मार्ट प्लेयर को स्टोरेज अनुमति की आवश्यकता है।</string>
+    <string name="grant_permission">अनुमति दें</string>
+
+    <!-- General / Common -->
     <string name="all_videos">सभी वीडियो</string>
     <string name="folders">फ़ोल्डर्स</string>
     <string name="tracks">गाने</string>
@@ -24,23 +27,75 @@
     <string name="custom_playlists">कस्टम</string>
     <string name="equalizer">इक्वलाइज़र</string>
     <string name="sleep_timer">स्लीप टाइमर</string>
-    <string name="audio_boost">ऑडियो बूस्ट (200%)</string>
     <string name="app_language">ऐप भाषा</string>
-
-    <!-- New Top-Tier Features -->
+    <string name="search_hint_video">वीडियो खोजें...</string>
+    <string name="search_hint_music">गाने, कलाकार, एल्बम खोजें...</string>
     <string name="continue_watching">देखना जारी रखें</string>
     <string name="recently_played">हाल ही में बजाया गया</string>
-    <string name="private_vault">प्राइवेट वॉल्ट (गुप्त फ़ोल्डर)</string>
-    <string name="play_as_audio">ऑडियो के रूप में चलाएं</string>
+    <string name="private_vault">प्राइवेट वॉल्ट</string>
+    <string name="secret_vault_active">गुप्त फ़ोल्डर</string>
+    <string name="exit_vault">वॉल्ट से बाहर निकलें</string>
+    <string name="play_as_audio">ऑडियो के रूप में चलाएं (बैकग्राउंड)</string>
     <string name="move_to_vault">प्राइवेट वॉल्ट में ले जाएं (छिपाएं)</string>
     <string name="remove_from_vault">वॉल्ट से बाहर निकालें</string>
+    <string name="add_to_favorites">पसंदीदा में जोड़ें</string>
+    <string name="remove_favorite">पसंदीदा से हटाएं</string>
+    <string name="share">शेयर करें</string>
+    <string name="details">विवरण</string>
+    <string name="delete_file">फ़ाइल हटाएं</string>
+    <string name="delete_video">वीडियो हटाएं</string>
+    <string name="delete_track">गाना हटाएं</string>
+    <string name="delete_confirm">क्या आप वाकई इस फ़ाइल को अपने डिवाइस से हटाना चाहते हैं? इसे पूर्ववत नहीं किया जा सकता।</string>
+    <string name="file_deleted">फ़ाइल सफलतापूर्वक हटाई गई</string>
     <string name="enter_pin">४-अंकों का पिन दर्ज करें</string>
     <string name="set_pin">नया ४-अंकों का पिन सेट करें</string>
     <string name="pin_incorrect">गलत पिन! पुनः प्रयास करें।</string>
     <string name="pin_saved">प्राइवेट वॉल्ट पिन सेट हो गया</string>
-    <string name="delete_file">फ़ाइल हटाएं</string>
-    <string name="delete_confirm">क्या आप वाकई इस फ़ाइल को अपने डिवाइस से हटाना चाहते हैं?</string>
-    <string name="file_deleted">फ़ाइल सफलतापूर्वक हटाई गई</string>
+    <string name="unlock_vault">वॉल्ट अनलॉक करें</string>
+    <string name="play_all">सभी चलाएं</string>
+    <string name="shuffle">शफ़ल करें</string>
+    <string name="add_to_queue">कतार में जोड़ें</string>
+    <string name="add_to_playlist">प्लेलिस्ट में जोड़ें</string>
+    <string name="set_as_ringtone">फ़ोन रिंगटोन के रूप में सेट करें</string>
     <string name="speed_2x_active">२ गुना स्पीड &gt;&gt;</string>
     <string name="subtitle_style">सबटाइटल शैली</string>
+    <string name="no_videos_found">कोई वीडियो नहीं मिला</string>
+    <string name="no_songs_found">कोई गाना नहीं मिला</string>
+    <string name="no_vault_videos">प्राइवेट वॉल्ट में कोई वीडियो नहीं है।\n३-डॉट मेनू से वीडियो यहां लाएं।</string>
+    <string name="no_vault_songs">प्राइवेट वॉल्ट में कोई गाना नहीं है।\n३-डॉट मेनू से गाने यहां लाएं।</string>
+    <string name="cancel">रद्द करें</string>
+    <string name="close">बंद करें</string>
+    <string name="done">पूर्ण</string>
+    <string name="ok">ठीक है</string>
+    <string name="delete">हटाएं</string>
+
+    <!-- Settings Screen -->
+    <string name="settings_title">सेटिंग्स</string>
+    <string name="section_general">सामान्य और भाषा</string>
+    <string name="theme_appearance">थीम स्वरूप</string>
+    <string name="section_video_player">वीडियो प्लेयर (MX PLAYER शैली)</string>
+    <string name="default_decoder">डिफ़ॉल्ट डिकोडर</string>
+    <string name="decoder_hw_desc">हार्डवेयर (HW) - अधिकतम GPU प्रदर्शन</string>
+    <string name="decoder_sw_desc">सॉफ़्टवेयर (SW) - उच्च अनुकूलता मोड</string>
+    <string name="resume_playback">प्लेबैक फिर से शुरू करें</string>
+    <string name="resume_playback_desc">जहां छोड़ा था वहीं से वीडियो स्वचालित रूप से जारी रखें</string>
+    <string name="audio_boost">ऑडियो बूस्ट (200%)</string>
+    <string name="audio_boost_desc">सामान्य 100% से अधिक आवाज बढ़ाएं</string>
+    <string name="double_tap_seek">डबल-टैप सीक अंतराल</string>
+    <string name="auto_hide_controls">कंट्रोल छिपने का समय</string>
+    <string name="bg_video_playback">पृष्ठभूमि वीडियो प्लेबैक</string>
+    <string name="bg_video_playback_desc">नोटिफिकेशन से रोके जाने तक बैकग्राउंड में ध्वनि चालू रखें</string>
+    <string name="section_audio_player">ऑडियो प्लेयर और ध्वनि</string>
+    <string name="open_equalizer">इक्वलाइज़र और साउंड FX खोलें</string>
+    <string name="pause_on_unplug">हेडफ़ोन हटने पर रोकें</string>
+    <string name="pause_on_unplug_desc">हेडफ़ोन या ब्लूटूथ डिस्कनेक्ट होने पर स्वतः रोकें</string>
+    <string name="section_library_storage">मीडिया स्टोरेज और पुनः स्कैन</string>
+    <string name="rescan_media">मीडिया स्टोरेज पुनः स्कैन करें</string>
+    <string name="rescan_media_desc">नए जोड़े गए वीडियो और गानों के लिए डिवाइस स्कैन करें</string>
+    <string name="clear_history">प्लेबैक इतिहास साफ़ करें</string>
+    <string name="clear_history_desc">हाल ही में चलाए गए वीडियो और गानों की सूची साफ़ करें</string>
+    <string name="section_about">SMART PLAYER PRO के बारे में</string>
+    <string name="app_version_info">Smart Player Pro • संस्करण 2.0.0</string>
+    <string name="choose_language">भाषा चुनें</string>
+    <string name="seconds">सेकंड</string>
 </resources>

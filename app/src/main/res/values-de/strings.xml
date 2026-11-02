@@ -1,0 +1,101 @@
+<resources>
+    <!-- App Details -->
+    <string name="app_name">Smart Player</string>
+    <string name="app_description">Professioneller Smart Video- &amp; Musik-Player</string>
+    <string name="channel_name">Smart-Medienwiedergabe</string>
+    <string name="channel_desc">Wiedergabesteuerung für Hintergrundmusik und -videos</string>
+
+    <!-- Navigation Tabs -->
+    <string name="tab_videos">Videos</string>
+    <string name="tab_music">Musik</string>
+    <string name="tab_playlists">Playlists</string>
+    <string name="tab_settings">Einstellungen</string>
+
+    <!-- Permissions -->
+    <string name="permission_required">Speicherberechtigung erforderlich</string>
+    <string name="permission_desc">Um lokale Videos und Musik abzuspielen, benötigt Smart Player Zugriff auf Ihre Mediendateien.</string>
+    <string name="grant_permission">Berechtigung erteilen</string>
+
+    <!-- General / Common -->
+    <string name="all_videos">Alle Videos</string>
+    <string name="folders">Ordner</string>
+    <string name="tracks">Titel</string>
+    <string name="albums">Alben</string>
+    <string name="artists">Künstler</string>
+    <string name="favorites">Favoriten</string>
+    <string name="history">Verlauf</string>
+    <string name="custom_playlists">Eigene</string>
+    <string name="equalizer">Equalizer</string>
+    <string name="sleep_timer">Schlaf-Timer</string>
+    <string name="app_language">App-Sprache</string>
+    <string name="search_hint_video">Videos suchen...</string>
+    <string name="search_hint_music">Titel, Künstler, Alben suchen...</string>
+    <string name="continue_watching">Weiterschauen</string>
+    <string name="recently_played">Zuletzt gespielt</string>
+    <string name="private_vault">Privater Tresor</string>
+    <string name="secret_vault_active">Geheimer Ordner</string>
+    <string name="exit_vault">Tresor verlassen</string>
+    <string name="play_as_audio">Als Audio abspielen (Hintergrund)</string>
+    <string name="move_to_vault">In Tresor verschieben (Verstecken)</string>
+    <string name="remove_from_vault">Aus Tresor entfernen</string>
+    <string name="add_to_favorites">Zu Favoriten hinzufügen</string>
+    <string name="remove_favorite">Aus Favoriten entfernen</string>
+    <string name="share">Teilen</string>
+    <string name="details">Details</string>
+    <string name="delete_file">Datei löschen</string>
+    <string name="delete_video">Video löschen</string>
+    <string name="delete_track">Titel löschen</string>
+    <string name="delete_confirm">Möchten Sie diese Datei wirklich löschen? Dies kann nicht rückgängig gemacht werden.</string>
+    <string name="file_deleted">Datei erfolgreich gelöscht</string>
+    <string name="enter_pin">4-stellige PIN eingeben</string>
+    <string name="set_pin">4-stellige PIN festlegen</string>
+    <string name="pin_incorrect">Falsche PIN! Bitte erneut versuchen.</string>
+    <string name="pin_saved">Tresor-PIN gespeichert</string>
+    <string name="unlock_vault">Tresor entsperren</string>
+    <string name="play_all">Alle abspielen</string>
+    <string name="shuffle">Zufallswiedergabe</string>
+    <string name="add_to_queue">Zur Warteschlange hinzufügen</string>
+    <string name="add_to_playlist">Zur Playlist hinzufügen</string>
+    <string name="set_as_ringtone">Als Klingelton festlegen</string>
+    <string name="speed_2x_active">2X GESCHWINDIGKEIT &gt;&gt;</string>
+    <string name="subtitle_style">Untertitelstil</string>
+    <string name="no_videos_found">Keine Videos gefunden</string>
+    <string name="no_songs_found">Keine Titel gefunden</string>
+    <string name="no_vault_videos">Keine versteckten Videos im Tresor.\nVerschieben Sie Videos über das 3-Punkte-Menü hierher.</string>
+    <string name="no_vault_songs">Keine versteckten Titel im Tresor.\nVerschieben Sie Titel über das 3-Punkte-Menü hierher.</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="close">Schließen</string>
+    <string name="done">Fertig</string>
+    <string name="ok">OK</string>
+    <string name="delete">Löschen</string>
+
+    <!-- Settings Screen -->
+    <string name="settings_title">Einstellungen</string>
+    <string name="section_general">ALLGEMEIN &amp; SPRACHE</string>
+    <string name="theme_appearance">Design / Farbschema</string>
+    <string name="section_video_player">VIDEO-PLAYER (MX PLAYER-STIL)</string>
+    <string name="default_decoder">Standard-Decoder</string>
+    <string name="decoder_hw_desc">Hardware (HW) - Maximale GPU-Leistung</string>
+    <string name="decoder_sw_desc">Software (SW) - Hoher Kompatibilitätsmodus</string>
+    <string name="resume_playback">Wiedergabe fortsetzen</string>
+    <string name="resume_playback_desc">Videos automatisch an der letzten Position fortsetzen</string>
+    <string name="audio_boost">Audio-Boost (200%)</string>
+    <string name="audio_boost_desc">Videolautstärke über normal 100% erhöhen</string>
+    <string name="double_tap_seek">Doppeltipp-Spulintervall</string>
+    <string name="auto_hide_controls">Bedienelemente automatisch ausblenden</string>
+    <string name="bg_video_playback">Hintergrund-Videowiedergabe</string>
+    <string name="bg_video_playback_desc">Ton im Hintergrund weiter abspielen, bis in Benachrichtigung pausiert</string>
+    <string name="section_audio_player">AUDIO-PLAYER &amp; SOUND</string>
+    <string name="open_equalizer">Equalizer &amp; Soundeffekte öffnen</string>
+    <string name="pause_on_unplug">Pause beim Trennen von Kopfhörern</string>
+    <string name="pause_on_unplug_desc">Automatische Pause beim Trennen von Kopfhörern oder Bluetooth</string>
+    <string name="section_library_storage">MEDIEN-SPEICHER &amp; NEUSCAN</string>
+    <string name="rescan_media">Medienspeicher neu scannen</string>
+    <string name="rescan_media_desc">Gerätespeicher nach neuen Videos und Musik scannen</string>
+    <string name="clear_history">Wiedergabeverlauf löschen</string>
+    <string name="clear_history_desc">Zuletzt wiedergegebene Videos und Musik leeren</string>
+    <string name="section_about">ÜBER SMART PLAYER PRO</string>
+    <string name="app_version_info">Smart Player Pro • Version 2.0.0</string>
+    <string name="choose_language">Sprache wählen</string>
+    <string name="seconds">Sekunden</string>
+</resources>

@@ -1,0 +1,101 @@
+<resources>
+    <!-- App Details -->
+    <string name="app_name">Smart Player</string>
+    <string name="app_description">পেশাদার স্মার্ট ভিডিও এবং মিউজিক প্লেয়ার</string>
+    <string name="channel_name">স্মার্ট মিডিয়া প্লেব্যাক</string>
+    <string name="channel_desc">ব্যাকগ্রাউন্ড মিউজিক এবং ভিডিও কন্ট্রোল</string>
+
+    <!-- Navigation Tabs -->
+    <string name="tab_videos">ভিডিও</string>
+    <string name="tab_music">গান</string>
+    <string name="tab_playlists">প্লেলিস্ট</string>
+    <string name="tab_settings">সেটিংস</string>
+
+    <!-- Permissions -->
+    <string name="permission_required">স্টোরেজ অনুমতি প্রয়োজন</string>
+    <string name="permission_desc">আপনার স্থানীয় ভিডিও এবং সঙ্গীত চালাতে স্মার্ট প্লেয়ারের স্টোরেজ অ্যাক্সেস প্রয়োজন।</string>
+    <string name="grant_permission">অনুমতি দিন</string>
+
+    <!-- General / Common -->
+    <string name="all_videos">সমস্ত ভিডিও</string>
+    <string name="folders">ফোল্ডার</string>
+    <string name="tracks">গান</string>
+    <string name="albums">অ্যালবাম</string>
+    <string name="artists">শিল্পী</string>
+    <string name="favorites">প্রিয়</string>
+    <string name="history">ইতিহাস</string>
+    <string name="custom_playlists">কাস্টম</string>
+    <string name="equalizer">ইকুয়ালাইজার</string>
+    <string name="sleep_timer">স্লিপ টাইমার</string>
+    <string name="app_language">অ্যাপের ভাষা</string>
+    <string name="search_hint_video">ভিডিও খুঁজুন...</string>
+    <string name="search_hint_music">গান, শিল্পী, অ্যালবাম খুঁজুন...</string>
+    <string name="continue_watching">দেখা চালিয়ে যান</string>
+    <string name="recently_played">সম্প্রতি বাজানো হয়েছে</string>
+    <string name="private_vault">ব্যক্তিগত ভল্ট</string>
+    <string name="secret_vault_active">গোপন ফোল্ডার</string>
+    <string name="exit_vault">ভল্ট থেকে প্রস্থান</string>
+    <string name="play_as_audio">অডিও হিসেবে বাজান (ব্যাকগ্রাউন্ড)</string>
+    <string name="move_to_vault">ভল্টে লুকান</string>
+    <string name="remove_from_vault">ভল্ট থেকে সরান</string>
+    <string name="add_to_favorites">প্রিয়তে যোগ করুন</string>
+    <string name="remove_favorite">প্রিয় থেকে সরান</string>
+    <string name="share">শেয়ার করুন</string>
+    <string name="details">বিবরণ</string>
+    <string name="delete_file">ফাইল মুছুন</string>
+    <string name="delete_video">ভিডিও মুছুন</string>
+    <string name="delete_track">গান মুছুন</string>
+    <string name="delete_confirm">আপনি কি নিশ্চিত যে এই ফাইলটি মুছে ফেলতে চান?</string>
+    <string name="file_deleted">ফাইল সফলভাবে মুছে ফেলা হয়েছে</string>
+    <string name="enter_pin">৪-সংখ্যার পিন লিখুন</string>
+    <string name="set_pin">নতুন ৪-সংখ্যার পিন সেট করুন</string>
+    <string name="pin_incorrect">ভুল পিন! আবার চেষ্টা করুন।</string>
+    <string name="pin_saved">পিন সংরক্ষিত হয়েছে</string>
+    <string name="unlock_vault">ভল্ট আনলক করুন</string>
+    <string name="play_all">সব বাজান</string>
+    <string name="shuffle">শাফল করুন</string>
+    <string name="add_to_queue">সারিতে যোগ করুন</string>
+    <string name="add_to_playlist">প্লেলিস্টে যোগ করুন</string>
+    <string name="set_as_ringtone">রিংটোন হিসেবে সেট করুন</string>
+    <string name="speed_2x_active">২ গুণ গতি &gt;&gt;</string>
+    <string name="subtitle_style">সাবটাইটেল স্টাইল</string>
+    <string name="no_videos_found">কোনো ভিডিও পাওয়া যায়নি</string>
+    <string name="no_songs_found">কোনো গান পাওয়া যায়নি</string>
+    <string name="no_vault_videos">ভল্টে কোনো ভিডিও নেই।</string>
+    <string name="no_vault_songs">ভল্টে কোনো গান নেই।</string>
+    <string name="cancel">বাতিল</string>
+    <string name="close">বন্ধ করুন</string>
+    <string name="done">সম্পন্ন</string>
+    <string name="ok">ঠিক আছে</string>
+    <string name="delete">মুছুন</string>
+
+    <!-- Settings Screen -->
+    <string name="settings_title">সেটিংস</string>
+    <string name="section_general">সাধারণ এবং ভাষা</string>
+    <string name="theme_appearance">থিম রূপ</string>
+    <string name="section_video_player">ভিডিও প্লেয়ার (MX PLAYER স্টাইল)</string>
+    <string name="default_decoder">ডিফল্ট ডিকোডার</string>
+    <string name="decoder_hw_desc">হার্ডওয়্যার (HW) - সর্বোচ্চ জিপিইউ কর্মক্ষমতা</string>
+    <string name="decoder_sw_desc">সফটওয়্যার (SW) - উচ্চ সামঞ্জস্যতা</string>
+    <string name="resume_playback">পুনরায় চালু করুন</string>
+    <string name="resume_playback_desc">যেখান থেকে শেষ করেছিলেন সেখান থেকে শুরু করুন</string>
+    <string name="audio_boost">অডিও বুস্ট (২০০%)</string>
+    <string name="audio_boost_desc">স্বাভাবিক ১০০% এর বেশি ভলিউম বাড়ান</string>
+    <string name="double_tap_seek">ডাবল ট্যাপ সিক সময়</string>
+    <string name="auto_hide_controls">নিয়ন্ত্রণ লুকানোর সময়</string>
+    <string name="bg_video_playback">ব্যাকগ্রাউন্ড ভিডিও প্লেব্যাক</string>
+    <string name="bg_video_playback_desc">বিজ্ঞপ্তি থেকে বিরতি না দেওয়া পর্যন্ত ব্যাকগ্রাউন্ডে শব্দ বাজান</string>
+    <string name="section_audio_player">অডিও প্লেয়ার এবং শব্দ</string>
+    <string name="open_equalizer">ইকুয়ালাইজার খুলুন</string>
+    <string name="pause_on_unplug">হেডফোন খুললে থামান</string>
+    <string name="pause_on_unplug_desc">হেডফোন বা ব্লুটুথ সংযোগ বিচ্ছিন্ন হলে স্বয়ংক্রিয়ভাবে বিরতি দিন</string>
+    <string name="section_library_storage">মিডিয়া স্টোরেজ এবং রিস্ক্যান</string>
+    <string name="rescan_media">মিডিয়া পুনরায় স্ক্যান করুন</string>
+    <string name="rescan_media_desc">নতুন ভিডিও এবং গানের জন্য স্টোরেজ স্ক্যান করুন</string>
+    <string name="clear_history">ইতিহাস পরিষ্কার করুন</string>
+    <string name="clear_history_desc">সম্প্রতি বাজানো ভিডিও এবং অডিও তালিকা মুছুন</string>
+    <string name="section_about">SMART PLAYER PRO সম্পর্কে</string>
+    <string name="app_version_info">Smart Player Pro • সংস্করণ ২.০.০</string>
+    <string name="choose_language">ভাষা নির্বাচন করুন</string>
+    <string name="seconds">সেকেন্ড</string>
+</resources>

@@ -1,0 +1,101 @@
+<resources>
+    <!-- App Details -->
+    <string name="app_name">Smart Player</string>
+    <string name="app_description">专业智能音视频播放器</string>
+    <string name="channel_name">智能媒体播放</string>
+    <string name="channel_desc">后台音乐和视频播放控制</string>
+
+    <!-- Navigation Tabs -->
+    <string name="tab_videos">视频</string>
+    <string name="tab_music">音乐</string>
+    <string name="tab_playlists">歌单</string>
+    <string name="tab_settings">设置</string>
+
+    <!-- Permissions -->
+    <string name="permission_required">需要存储权限</string>
+    <string name="permission_desc">为了播放本地视频和音乐，Smart Player 需要访问您的媒体文件。</string>
+    <string name="grant_permission">授予权限</string>
+
+    <!-- General / Common -->
+    <string name="all_videos">全部视频</string>
+    <string name="folders">文件夹</string>
+    <string name="tracks">曲目</string>
+    <string name="albums">专辑</string>
+    <string name="artists">歌手</string>
+    <string name="favorites">收藏夹</string>
+    <string name="history">播放历史</string>
+    <string name="custom_playlists">自定歌单</string>
+    <string name="equalizer">均衡器</string>
+    <string name="sleep_timer">睡眠定时器</string>
+    <string name="app_language">应用语言</string>
+    <string name="search_hint_video">搜索视频...</string>
+    <string name="search_hint_music">搜索歌曲、歌手、专辑...</string>
+    <string name="continue_watching">继续播放</string>
+    <string name="recently_played">最近播放</string>
+    <string name="private_vault">私密保险箱</string>
+    <string name="secret_vault_active">加密文件夹</string>
+    <string name="exit_vault">退出保险箱</string>
+    <string name="play_as_audio">作为音频播放 (后台)</string>
+    <string name="move_to_vault">移至私密保险箱 (隐藏)</string>
+    <string name="remove_from_vault">解除隐藏 / 移出保险箱</string>
+    <string name="add_to_favorites">添加到收藏夹</string>
+    <string name="remove_favorite">从收藏中移除</string>
+    <string name="share">分享</string>
+    <string name="details">详情</string>
+    <string name="delete_file">删除文件</string>
+    <string name="delete_video">删除视频</string>
+    <string name="delete_track">删除音频</string>
+    <string name="delete_confirm">您确定要从设备中删除此文件吗？此操作无法撤消。</string>
+    <string name="file_deleted">文件已成功删除</string>
+    <string name="enter_pin">请输入4位数字PIN码</string>
+    <string name="set_pin">设置4位数字PIN码</string>
+    <string name="pin_incorrect">PIN码错误！请重试。</string>
+    <string name="pin_saved">私密保险箱PIN码已保存</string>
+    <string name="unlock_vault">解锁保险箱</string>
+    <string name="play_all">全部播放</string>
+    <string name="shuffle">随机播放</string>
+    <string name="add_to_queue">添加到播放队列</string>
+    <string name="add_to_playlist">添加到歌单</string>
+    <string name="set_as_ringtone">设置为来电铃声</string>
+    <string name="speed_2x_active">2倍速 &gt;&gt;</string>
+    <string name="subtitle_style">字幕样式</string>
+    <string name="no_videos_found">未找到视频</string>
+    <string name="no_songs_found">未找到歌曲</string>
+    <string name="no_vault_videos">私密保险箱中暂无隐藏视频。\n通过三点菜单将视频移动至此处。</string>
+    <string name="no_vault_songs">私密保险箱中暂无隐藏歌曲。\n通过三点菜单将歌曲移动至此处。</string>
+    <string name="cancel">取消</string>
+    <string name="close">关闭</string>
+    <string name="done">完成</string>
+    <string name="ok">确定</string>
+    <string name="delete">删除</string>
+
+    <!-- Settings Screen -->
+    <string name="settings_title">设置</string>
+    <string name="section_general">通用与语言</string>
+    <string name="theme_appearance">主题外观</string>
+    <string name="section_video_player">视频播放器 (MX PLAYER 风格)</string>
+    <string name="default_decoder">默认解码器</string>
+    <string name="decoder_hw_desc">硬件解码 (HW) - 最大化 GPU 性能</string>
+    <string name="decoder_sw_desc">软件解码 (SW) - 高兼容性模式</string>
+    <string name="resume_playback">记忆播放</string>
+    <string name="resume_playback_desc">自动从上次离开的位置继续播放视频</string>
+    <string name="audio_boost">音量增强 (200%)</string>
+    <string name="audio_boost_desc">突破系统默认 100% 最大音量</string>
+    <string name="double_tap_seek">双击快进/快退间隔</string>
+    <string name="auto_hide_controls">控制面板自动隐藏超时</string>
+    <string name="bg_video_playback">后台视频播放</string>
+    <string name="bg_video_playback_desc">在后台持续播放声音，直到在通知栏中暂停</string>
+    <string name="section_audio_player">音频播放器与音效</string>
+    <string name="open_equalizer">打开均衡器与音效</string>
+    <string name="pause_on_unplug">拔出耳机时暂停</string>
+    <string name="pause_on_unplug_desc">拔出耳机或断开蓝牙时自动暂停播放</string>
+    <string name="section_library_storage">媒体库与重新扫描</string>
+    <string name="rescan_media">重新扫描媒体库</string>
+    <string name="rescan_media_desc">扫描设备存储中的新视频与音乐</string>
+    <string name="clear_history">清除播放历史</string>
+    <string name="clear_history_desc">清除最近播放的音视频历史记录</string>
+    <string name="section_about">关于 SMART PLAYER PRO</string>
+    <string name="app_version_info">Smart Player Pro • 版本 2.0.0</string>
+    <string name="choose_language">选择语言</string>
+    <string name="seconds">秒</string>
+</resources>
