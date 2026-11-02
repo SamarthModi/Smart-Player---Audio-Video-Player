@@ -209,7 +209,14 @@ fun MainAppScreen(
     var hasPermission by remember { mutableStateOf(checkMediaPermissions(context)) }
 
     val requiredPermissions = remember {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            arrayOf(
+                Manifest.permission.READ_MEDIA_VIDEO,
+                Manifest.permission.READ_MEDIA_AUDIO,
+                Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED,
+                Manifest.permission.POST_NOTIFICATIONS
+            )
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             arrayOf(
                 Manifest.permission.READ_MEDIA_VIDEO,
                 Manifest.permission.READ_MEDIA_AUDIO,
@@ -224,38 +231,58 @@ fun MainAppScreen(
 
     fun reloadMedia() {
         coroutineScope.launch {
-            try {
-                val extDir = Environment.getExternalStorageDirectory()
-                if (extDir != null && extDir.exists()) {
-                    val pathsToScan = mutableListOf<String>()
-                    listOf("Download", "Movies", "Music", "DCIM").forEach { folderName ->
-                        val dir = File(extDir, folderName)
-                        if (dir.exists()) {
-                            dir.listFiles()?.take(50)?.forEach { file ->
-                                if (file.isFile) pathsToScan.add(file.absolutePath)
-                            }
-                        }
-                    }
-                    if (pathsToScan.isNotEmpty()) {
-                        MediaScannerConnection.scanFile(context, pathsToScan.toTypedArray(), null, null)
-                    }
-                }
-            } catch (_: Exception) {}
-
+            // 1. Immediately query MediaStore for instant display
             val vids = mediaStoreRepository.getAllVideos()
-            videos = vids
-            videoFolders = mediaStoreRepository.groupVideosByFolders(vids)
+            if (vids.isNotEmpty()) {
+                videos = vids
+                videoFolders = mediaStoreRepository.groupVideosByFolders(vids)
+            }
 
             val auds = mediaStoreRepository.getAllAudios()
-            audios = auds
-            audioFolders = mediaStoreRepository.groupAudiosByFolders(auds)
+            if (auds.isNotEmpty()) {
+                audios = auds
+                audioFolders = mediaStoreRepository.groupAudiosByFolders(auds)
+            }
+
+            // 2. Right after runtime permission grant, MediaStore provider in Android OS
+            // can take a few milliseconds to update IPC permission status.
+            // If empty, auto-retry at 250ms and 750ms so user gets data immediately without touching anything!
+            if (vids.isEmpty() || auds.isEmpty()) {
+                kotlinx.coroutines.delay(250)
+                val retryVids = mediaStoreRepository.getAllVideos()
+                if (retryVids.isNotEmpty()) {
+                    videos = retryVids
+                    videoFolders = mediaStoreRepository.groupVideosByFolders(retryVids)
+                }
+
+                val retryAuds = mediaStoreRepository.getAllAudios()
+                if (retryAuds.isNotEmpty()) {
+                    audios = retryAuds
+                    audioFolders = mediaStoreRepository.groupAudiosByFolders(retryAuds)
+                }
+
+                if (videos.isEmpty() && audios.isEmpty()) {
+                    kotlinx.coroutines.delay(500)
+                    val retryVids2 = mediaStoreRepository.getAllVideos()
+                    videos = retryVids2
+                    videoFolders = mediaStoreRepository.groupVideosByFolders(retryVids2)
+
+                    val retryAuds2 = mediaStoreRepository.getAllAudios()
+                    audios = retryAuds2
+                    audioFolders = mediaStoreRepository.groupAudiosByFolders(retryAuds2)
+                }
+            }
         }
     }
 
     val permissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestMultiplePermissions()
-    ) { _ ->
-        val granted = checkMediaPermissions(context)
+    ) { results ->
+        // Check if any media permission was granted in the dialog results or via context check
+        val granted = results.any { (perm, isAllowed) ->
+            isAllowed && perm != Manifest.permission.POST_NOTIFICATIONS
+        } || checkMediaPermissions(context)
+
         hasPermission = granted
         if (granted) {
             reloadMedia()
@@ -272,17 +299,17 @@ fun MainAppScreen(
         }
     }
 
-    // Automatically detect permission grant when returning from App Settings
+    // Automatically detect permission grant when returning from App Settings or when activity resumes
     val lifecycleOwner = LocalLifecycleOwner.current
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
             if (event == Lifecycle.Event.ON_RESUME) {
                 val granted = checkMediaPermissions(context)
                 if (granted) {
-                    if (!hasPermission) {
-                        hasPermission = true
+                    hasPermission = true
+                    if (videos.isEmpty() || audios.isEmpty()) {
+                        reloadMedia()
                     }
-                    reloadMedia()
                 }
             }
         }
