@@ -118,14 +118,6 @@ class MainActivity : ComponentActivity() {
         // Apply saved language
         LocaleHelper.applyLanguage(this, preferencesRepository.appLanguage)
 
-        // Start Foreground Playback Service
-        val serviceIntent = Intent(this, SmartAudioService::class.java)
-        try {
-            startService(serviceIntent)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-
         setContent {
             val themeStyle by preferencesRepository.themeStyleFlow.collectAsState()
             SmartPlayerTheme(themeStyle = themeStyle) {
@@ -191,15 +183,13 @@ fun MainAppScreen(
     var audioFolders by remember { mutableStateOf<List<MediaFolder>>(emptyList()) }
 
     fun checkMediaPermissions(ctx: android.content.Context): Boolean {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             val hasVideo = ContextCompat.checkSelfPermission(ctx, Manifest.permission.READ_MEDIA_VIDEO) == PackageManager.PERMISSION_GRANTED
             val hasAudio = ContextCompat.checkSelfPermission(ctx, Manifest.permission.READ_MEDIA_AUDIO) == PackageManager.PERMISSION_GRANTED
-            val hasPartial = ContextCompat.checkSelfPermission(ctx, Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED) == PackageManager.PERMISSION_GRANTED
+            val hasPartial = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                ContextCompat.checkSelfPermission(ctx, Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED) == PackageManager.PERMISSION_GRANTED
+            } else false
             hasVideo || hasAudio || hasPartial
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            val hasVideo = ContextCompat.checkSelfPermission(ctx, Manifest.permission.READ_MEDIA_VIDEO) == PackageManager.PERMISSION_GRANTED
-            val hasAudio = ContextCompat.checkSelfPermission(ctx, Manifest.permission.READ_MEDIA_AUDIO) == PackageManager.PERMISSION_GRANTED
-            hasVideo || hasAudio
         } else {
             ContextCompat.checkSelfPermission(ctx, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
         }
@@ -209,18 +199,15 @@ fun MainAppScreen(
     var hasPermission by remember { mutableStateOf(checkMediaPermissions(context)) }
 
     val requiredPermissions = remember {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             arrayOf(
                 Manifest.permission.READ_MEDIA_VIDEO,
-                Manifest.permission.READ_MEDIA_AUDIO,
-                Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED,
-                Manifest.permission.POST_NOTIFICATIONS
+                Manifest.permission.READ_MEDIA_AUDIO
             )
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        } else if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
             arrayOf(
-                Manifest.permission.READ_MEDIA_VIDEO,
-                Manifest.permission.READ_MEDIA_AUDIO,
-                Manifest.permission.POST_NOTIFICATIONS
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
             )
         } else {
             arrayOf(
@@ -275,6 +262,10 @@ fun MainAppScreen(
         }
     }
 
+    val notificationLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+    ) { _ -> }
+
     val permissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestMultiplePermissions()
     ) { results ->
@@ -286,6 +277,12 @@ fun MainAppScreen(
         hasPermission = granted
         if (granted) {
             reloadMedia()
+            // Request notification permission smoothly after media is granted on Android 13+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                if (ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                    notificationLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                }
+            }
         }
     }
 
@@ -293,6 +290,11 @@ fun MainAppScreen(
         if (checkMediaPermissions(context)) {
             hasPermission = true
             reloadMedia()
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                if (ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                    notificationLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                }
+            }
         } else {
             hasPermission = false
             permissionLauncher.launch(requiredPermissions)

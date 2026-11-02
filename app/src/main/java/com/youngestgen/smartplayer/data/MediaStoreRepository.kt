@@ -132,7 +132,7 @@ class MediaStoreRepository(private val context: Context) {
             MediaStore.Audio.Media.YEAR
         )
 
-        val selection = "${MediaStore.Audio.Media.IS_MUSIC} != 0"
+        val selection = "(${MediaStore.Audio.Media.IS_MUSIC} != 0) OR (${MediaStore.Audio.Media.DURATION} >= 2000)"
         val sortOrder = "${MediaStore.Audio.Media.TITLE} ASC"
 
         try {
@@ -175,8 +175,8 @@ class MediaStoreRepository(private val context: Context) {
                         File(path).parentFile?.name ?: "Unknown"
                     } else "Unknown"
 
-                    // Ignore ringtones, notification sounds (< 15 seconds) unless user explicitly plays them
-                    if (duration >= 15000 && size > 10240) {
+                    // Ignore tiny corrupted files (< 3 seconds or < 5KB)
+                    if (duration >= 3000 && size > 5120) {
                         audioList.add(
                             AudioItem(
                                 id = id,
