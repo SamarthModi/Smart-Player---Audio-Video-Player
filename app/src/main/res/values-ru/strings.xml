@@ -98,4 +98,5 @@
     <string name="app_version_info">Smart Player Pro • Версия 2.0.0</string>
     <string name="choose_language">Выбрать язык</string>
     <string name="seconds">Секунд</string>
+    <string name="system_default">По умолчанию системы</string>
 </resources>

@@ -98,4 +98,5 @@
     <string name="app_version_info">Smart Player Pro • バージョン 2.0.0</string>
     <string name="choose_language">言語を選択</string>
     <string name="seconds">秒</string>
+    <string name="system_default">システムデフォルト</string>
 </resources>

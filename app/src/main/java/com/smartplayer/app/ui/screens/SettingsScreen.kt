@@ -567,7 +567,8 @@ fun SettingsScreen(
                                 .clickable {
                                     appLanguage = code
                                     preferencesRepository.appLanguage = code
-                                    LocaleHelper.applyLanguage(code)
+                                    LocaleHelper.updateContextLocale(context, code)
+                                    LocaleHelper.applyLanguage(context, code)
                                     showLanguageDialog = false
                                     (context as? Activity)?.recreate()
                                 }

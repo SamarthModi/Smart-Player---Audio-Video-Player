@@ -98,4 +98,5 @@
     <string name="app_version_info">Smart Player Pro • பதிப்பு 2.0.0</string>
     <string name="choose_language">மொழியைத் தேர்வுசெய்க</string>
     <string name="seconds">விநாடிகள்</string>
+    <string name="system_default">கணினி இயல்புநிலை</string>
 </resources>

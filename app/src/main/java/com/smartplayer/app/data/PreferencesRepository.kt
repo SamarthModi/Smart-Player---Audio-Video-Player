@@ -258,7 +258,9 @@ class PreferencesRepository(private val context: Context) {
     // App Language ("system", "en", "gu", "hi")
     var appLanguage: String
         get() = prefs.getString("app_language", "system") ?: "system"
-        set(value) = prefs.edit().putString("app_language", value).apply()
+        set(value) {
+            prefs.edit().putString("app_language", value).commit()
+        }
 
     // Decoder Mode ("HW", "SW")
     var decoderMode: String

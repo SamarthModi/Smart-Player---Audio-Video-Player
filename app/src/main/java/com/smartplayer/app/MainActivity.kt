@@ -109,7 +109,7 @@ class MainActivity : ComponentActivity() {
         playerManager = SmartAudioPlayerManager.getInstance(this)
 
         // Apply saved language
-        LocaleHelper.applyLanguage(preferencesRepository.appLanguage)
+        LocaleHelper.applyLanguage(this, preferencesRepository.appLanguage)
 
         // Start Foreground Playback Service
         val serviceIntent = Intent(this, SmartAudioService::class.java)

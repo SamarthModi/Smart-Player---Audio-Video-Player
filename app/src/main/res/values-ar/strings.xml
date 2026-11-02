@@ -98,4 +98,5 @@
     <string name="app_version_info">Smart Player Pro • الإصدار 2.0.0</string>
     <string name="choose_language">اختر اللغة</string>
     <string name="seconds">ثوانٍ</string>
+    <string name="system_default">افتراضي النظام</string>
 </resources>
