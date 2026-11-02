@@ -41,6 +41,7 @@ import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -63,6 +64,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.smartplayer.app.data.MediaStoreRepository
 import com.smartplayer.app.data.PreferencesRepository
 import com.smartplayer.app.model.AudioItem
@@ -183,7 +187,23 @@ fun MainAppScreen(
     var audios by remember { mutableStateOf<List<AudioItem>>(emptyList()) }
     var audioFolders by remember { mutableStateOf<List<MediaFolder>>(emptyList()) }
 
-    var hasPermission by remember { mutableStateOf(false) }
+    fun checkMediaPermissions(ctx: android.content.Context): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            val hasVideo = ContextCompat.checkSelfPermission(ctx, Manifest.permission.READ_MEDIA_VIDEO) == PackageManager.PERMISSION_GRANTED
+            val hasAudio = ContextCompat.checkSelfPermission(ctx, Manifest.permission.READ_MEDIA_AUDIO) == PackageManager.PERMISSION_GRANTED
+            val hasPartial = ContextCompat.checkSelfPermission(ctx, Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED) == PackageManager.PERMISSION_GRANTED
+            hasVideo || hasAudio || hasPartial
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            val hasVideo = ContextCompat.checkSelfPermission(ctx, Manifest.permission.READ_MEDIA_VIDEO) == PackageManager.PERMISSION_GRANTED
+            val hasAudio = ContextCompat.checkSelfPermission(ctx, Manifest.permission.READ_MEDIA_AUDIO) == PackageManager.PERMISSION_GRANTED
+            hasVideo || hasAudio
+        } else {
+            ContextCompat.checkSelfPermission(ctx, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+        }
+    }
+
+    // Initialize with real permission status immediately so PermissionRequestScreen is never flashed
+    var hasPermission by remember { mutableStateOf(checkMediaPermissions(context)) }
 
     val requiredPermissions = remember {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -196,12 +216,6 @@ fun MainAppScreen(
             arrayOf(
                 Manifest.permission.READ_EXTERNAL_STORAGE
             )
-        }
-    }
-
-    fun checkPermissions(): Boolean {
-        return requiredPermissions.all {
-            ContextCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED
         }
     }
 
@@ -219,8 +233,8 @@ fun MainAppScreen(
 
     val permissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestMultiplePermissions()
-    ) { results ->
-        val granted = results.values.any { it }
+    ) { _ ->
+        val granted = checkMediaPermissions(context)
         hasPermission = granted
         if (granted) {
             reloadMedia()
@@ -228,11 +242,32 @@ fun MainAppScreen(
     }
 
     LaunchedEffect(Unit) {
-        if (checkPermissions()) {
+        if (checkMediaPermissions(context)) {
             hasPermission = true
             reloadMedia()
         } else {
+            hasPermission = false
             permissionLauncher.launch(requiredPermissions)
+        }
+    }
+
+    // Automatically detect permission grant when returning from App Settings
+    val lifecycleOwner = LocalLifecycleOwner.current
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_RESUME) {
+                val granted = checkMediaPermissions(context)
+                if (granted) {
+                    if (!hasPermission) {
+                        hasPermission = true
+                    }
+                    reloadMedia()
+                }
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
         }
     }
 
