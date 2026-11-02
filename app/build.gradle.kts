@@ -21,9 +21,19 @@ android {
         }
     }
 
+    signingConfigs {
+        create("release") {
+            storeFile = file("smartplayer.jks")
+            storePassword = "9714666540"
+            keyAlias = "smartplayer"
+            keyPassword = "9714666540"
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("release")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -31,6 +41,7 @@ android {
         }
         debug {
             isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("release")
         }
     }
 
