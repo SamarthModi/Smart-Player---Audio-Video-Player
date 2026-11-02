@@ -97,5 +97,6 @@
     <string name="section_about">ABOUT SMART PLAYER PRO</string>
     <string name="app_version_info">Smart Player Pro • Version 2.0.0</string>
     <string name="choose_language">Choose Language</string>
+    <string name="system_default">System Default</string>
     <string name="seconds">Seconds</string>
 </resources>

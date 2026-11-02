@@ -87,6 +87,7 @@ string shuffle
 string sleep_timer
 string speed_2x_active
 string subtitle_style
+string system_default
 string tab_music
 string tab_playlists
 string tab_settings

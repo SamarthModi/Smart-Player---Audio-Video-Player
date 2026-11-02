@@ -22,7 +22,7 @@ object LocaleHelper {
     fun updateContextLocale(context: Context, languageCode: String): Context {
         if (languageCode == "system" || languageCode.isEmpty()) return context
 
-        val locale = Locale(languageCode)
+        val locale = Locale.forLanguageTag(languageCode)
         Locale.setDefault(locale)
 
         val res = context.resources
@@ -38,5 +38,34 @@ object LocaleHelper {
         res.updateConfiguration(configuration, res.displayMetrics)
 
         return context.createConfigurationContext(configuration)
+    }
+
+    fun getSystemLanguageCode(): String {
+        val systemLocale = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            android.content.res.Resources.getSystem().configuration.locales[0]
+        } else {
+            @Suppress("DEPRECATION")
+            android.content.res.Resources.getSystem().configuration.locale
+        } ?: Locale.getDefault()
+
+        return systemLocale.language.lowercase()
+    }
+
+    fun getSystemLanguageDisplayName(): String {
+        val systemLocale = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            android.content.res.Resources.getSystem().configuration.locales[0]
+        } else {
+            @Suppress("DEPRECATION")
+            android.content.res.Resources.getSystem().configuration.locale
+        } ?: Locale.getDefault()
+
+        val nativeName = systemLocale.getDisplayLanguage(systemLocale).replaceFirstChar { it.uppercase() }
+        val englishName = systemLocale.getDisplayLanguage(Locale.ENGLISH).replaceFirstChar { it.uppercase() }
+
+        return if (nativeName.equals(englishName, ignoreCase = true) || nativeName.isBlank()) {
+            englishName.ifBlank { "English" }
+        } else {
+            "$nativeName ($englishName)"
+        }
     }
 }

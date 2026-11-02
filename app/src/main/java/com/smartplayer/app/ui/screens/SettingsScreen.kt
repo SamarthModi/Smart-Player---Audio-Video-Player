@@ -74,6 +74,9 @@ fun SettingsScreen(
     val context = LocalContext.current
 
     var appLanguage by remember { mutableStateOf(preferencesRepository.appLanguage) }
+    val systemLangCode = remember { LocaleHelper.getSystemLanguageCode() }
+    val systemLangDisplay = remember { LocaleHelper.getSystemLanguageDisplayName() }
+    val systemDefaultPrefix = stringResource(R.string.system_default)
     var decoderMode by remember { mutableStateOf(preferencesRepository.decoderMode) }
     var isAudioBoost by remember { mutableStateOf(preferencesRepository.isAudioBoostEnabled) }
     var isAutoResume by remember { mutableStateOf(preferencesRepository.isAutoResumeEnabled) }
@@ -139,24 +142,25 @@ fun SettingsScreen(
                             fontSize = 15.sp
                         )
                         Text(
-                            when (appLanguage) {
-                                "gu" -> "ગુજરાતી (Gujarati)"
-                                "hi" -> "हिन्दी (Hindi)"
-                                "mr" -> "मराठी (Marathi)"
-                                "bn" -> "বাংলা (Bengali)"
-                                "ta" -> "தமிழ் (Tamil)"
-                                "te" -> "తెలుగు (Telugu)"
-                                "en" -> "English"
-                                "es" -> "Español (Spanish)"
-                                "fr" -> "Français (French)"
-                                "de" -> "Deutsch (German)"
-                                "ar" -> "العربية (Arabic)"
-                                "ru" -> "Русский (Russian)"
-                                "pt" -> "Português (Portuguese)"
-                                "ja" -> "日本語 (Japanese)"
-                                "ko" -> "한국어 (Korean)"
-                                "zh" -> "中文 (Chinese)"
-                                else -> "System Default"
+                            when {
+                                appLanguage == "system" || appLanguage == systemLangCode -> "$systemDefaultPrefix ($systemLangDisplay)"
+                                appLanguage == "gu" -> "ગુજરાતી (Gujarati)"
+                                appLanguage == "hi" -> "हिन्दी (Hindi)"
+                                appLanguage == "mr" -> "मराठी (Marathi)"
+                                appLanguage == "bn" -> "বাংলা (Bengali)"
+                                appLanguage == "ta" -> "தமிழ் (Tamil)"
+                                appLanguage == "te" -> "తెలుగు (Telugu)"
+                                appLanguage == "en" -> "English"
+                                appLanguage == "es" -> "Español (Spanish)"
+                                appLanguage == "fr" -> "Français (French)"
+                                appLanguage == "de" -> "Deutsch (German)"
+                                appLanguage == "ar" -> "العربية (Arabic)"
+                                appLanguage == "ru" -> "Русский (Russian)"
+                                appLanguage == "pt" -> "Português (Portuguese)"
+                                appLanguage == "ja" -> "日本語 (Japanese)"
+                                appLanguage == "ko" -> "한국어 (Korean)"
+                                appLanguage == "zh" -> "中文 (Chinese)"
+                                else -> "$systemDefaultPrefix ($systemLangDisplay)"
                             },
                             color = NeonCyan,
                             fontSize = 12.sp
@@ -514,8 +518,7 @@ fun SettingsScreen(
 
     // Language Selection Dialog
     if (showLanguageDialog) {
-        val langs = listOf(
-            Pair("system", "System Default"),
+        val allOtherLanguages = listOf(
             Pair("gu", "ગુજરાતી (Gujarati)"),
             Pair("hi", "हिन्दी (Hindi)"),
             Pair("mr", "मराठी (Marathi)"),
@@ -532,13 +535,23 @@ fun SettingsScreen(
             Pair("ja", "日本語 (Japanese)"),
             Pair("ko", "한국어 (Korean)"),
             Pair("zh", "中文 (Chinese)")
-        )
+        ).filter { it.first != systemLangCode }
+
+        val langs = listOf(
+            Pair("system", "$systemDefaultPrefix ($systemLangDisplay)")
+        ) + allOtherLanguages
+
         AlertDialog(
             onDismissRequest = { showLanguageDialog = false },
             title = { Text(stringResource(R.string.choose_language), fontWeight = FontWeight.Bold) },
             text = {
                 Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
                     langs.forEach { (code, name) ->
+                        val isSelected = when (code) {
+                            "system" -> appLanguage == "system" || appLanguage == systemLangCode
+                            else -> appLanguage == code
+                        }
+
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -554,10 +567,10 @@ fun SettingsScreen(
                         ) {
                             Text(
                                 name,
-                                color = if (appLanguage == code) NeonCyan else Color.White,
-                                fontWeight = if (appLanguage == code) FontWeight.Bold else FontWeight.Normal
+                                color = if (isSelected) NeonCyan else Color.White,
+                                fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal
                             )
-                            if (appLanguage == code) Text("✓", color = NeonCyan)
+                            if (isSelected) Text("✓", color = NeonCyan)
                         }
                     }
                 }

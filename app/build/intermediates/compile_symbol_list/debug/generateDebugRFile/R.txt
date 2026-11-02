@@ -85,6 +85,7 @@ int string shuffle 0x0
 int string sleep_timer 0x0
 int string speed_2x_active 0x0
 int string subtitle_style 0x0
+int string system_default 0x0
 int string tab_music 0x0
 int string tab_playlists 0x0
 int string tab_settings 0x0
