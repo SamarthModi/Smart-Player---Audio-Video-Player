@@ -182,21 +182,24 @@ fun MainAppScreen(
     var audios by remember { mutableStateOf<List<AudioItem>>(emptyList()) }
     var audioFolders by remember { mutableStateOf<List<MediaFolder>>(emptyList()) }
 
-    fun checkMediaPermissions(ctx: android.content.Context): Boolean {
+    fun hasVideoPermission(ctx: android.content.Context): Boolean {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            val hasVideo = ContextCompat.checkSelfPermission(ctx, Manifest.permission.READ_MEDIA_VIDEO) == PackageManager.PERMISSION_GRANTED
-            val hasAudio = ContextCompat.checkSelfPermission(ctx, Manifest.permission.READ_MEDIA_AUDIO) == PackageManager.PERMISSION_GRANTED
-            val hasPartial = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-                ContextCompat.checkSelfPermission(ctx, Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED) == PackageManager.PERMISSION_GRANTED
-            } else false
-            hasVideo || hasAudio || hasPartial
+            ContextCompat.checkSelfPermission(ctx, Manifest.permission.READ_MEDIA_VIDEO) == PackageManager.PERMISSION_GRANTED
         } else {
             ContextCompat.checkSelfPermission(ctx, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
         }
     }
 
-    // Initialize with real permission status immediately so PermissionRequestScreen is never flashed
-    var hasPermission by remember { mutableStateOf(checkMediaPermissions(context)) }
+    fun hasAudioPermission(ctx: android.content.Context): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            ContextCompat.checkSelfPermission(ctx, Manifest.permission.READ_MEDIA_AUDIO) == PackageManager.PERMISSION_GRANTED
+        } else {
+            ContextCompat.checkSelfPermission(ctx, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+        }
+    }
+
+    var isVideoPermGranted by remember { mutableStateOf(hasVideoPermission(context)) }
+    var isAudioPermGranted by remember { mutableStateOf(hasAudioPermission(context)) }
 
     val requiredPermissions = remember {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -266,16 +269,41 @@ fun MainAppScreen(
         contract = ActivityResultContracts.RequestPermission()
     ) { _ -> }
 
+    val videoSinglePermissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+    ) { _ ->
+        isVideoPermGranted = hasVideoPermission(context)
+        if (isVideoPermGranted) {
+            reloadMedia()
+        } else {
+            val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                data = Uri.fromParts("package", context.packageName, null)
+            }
+            context.startActivity(intent)
+        }
+    }
+
+    val audioSinglePermissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+    ) { _ ->
+        isAudioPermGranted = hasAudioPermission(context)
+        if (isAudioPermGranted) {
+            reloadMedia()
+        } else {
+            val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                data = Uri.fromParts("package", context.packageName, null)
+            }
+            context.startActivity(intent)
+        }
+    }
+
     val permissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestMultiplePermissions()
-    ) { results ->
-        // Check if any media permission was granted in the dialog results or via context check
-        val granted = results.any { (perm, isAllowed) ->
-            isAllowed && perm != Manifest.permission.POST_NOTIFICATIONS
-        } || checkMediaPermissions(context)
+    ) { _ ->
+        isVideoPermGranted = hasVideoPermission(context)
+        isAudioPermGranted = hasAudioPermission(context)
 
-        hasPermission = granted
-        if (granted) {
+        if (isVideoPermGranted || isAudioPermGranted) {
             reloadMedia()
             // Request notification permission smoothly after media is granted on Android 13+
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -287,8 +315,9 @@ fun MainAppScreen(
     }
 
     LaunchedEffect(Unit) {
-        if (checkMediaPermissions(context)) {
-            hasPermission = true
+        isVideoPermGranted = hasVideoPermission(context)
+        isAudioPermGranted = hasAudioPermission(context)
+        if (isVideoPermGranted || isAudioPermGranted) {
             reloadMedia()
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 if (ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
@@ -296,7 +325,6 @@ fun MainAppScreen(
                 }
             }
         } else {
-            hasPermission = false
             permissionLauncher.launch(requiredPermissions)
         }
     }
@@ -306,12 +334,12 @@ fun MainAppScreen(
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
             if (event == Lifecycle.Event.ON_RESUME) {
-                val granted = checkMediaPermissions(context)
-                if (granted) {
-                    hasPermission = true
-                    if (videos.isEmpty() || audios.isEmpty()) {
-                        reloadMedia()
-                    }
+                val prevVideo = isVideoPermGranted
+                val prevAudio = isAudioPermGranted
+                isVideoPermGranted = hasVideoPermission(context)
+                isAudioPermGranted = hasAudioPermission(context)
+                if ((!prevVideo && isVideoPermGranted) || (!prevAudio && isAudioPermGranted) || (videos.isEmpty() && audios.isEmpty())) {
+                    reloadMedia()
                 }
             }
         }
@@ -393,8 +421,9 @@ fun MainAppScreen(
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
-            if (!hasPermission) {
-                // Permission Explanation Screen
+            val hasAnyPermission = isVideoPermGranted || isAudioPermGranted
+            if (!hasAnyPermission) {
+                // Initial Permission Explanation Screen if no media permissions granted yet
                 PermissionRequestScreen(
                     onRequestPermission = { permissionLauncher.launch(requiredPermissions) }
                 )
@@ -404,7 +433,15 @@ fun MainAppScreen(
                         VideoScreen(
                             videos = videos,
                             folders = videoFolders,
-                            preferencesRepository = preferencesRepository
+                            preferencesRepository = preferencesRepository,
+                            hasPermission = isVideoPermGranted,
+                            onRequestPermission = {
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                                    videoSinglePermissionLauncher.launch(Manifest.permission.READ_MEDIA_VIDEO)
+                                } else {
+                                    videoSinglePermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+                                }
+                            }
                         )
                     }
                     NavigationTab.MUSIC -> {
@@ -412,7 +449,15 @@ fun MainAppScreen(
                             audios = audios,
                             audioFolders = audioFolders,
                             playerManager = playerManager,
-                            preferencesRepository = preferencesRepository
+                            preferencesRepository = preferencesRepository,
+                            hasPermission = isAudioPermGranted,
+                            onRequestPermission = {
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                                    audioSinglePermissionLauncher.launch(Manifest.permission.READ_MEDIA_AUDIO)
+                                } else {
+                                    audioSinglePermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+                                }
+                            }
                         )
                     }
                     NavigationTab.PLAYLISTS -> {

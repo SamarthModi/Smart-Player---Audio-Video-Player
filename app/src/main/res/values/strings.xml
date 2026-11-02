@@ -15,6 +15,11 @@
     <string name="permission_required">Storage Permission Required</string>
     <string name="permission_desc">To play your local videos and music, SmartAV Media Player needs access to your media files.</string>
     <string name="grant_permission">Grant Permission</string>
+    <string name="open_settings">Open Settings</string>
+    <string name="video_permission_required">Video Permission Required</string>
+    <string name="video_permission_desc">To display and play videos from your device, please grant video access.</string>
+    <string name="music_permission_required">Music Permission Required</string>
+    <string name="music_permission_desc">To display and play your songs and playlists, please grant music/audio access.</string>
 
     <!-- General / Common -->
     <string name="all_videos">All Videos</string>

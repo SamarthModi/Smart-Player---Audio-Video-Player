@@ -15,6 +15,11 @@
     <string name="permission_required">स्टोरेज अनुमति आवश्यक है</string>
     <string name="permission_desc">अपने स्थानीय वीडियो और संगीत चलाने के लिए स्मार्ट प्लेयर को स्टोरेज अनुमति की आवश्यकता है।</string>
     <string name="grant_permission">अनुमति दें</string>
+    <string name="open_settings">सेटिंग्स खोलें</string>
+    <string name="video_permission_required">वीडियो अनुमति आवश्यक है</string>
+    <string name="video_permission_desc">अपने डिवाइस से वीडियो देखने और चलाने के लिए, कृपया वीडियो एक्सेस की अनुमति दें।</string>
+    <string name="music_permission_required">म्यूजिक अनुमति आवश्यक है</string>
+    <string name="music_permission_desc">अपने गाने और प्लेलिस्ट देखने और सुनने के लिए, कृपया ऑडियो एक्सेस की अनुमति दें।</string>
 
     <!-- General / Common -->
     <string name="all_videos">सभी वीडियो</string>

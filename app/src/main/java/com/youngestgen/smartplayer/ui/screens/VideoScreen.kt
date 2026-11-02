@@ -44,6 +44,7 @@ import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.Sort
+import androidx.compose.material.icons.filled.Videocam
 import androidx.compose.material.icons.filled.ViewList
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
@@ -94,6 +95,7 @@ import com.youngestgen.smartplayer.ui.components.SortFilterDialog
 import com.youngestgen.smartplayer.ui.player.VideoPlayerActivity
 import com.youngestgen.smartplayer.ui.theme.ElectricViolet
 import com.youngestgen.smartplayer.ui.theme.NeonCyan
+import com.youngestgen.smartplayer.ui.theme.PlayerBlack
 import com.youngestgen.smartplayer.ui.theme.PlayerSurface
 import com.youngestgen.smartplayer.ui.theme.PlayerSurfaceVariant
 import com.youngestgen.smartplayer.util.FormatUtils
@@ -105,6 +107,8 @@ fun VideoScreen(
     videos: List<VideoItem>,
     folders: List<MediaFolder>,
     preferencesRepository: PreferencesRepository,
+    hasPermission: Boolean = true,
+    onRequestPermission: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
@@ -402,15 +406,84 @@ fun VideoScreen(
         }
 
         // Main Content List / Grid
-        if (selectedTab == 1 && selectedFolder == null && !isVaultOpen) {
-            // Folders List
-            LazyColumn(
-                modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(16.dp),
-                verticalArrangement = Arrangement.spacedBy(10.dp)
+        if (!hasPermission) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(32.dp),
+                contentAlignment = Alignment.Center
             ) {
-                items(folders) { folder ->
-                    FolderItemCard(folder = folder, onClick = { selectedFolder = folder })
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .size(72.dp)
+                            .clip(RoundedCornerShape(20.dp))
+                            .background(NeonCyan.copy(alpha = 0.15f)),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Videocam,
+                            contentDescription = null,
+                            tint = NeonCyan,
+                            modifier = Modifier.size(36.dp)
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(18.dp))
+                    Text(
+                        text = stringResource(R.string.video_permission_required),
+                        color = Color.White,
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = androidx.compose.ui.text.style.TextAlign.Center
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = stringResource(R.string.video_permission_desc),
+                        color = Color.Gray,
+                        fontSize = 14.sp,
+                        textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                        lineHeight = 20.sp
+                    )
+                    Spacer(modifier = Modifier.height(24.dp))
+                    Button(
+                        onClick = onRequestPermission,
+                        colors = ButtonDefaults.buttonColors(containerColor = NeonCyan),
+                        shape = RoundedCornerShape(12.dp),
+                        modifier = Modifier
+                            .fillMaxWidth(0.85f)
+                            .height(48.dp)
+                    ) {
+                        Text(
+                            text = stringResource(R.string.grant_permission),
+                            color = PlayerBlack,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 15.sp
+                        )
+                    }
+                }
+            }
+        } else if (selectedTab == 1 && selectedFolder == null && !isVaultOpen) {
+            if (folders.isEmpty()) {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    Text(
+                        text = stringResource(R.string.no_videos_found),
+                        color = Color.Gray,
+                        fontSize = 15.sp
+                    )
+                }
+            } else {
+                // Folders List
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize(),
+                    contentPadding = PaddingValues(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    items(folders) { folder ->
+                        FolderItemCard(folder = folder, onClick = { selectedFolder = folder })
+                    }
                 }
             }
         } else {

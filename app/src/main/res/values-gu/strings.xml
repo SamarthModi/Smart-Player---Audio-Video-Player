@@ -15,6 +15,11 @@
     <string name="permission_required">સ્ટોરેજ પરમિશન જરૂરી છે</string>
     <string name="permission_desc">તમારા લોકલ વિડીયો અને ગીતો વગાડવા માટે, SmartAV Media Player ને સ્ટોરેજ ઍક્સેસની જરૂર છે.</string>
     <string name="grant_permission">પરમિશન આપો</string>
+    <string name="open_settings">સેટિંગ્સ ખોલો</string>
+    <string name="video_permission_required">વિડિઓ પરમિશન જરૂરી છે</string>
+    <string name="video_permission_desc">તમારા ડિવાઇસમાંથી વિડિઓ જોવા અને ચલાવવા માટે, કૃપા કરીને વિડિઓ ઍક્સેસ આપો.</string>
+    <string name="music_permission_required">મ્યુઝિક પરમિશન જરૂરી છે</string>
+    <string name="music_permission_desc">તમારા ગીતો અને પ્લેલિસ્ટ જોવા અને વગાડવા માટે, કૃપા કરીને ઑડિયો ઍક્સેસ આપો.</string>
 
     <!-- General / Common -->
     <string name="all_videos">બધા વિડીયો</string>

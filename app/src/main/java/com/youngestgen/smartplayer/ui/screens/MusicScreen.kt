@@ -97,6 +97,7 @@ import com.youngestgen.smartplayer.ui.components.PrivateVaultPinDialog
 import com.youngestgen.smartplayer.ui.components.SortFilterDialog
 import com.youngestgen.smartplayer.ui.theme.ElectricViolet
 import com.youngestgen.smartplayer.ui.theme.NeonCyan
+import com.youngestgen.smartplayer.ui.theme.PlayerBlack
 import com.youngestgen.smartplayer.ui.theme.PlayerSurface
 import com.youngestgen.smartplayer.ui.theme.PlayerSurfaceVariant
 import com.youngestgen.smartplayer.util.FormatUtils
@@ -109,6 +110,8 @@ fun MusicScreen(
     audioFolders: List<MediaFolder>,
     playerManager: SmartAudioPlayerManager,
     preferencesRepository: PreferencesRepository,
+    hasPermission: Boolean = true,
+    onRequestPermission: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
@@ -335,7 +338,66 @@ fun MusicScreen(
         }
 
         // Drilldown or Tab Content
-        if (selectedAlbum != null || selectedArtist != null || selectedFolder != null || selectedTab == 0 || isVaultOpen) {
+        if (!hasPermission) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(32.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .size(72.dp)
+                            .clip(RoundedCornerShape(20.dp))
+                            .background(NeonCyan.copy(alpha = 0.15f)),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.MusicNote,
+                            contentDescription = null,
+                            tint = NeonCyan,
+                            modifier = Modifier.size(36.dp)
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(18.dp))
+                    Text(
+                        text = stringResource(R.string.music_permission_required),
+                        color = Color.White,
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = androidx.compose.ui.text.style.TextAlign.Center
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = stringResource(R.string.music_permission_desc),
+                        color = Color.Gray,
+                        fontSize = 14.sp,
+                        textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                        lineHeight = 20.sp
+                    )
+                    Spacer(modifier = Modifier.height(24.dp))
+                    Button(
+                        onClick = onRequestPermission,
+                        colors = ButtonDefaults.buttonColors(containerColor = NeonCyan),
+                        shape = RoundedCornerShape(12.dp),
+                        modifier = Modifier
+                            .fillMaxWidth(0.85f)
+                            .height(48.dp)
+                    ) {
+                        Text(
+                            text = stringResource(R.string.grant_permission),
+                            color = PlayerBlack,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 15.sp
+                        )
+                    }
+                }
+            }
+        } else if (selectedAlbum != null || selectedArtist != null || selectedFolder != null || selectedTab == 0 || isVaultOpen) {
             // Tracks Tab Content
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
