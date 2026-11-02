@@ -56,12 +56,15 @@ int string folders 0x0
 int string grant_permission 0x0
 int string history 0x0
 int string move_to_vault 0x0
+int string music_permission_desc 0x0
+int string music_permission_required 0x0
 int string no_songs_found 0x0
 int string no_vault_songs 0x0
 int string no_vault_videos 0x0
 int string no_videos_found 0x0
 int string ok 0x0
 int string open_equalizer 0x0
+int string open_settings 0x0
 int string pause_on_unplug 0x0
 int string pause_on_unplug_desc 0x0
 int string permission_desc 0x0
@@ -103,4 +106,6 @@ int string tab_videos 0x0
 int string theme_appearance 0x0
 int string tracks 0x0
 int string unlock_vault 0x0
+int string video_permission_desc 0x0
+int string video_permission_required 0x0
 int style Theme_SmartPlayer 0x0

@@ -49,12 +49,15 @@
     <string name="grant_permission">Grant Permission</string>
     <string name="history">History</string>
     <string name="move_to_vault">Move to Private Vault (Hide)</string>
+    <string name="music_permission_desc">To display and play your songs and playlists, please grant music/audio access.</string>
+    <string name="music_permission_required">Music Permission Required</string>
     <string name="no_songs_found">No songs found</string>
     <string name="no_vault_songs">No hidden songs in Private Vault.\nMove songs here using the 3-dot menu.</string>
     <string name="no_vault_videos">No hidden videos in Private Vault.\nMove videos here using the 3-dot menu.</string>
     <string name="no_videos_found">No videos found</string>
     <string name="ok">OK</string>
     <string name="open_equalizer">Open Equalizer &amp; Sound FX</string>
+    <string name="open_settings">Open Settings</string>
     <string name="pause_on_unplug">Pause on Headphone Disconnect</string>
     <string name="pause_on_unplug_desc">Auto-pause playback when headphones or Bluetooth disconnect</string>
     <string name="permission_desc">To play your local videos and music, SmartAV Media Player needs access to your media files.</string>
@@ -96,6 +99,8 @@
     <string name="theme_appearance">Theme Appearance</string>
     <string name="tracks">Tracks</string>
     <string name="unlock_vault">Unlock Vault</string>
+    <string name="video_permission_desc">To display and play videos from your device, please grant video access.</string>
+    <string name="video_permission_required">Video Permission Required</string>
     <style name="Theme.SmartPlayer" parent="android:Theme.Material.NoActionBar">
         <item name="android:statusBarColor">#0D0E15</item>
         <item name="android:navigationBarColor">#0D0E15</item>

@@ -58,12 +58,15 @@ string folders
 string grant_permission
 string history
 string move_to_vault
+string music_permission_desc
+string music_permission_required
 string no_songs_found
 string no_vault_songs
 string no_vault_videos
 string no_videos_found
 string ok
 string open_equalizer
+string open_settings
 string pause_on_unplug
 string pause_on_unplug_desc
 string permission_desc
@@ -105,4 +108,6 @@ string tab_videos
 string theme_appearance
 string tracks
 string unlock_vault
+string video_permission_desc
+string video_permission_required
 style Theme.SmartPlayer
