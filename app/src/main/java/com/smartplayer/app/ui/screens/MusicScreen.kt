@@ -1,8 +1,12 @@
 package com.smartplayer.app.ui.screens
 
+import android.content.Context
 import android.content.Intent
-import androidx.compose.ui.platform.LocalContext
-
+import android.media.RingtoneManager
+import android.net.Uri
+import android.os.Build
+import android.provider.Settings
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -19,28 +23,35 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Album
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Folder
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.LockOpen
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.MusicNote
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.PhoneAndroid
 import androidx.compose.material.icons.filled.PlaylistAdd
 import androidx.compose.material.icons.filled.QueueMusic
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.Shuffle
 import androidx.compose.material.icons.filled.Sort
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -68,6 +79,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -79,12 +91,14 @@ import com.smartplayer.app.model.MediaFolder
 import com.smartplayer.app.model.SortDirection
 import com.smartplayer.app.model.SortOption
 import com.smartplayer.app.player.SmartAudioPlayerManager
+import com.smartplayer.app.ui.components.PrivateVaultPinDialog
 import com.smartplayer.app.ui.components.SortFilterDialog
 import com.smartplayer.app.ui.theme.ElectricViolet
 import com.smartplayer.app.ui.theme.NeonCyan
 import com.smartplayer.app.ui.theme.PlayerSurface
 import com.smartplayer.app.ui.theme.PlayerSurfaceVariant
 import com.smartplayer.app.util.FormatUtils
+import java.io.File
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -95,6 +109,7 @@ fun MusicScreen(
     preferencesRepository: PreferencesRepository,
     modifier: Modifier = Modifier
 ) {
+    val context = LocalContext.current
     var selectedTab by remember { mutableIntStateOf(0) } // 0: Tracks, 1: Albums, 2: Artists, 3: Folders
     var searchQuery by remember { mutableStateOf("") }
     var isSearchActive by remember { mutableStateOf(false) }
@@ -105,19 +120,44 @@ fun MusicScreen(
 
     val playbackState by playerManager.playbackState.collectAsState()
     val favoriteSongIds by preferencesRepository.favoriteSongIds.collectAsState()
+    val vaultAudioIds by preferencesRepository.vaultAudioIds.collectAsState()
+    val recentlyPlayedAudioIds by preferencesRepository.recentlyPlayedAudioIds.collectAsState()
     val playlists by preferencesRepository.playlists.collectAsState()
 
     var showPlaylistChooserForSong by remember { mutableStateOf<AudioItem?>(null) }
     var detailSong by remember { mutableStateOf<AudioItem?>(null) }
+    var songToDelete by remember { mutableStateOf<AudioItem?>(null) }
+
+    // Private Vault States
+    var isVaultOpen by remember { mutableStateOf(false) }
+    var showVaultPinDialog by remember { mutableStateOf(false) }
 
     // Selected drilldown filters
     var selectedAlbum by remember { mutableStateOf<String?>(null) }
     var selectedArtist by remember { mutableStateOf<String?>(null) }
     var selectedFolder by remember { mutableStateOf<String?>(null) }
 
+    // Filter public vs private vault songs
+    val activeAudiosPool = remember(audios, vaultAudioIds, isVaultOpen) {
+        if (isVaultOpen) {
+            audios.filter { vaultAudioIds.contains(it.id) }
+        } else {
+            audios.filter { !vaultAudioIds.contains(it.id) }
+        }
+    }
+
+    // Recently played audio list for shelf
+    val recentSongs = remember(audios, recentlyPlayedAudioIds, vaultAudioIds, isVaultOpen) {
+        if (isVaultOpen) emptyList()
+        else {
+            val audioMap = audios.associateBy { it.id }
+            recentlyPlayedAudioIds.filter { !vaultAudioIds.contains(it) }.mapNotNull { audioMap[it] }.take(15)
+        }
+    }
+
     // Filter and Sort tracks
-    val displayedTracks = remember(audios, searchQuery, sortOption, sortDirection, selectedAlbum, selectedArtist, selectedFolder) {
-        var list = audios
+    val displayedTracks = remember(activeAudiosPool, searchQuery, sortOption, sortDirection, selectedAlbum, selectedArtist, selectedFolder) {
+        var list = activeAudiosPool
         if (selectedAlbum != null) {
             list = list.filter { it.album == selectedAlbum }
         } else if (selectedArtist != null) {
@@ -182,6 +222,7 @@ fun MusicScreen(
             } else {
                 Text(
                     text = when {
+                        isVaultOpen -> "🔒 Private Music Vault"
                         selectedAlbum != null -> selectedAlbum!!
                         selectedArtist != null -> selectedArtist!!
                         selectedFolder != null -> selectedFolder!!
@@ -189,9 +230,25 @@ fun MusicScreen(
                     },
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Bold,
-                    color = Color.White,
+                    color = if (isVaultOpen) ElectricViolet else Color.White,
                     modifier = Modifier.weight(1f)
                 )
+
+                // Vault Toggle
+                IconButton(onClick = {
+                    if (isVaultOpen) {
+                        isVaultOpen = false
+                        Toast.makeText(context, "Exited Private Vault", Toast.LENGTH_SHORT).show()
+                    } else {
+                        showVaultPinDialog = true
+                    }
+                }) {
+                    Icon(
+                        imageVector = if (isVaultOpen) Icons.Default.LockOpen else Icons.Default.Lock,
+                        contentDescription = "Private Vault",
+                        tint = if (isVaultOpen) ElectricViolet else Color.White
+                    )
+                }
 
                 IconButton(onClick = { isSearchActive = true }) {
                     Icon(Icons.Default.Search, contentDescription = "Search", tint = Color.White)
@@ -203,14 +260,38 @@ fun MusicScreen(
             }
         }
 
-        // Sub Tabs (when not drilled down into album/artist/folder)
-        if (selectedAlbum == null && selectedArtist == null && selectedFolder == null) {
+        // Vault Active Banner
+        if (isVaultOpen) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 6.dp)
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(ElectricViolet.copy(alpha = 0.2f))
+                    .padding(horizontal = 12.dp, vertical = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = "Secret Music: ${displayedTracks.size} private tracks",
+                    color = ElectricViolet,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 13.sp
+                )
+                TextButton(onClick = { isVaultOpen = false }) {
+                    Text("Exit Vault", color = Color.White, fontSize = 12.sp, fontWeight = FontWeight.SemiBold)
+                }
+            }
+        }
+
+        // Sub Tabs (when not drilled down and not in vault)
+        if (selectedAlbum == null && selectedArtist == null && selectedFolder == null && !isVaultOpen) {
             SecondaryTabRow(
                 selectedTabIndex = selectedTab,
                 containerColor = MaterialTheme.colorScheme.background,
                 contentColor = NeonCyan
             ) {
-                val tabs = listOf("Tracks (${audios.size})", "Albums", "Artists", "Folders")
+                val tabs = listOf("Tracks (${activeAudiosPool.size})", "Albums", "Artists", "Folders")
                 tabs.forEachIndexed { index, title ->
                     Tab(
                         selected = selectedTab == index,
@@ -226,7 +307,7 @@ fun MusicScreen(
                     )
                 }
             }
-        } else {
+        } else if (selectedAlbum != null || selectedArtist != null || selectedFolder != null) {
             // Header when filtered
             Row(
                 modifier = Modifier
@@ -247,17 +328,100 @@ fun MusicScreen(
         }
 
         // Drilldown or Tab Content
-        if (selectedAlbum != null || selectedArtist != null || selectedFolder != null || selectedTab == 0) {
-            // Tracks List
-            Column(modifier = Modifier.fillMaxSize()) {
-                // Shuffle All Button Bar
-                if (displayedTracks.isNotEmpty()) {
+        if (selectedAlbum != null || selectedArtist != null || selectedFolder != null || selectedTab == 0 || isVaultOpen) {
+            // Tracks Tab Content
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                contentPadding = PaddingValues(bottom = 90.dp)
+            ) {
+                // Recently Played shelf (when on main tracks tab and not in vault)
+                if (selectedTab == 0 && selectedAlbum == null && selectedArtist == null && selectedFolder == null && !isVaultOpen && recentSongs.isNotEmpty()) {
+                    item {
+                        Column(modifier = Modifier.padding(top = 10.dp, bottom = 12.dp)) {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 16.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Icon(Icons.Default.QueueMusic, contentDescription = null, tint = NeonCyan, modifier = Modifier.size(18.dp))
+                                Spacer(modifier = Modifier.width(6.dp))
+                                Text("Recently Played", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                            }
+                            Spacer(modifier = Modifier.height(8.dp))
+                            LazyRow(
+                                contentPadding = PaddingValues(horizontal = 16.dp),
+                                horizontalArrangement = Arrangement.spacedBy(10.dp)
+                            ) {
+                                items(recentSongs, key = { "rec_${it.id}" }) { s ->
+                                    val isCur = playbackState.currentSong?.id == s.id
+                                    Row(
+                                        modifier = Modifier
+                                            .clip(RoundedCornerShape(10.dp))
+                                            .background(if (isCur) ElectricViolet.copy(alpha = 0.3f) else PlayerSurface)
+                                            .clickable {
+                                                val idx = recentSongs.indexOf(s)
+                                                playerManager.playQueue(recentSongs, idx)
+                                            }
+                                            .padding(8.dp),
+                                        verticalAlignment = Alignment.CenterVertically
+                                    ) {
+                                        Box(
+                                            modifier = Modifier
+                                                .size(38.dp)
+                                                .clip(RoundedCornerShape(8.dp))
+                                                .background(PlayerSurfaceVariant),
+                                            contentAlignment = Alignment.Center
+                                        ) {
+                                            AsyncImage(
+                                                model = s.albumArtUri,
+                                                contentDescription = null,
+                                                contentScale = ContentScale.Crop,
+                                                modifier = Modifier.fillMaxSize()
+                                            )
+                                            Icon(Icons.Default.MusicNote, contentDescription = null, tint = NeonCyan, modifier = Modifier.size(16.dp))
+                                        }
+                                        Spacer(modifier = Modifier.width(8.dp))
+                                        Column {
+                                            Text(
+                                                text = s.title,
+                                                color = if (isCur) NeonCyan else Color.White,
+                                                fontSize = 12.sp,
+                                                fontWeight = FontWeight.SemiBold,
+                                                maxLines = 1
+                                            )
+                                            Text(
+                                                text = s.artist,
+                                                color = Color.Gray,
+                                                fontSize = 10.sp,
+                                                maxLines = 1
+                                            )
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // Shuffle All & Play buttons header
+                item {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 16.dp, vertical = 6.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
+                        Button(
+                            onClick = { playerManager.playQueue(displayedTracks, 0) },
+                            colors = ButtonDefaults.buttonColors(containerColor = NeonCyan),
+                            shape = RoundedCornerShape(20.dp),
+                            modifier = Modifier.height(38.dp)
+                        ) {
+                            Text("Play All (${displayedTracks.size})", color = Color.Black, fontWeight = FontWeight.Bold, fontSize = 13.sp)
+                        }
+
                         Button(
                             onClick = {
                                 val shuffled = displayedTracks.shuffled()
@@ -265,54 +429,68 @@ fun MusicScreen(
                             },
                             colors = ButtonDefaults.buttonColors(containerColor = PlayerSurfaceVariant),
                             shape = RoundedCornerShape(20.dp),
-                            modifier = Modifier.height(36.dp)
+                            modifier = Modifier.height(38.dp)
                         ) {
                             Icon(Icons.Default.Shuffle, contentDescription = null, tint = NeonCyan, modifier = Modifier.size(16.dp))
                             Spacer(modifier = Modifier.width(6.dp))
-                            Text("Shuffle All", color = Color.White, fontSize = 12.sp, fontWeight = FontWeight.SemiBold)
+                            Text("Shuffle", color = Color.White, fontSize = 13.sp)
                         }
                     }
                 }
 
                 if (displayedTracks.isEmpty()) {
-                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        Text("No tracks found", color = Color.Gray, fontSize = 16.sp)
-                    }
-                } else {
-                    LazyColumn(
-                        modifier = Modifier.fillMaxSize(),
-                        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 6.dp),
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        itemsIndexed(displayedTracks, key = { _, song -> song.id }) { index, song ->
-                            val isCurrent = playbackState.currentSong?.id == song.id
-                            val isFav = favoriteSongIds.contains(song.id)
-
-                            AudioTrackItem(
-                                song = song,
-                                isPlayingNow = isCurrent && playbackState.isPlaying,
-                                isFavorite = isFav,
-                                onClick = {
-                                    playerManager.playQueue(displayedTracks, index)
-                                },
-                                onToggleFavorite = { preferencesRepository.toggleFavoriteSong(song.id) },
-                                onAddToQueue = { playerManager.addToQueue(song) },
-                                onAddToPlaylist = { showPlaylistChooserForSong = song },
-                                onShowDetails = { detailSong = song }
+                    item {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 48.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = if (isVaultOpen) "No hidden songs in Private Vault.\nMove songs here using the 3-dot menu." else "No songs found",
+                                color = Color.Gray,
+                                fontSize = 15.sp
                             )
                         }
+                    }
+                } else {
+                    itemsIndexed(displayedTracks, key = { _, song -> song.id }) { index, song ->
+                        val isPlayingNow = playbackState.currentSong?.id == song.id
+                        val isFav = favoriteSongIds.contains(song.id)
+
+                        SongListItem(
+                            song = song,
+                            isPlayingNow = isPlayingNow,
+                            isFavorite = isFav,
+                            isVaultItem = isVaultOpen,
+                            onClick = { playerManager.playQueue(displayedTracks, index) },
+                            onToggleFavorite = { preferencesRepository.toggleFavoriteSong(song.id) },
+                            onToggleVault = {
+                                preferencesRepository.toggleVaultAudio(song.id)
+                                Toast.makeText(
+                                    context,
+                                    if (isVaultOpen) "Unhid song from vault" else "Moved to Private Vault",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            },
+                            onAddToQueue = { playerManager.addToQueue(song) },
+                            onAddToPlaylist = { showPlaylistChooserForSong = song },
+                            onSetAsRingtone = {
+                                setAsRingtone(context, song)
+                            },
+                            onDelete = { songToDelete = song },
+                            onShowDetails = { detailSong = song }
+                        )
                     }
                 }
             }
         } else if (selectedTab == 1) {
             // Albums Grid
-            val albums = remember(audios) {
-                audios.groupBy { it.album }
-                    .map { (name, songs) ->
-                        AlbumInfo(name = name, artist = songs.firstOrNull()?.artist ?: "", count = songs.size, firstSong = songs.first())
-                    }.sortedBy { it.name.lowercase() }
+            val albums = remember(activeAudiosPool) {
+                activeAudiosPool.groupBy { it.album }
+                    .map { (name, songs) -> name to songs }
+                    .sortedByDescending { it.second.size }
             }
-
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
                 modifier = Modifier.fillMaxSize(),
@@ -320,51 +498,50 @@ fun MusicScreen(
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                items(albums) { album ->
+                items(albums) { (albumName, songs) ->
+                    val firstSong = songs.firstOrNull()
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
                             .clip(RoundedCornerShape(12.dp))
                             .background(PlayerSurface)
-                            .clickable { selectedAlbum = album.name }
+                            .clickable { selectedAlbum = albumName }
                     ) {
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .aspectRatio(1f)
-                                .background(Color.Black.copy(alpha = 0.3f)),
+                                .background(PlayerSurfaceVariant),
                             contentAlignment = Alignment.Center
                         ) {
                             AsyncImage(
-                                model = album.firstSong.albumArtUri,
-                                contentDescription = album.name,
+                                model = firstSong?.albumArtUri,
+                                contentDescription = albumName,
                                 contentScale = ContentScale.Crop,
                                 modifier = Modifier.fillMaxSize()
                             )
-                            Icon(Icons.Default.Album, contentDescription = null, tint = NeonCyan.copy(alpha = 0.5f), modifier = Modifier.size(36.dp))
+                            Icon(Icons.Default.Album, contentDescription = null, tint = NeonCyan, modifier = Modifier.size(36.dp))
                         }
                         Column(modifier = Modifier.padding(10.dp)) {
-                            Text(album.name, color = Color.White, fontSize = 13.sp, fontWeight = FontWeight.SemiBold, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                            Text(album.artist, color = Color.Gray, fontSize = 11.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                            Text("${album.count} songs", color = NeonCyan, fontSize = 10.sp, fontWeight = FontWeight.Bold)
+                            Text(albumName, color = Color.White, fontWeight = FontWeight.Bold, fontSize = 13.sp, maxLines = 1)
+                            Text("${songs.size} songs", color = Color.Gray, fontSize = 11.sp)
                         }
                     }
                 }
             }
         } else if (selectedTab == 2) {
             // Artists List
-            val artists = remember(audios) {
-                audios.groupBy { it.artist }
-                    .map { (name, songs) -> Pair(name, songs.size) }
-                    .sortedBy { it.first.lowercase() }
+            val artists = remember(activeAudiosPool) {
+                activeAudiosPool.groupBy { it.artist }
+                    .map { (name, songs) -> name to songs }
+                    .sortedByDescending { it.second.size }
             }
-
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(16.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                items(artists) { (artistName, count) ->
+                items(artists) { (artistName, songs) ->
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -376,7 +553,7 @@ fun MusicScreen(
                     ) {
                         Box(
                             modifier = Modifier
-                                .size(44.dp)
+                                .size(46.dp)
                                 .clip(CircleShape)
                                 .background(ElectricViolet.copy(alpha = 0.2f)),
                             contentAlignment = Alignment.Center
@@ -386,7 +563,7 @@ fun MusicScreen(
                         Spacer(modifier = Modifier.width(12.dp))
                         Column(modifier = Modifier.weight(1f)) {
                             Text(artistName, color = Color.White, fontSize = 14.sp, fontWeight = FontWeight.SemiBold)
-                            Text("$count songs", color = Color.Gray, fontSize = 12.sp)
+                            Text("${songs.size} songs", color = Color.Gray, fontSize = 12.sp)
                         }
                         Text("›", color = Color.Gray, fontSize = 20.sp, fontWeight = FontWeight.Bold)
                     }
@@ -440,6 +617,51 @@ fun MusicScreen(
                 sortDirection = dir
             },
             onDismiss = { showSortDialog = false }
+        )
+    }
+
+    // Private Vault PIN Dialog
+    if (showVaultPinDialog) {
+        PrivateVaultPinDialog(
+            preferencesRepository = preferencesRepository,
+            onSuccess = {
+                showVaultPinDialog = false
+                isVaultOpen = true
+                Toast.makeText(context, "Private Music Vault Unlocked", Toast.LENGTH_SHORT).show()
+            },
+            onDismiss = { showVaultPinDialog = false }
+        )
+    }
+
+    // Delete Song Confirmation Dialog
+    songToDelete?.let { song ->
+        AlertDialog(
+            onDismissRequest = { songToDelete = null },
+            title = { Text("Delete Song", fontWeight = FontWeight.Bold) },
+            text = { Text("Are you sure you want to delete '${song.title}' from your device? This cannot be undone.") },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        try {
+                            val f = File(song.path)
+                            if (f.exists()) f.delete()
+                            context.contentResolver.delete(song.uri, null, null)
+                            Toast.makeText(context, "Song deleted", Toast.LENGTH_SHORT).show()
+                        } catch (e: Exception) {
+                            Toast.makeText(context, "Could not delete song", Toast.LENGTH_SHORT).show()
+                        }
+                        songToDelete = null
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.Red)
+                ) {
+                    Text("Delete", color = Color.White)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { songToDelete = null }) {
+                    Text("Cancel", color = Color.Gray)
+                }
+            }
         )
     }
 
@@ -507,22 +729,43 @@ fun MusicScreen(
     }
 }
 
-private data class AlbumInfo(
-    val name: String,
-    val artist: String,
-    val count: Int,
-    val firstSong: AudioItem
-)
+private fun setAsRingtone(context: Context, song: AudioItem) {
+    try {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!Settings.System.canWrite(context)) {
+                val intent = Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS).apply {
+                    data = Uri.parse("package:" + context.packageName)
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                }
+                context.startActivity(intent)
+                Toast.makeText(context, "Please allow Modify System Settings to set ringtone", Toast.LENGTH_LONG).show()
+                return
+            }
+        }
+        RingtoneManager.setActualDefaultRingtoneUri(
+            context,
+            RingtoneManager.TYPE_RINGTONE,
+            song.uri
+        )
+        Toast.makeText(context, "Set as Ringtone: ${song.title}", Toast.LENGTH_SHORT).show()
+    } catch (e: Exception) {
+        Toast.makeText(context, "Could not set ringtone: ${e.message}", Toast.LENGTH_SHORT).show()
+    }
+}
 
 @Composable
-fun AudioTrackItem(
+fun SongListItem(
     song: AudioItem,
     isPlayingNow: Boolean,
     isFavorite: Boolean,
+    isVaultItem: Boolean,
     onClick: () -> Unit,
     onToggleFavorite: () -> Unit,
+    onToggleVault: () -> Unit,
     onAddToQueue: () -> Unit,
     onAddToPlaylist: () -> Unit,
+    onSetAsRingtone: () -> Unit,
+    onDelete: () -> Unit,
     onShowDetails: () -> Unit
 ) {
     val context = LocalContext.current
@@ -531,18 +774,17 @@ fun AudioTrackItem(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(12.dp))
-            .background(if (isPlayingNow) PlayerSurfaceVariant else PlayerSurface)
             .clickable { onClick() }
-            .padding(10.dp),
+            .background(if (isPlayingNow) PlayerSurfaceVariant.copy(alpha = 0.5f) else Color.Transparent)
+            .padding(horizontal = 16.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        // Thumbnail
+        // Album art thumbnail
         Box(
             modifier = Modifier
                 .size(48.dp)
                 .clip(RoundedCornerShape(8.dp))
-                .background(Color.Black.copy(alpha = 0.3f)),
+                .background(PlayerSurfaceVariant),
             contentAlignment = Alignment.Center
         ) {
             AsyncImage(
@@ -602,6 +844,28 @@ fun AudioTrackItem(
                 onDismissRequest = { showMenu = false }
             ) {
                 DropdownMenuItem(
+                    text = { Text(if (isVaultItem) "Unhide / Remove from Vault" else "Move to Private Vault (Hide)") },
+                    onClick = {
+                        onToggleVault()
+                        showMenu = false
+                    },
+                    leadingIcon = {
+                        Icon(
+                            if (isVaultItem) Icons.Default.Visibility else Icons.Default.VisibilityOff,
+                            contentDescription = null,
+                            tint = ElectricViolet
+                        )
+                    }
+                )
+                DropdownMenuItem(
+                    text = { Text("Set as Phone Ringtone") },
+                    onClick = {
+                        onSetAsRingtone()
+                        showMenu = false
+                    },
+                    leadingIcon = { Icon(Icons.Default.PhoneAndroid, contentDescription = null, tint = NeonCyan) }
+                )
+                DropdownMenuItem(
                     text = { Text("Add to Queue") },
                     onClick = {
                         onAddToQueue()
@@ -628,6 +892,14 @@ fun AudioTrackItem(
                         showMenu = false
                     },
                     leadingIcon = { Icon(Icons.Default.Share, contentDescription = null) }
+                )
+                DropdownMenuItem(
+                    text = { Text("Delete Track") },
+                    onClick = {
+                        onDelete()
+                        showMenu = false
+                    },
+                    leadingIcon = { Icon(Icons.Default.Delete, contentDescription = null, tint = Color.Red) }
                 )
                 DropdownMenuItem(
                     text = { Text("Details") },

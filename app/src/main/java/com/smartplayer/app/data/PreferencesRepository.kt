@@ -29,6 +29,15 @@ class PreferencesRepository(private val context: Context) {
     private val _recentlyPlayedAudioIds = MutableStateFlow<List<Long>>(emptyList())
     val recentlyPlayedAudioIds: StateFlow<List<Long>> = _recentlyPlayedAudioIds.asStateFlow()
 
+    private val _recentlyPlayedVideoIds = MutableStateFlow<List<Long>>(emptyList())
+    val recentlyPlayedVideoIds: StateFlow<List<Long>> = _recentlyPlayedVideoIds.asStateFlow()
+
+    private val _vaultVideoIds = MutableStateFlow<Set<Long>>(emptySet())
+    val vaultVideoIds: StateFlow<Set<Long>> = _vaultVideoIds.asStateFlow()
+
+    private val _vaultAudioIds = MutableStateFlow<Set<Long>>(emptySet())
+    val vaultAudioIds: StateFlow<Set<Long>> = _vaultAudioIds.asStateFlow()
+
     init {
         loadData()
     }
@@ -46,6 +55,19 @@ class PreferencesRepository(private val context: Context) {
         } catch (_: Exception) {
             _recentlyPlayedAudioIds.value = emptyList()
         }
+
+        val recentVideo = prefs.getString("recent_video_ids", "[]") ?: "[]"
+        try {
+            _recentlyPlayedVideoIds.value = json.decodeFromString(recentVideo)
+        } catch (_: Exception) {
+            _recentlyPlayedVideoIds.value = emptyList()
+        }
+
+        val vaultVideos = prefs.getStringSet("vault_video_ids", emptySet()) ?: emptySet()
+        _vaultVideoIds.value = vaultVideos.mapNotNull { it.toLongOrNull() }.toSet()
+
+        val vaultAudios = prefs.getStringSet("vault_audio_ids", emptySet()) ?: emptySet()
+        _vaultAudioIds.value = vaultAudios.mapNotNull { it.toLongOrNull() }.toSet()
 
         val playlistsJson = prefs.getString("custom_playlists", "[]") ?: "[]"
         try {
@@ -103,6 +125,55 @@ class PreferencesRepository(private val context: Context) {
         _recentlyPlayedAudioIds.value = current
         prefs.edit().putString("recent_audio_ids", json.encodeToString(current)).apply()
     }
+
+    fun addRecentlyPlayedVideo(videoId: Long) {
+        val current = _recentlyPlayedVideoIds.value.toMutableList()
+        current.remove(videoId)
+        current.add(0, videoId)
+        if (current.size > 100) {
+            current.removeAt(current.size - 1)
+        }
+        _recentlyPlayedVideoIds.value = current
+        prefs.edit().putString("recent_video_ids", json.encodeToString(current)).apply()
+    }
+
+    // Private Vault (PIN protection & Hidden items)
+    var vaultPin: String?
+        get() = prefs.getString("vault_pin", null)
+        set(value) = prefs.edit().putString("vault_pin", value).apply()
+
+    val isVaultConfigured: Boolean
+        get() = !vaultPin.isNullOrBlank()
+
+    fun verifyVaultPin(enteredPin: String): Boolean {
+        return vaultPin != null && vaultPin == enteredPin
+    }
+
+    fun toggleVaultVideo(videoId: Long) {
+        val current = _vaultVideoIds.value.toMutableSet()
+        if (current.contains(videoId)) {
+            current.remove(videoId)
+        } else {
+            current.add(videoId)
+        }
+        _vaultVideoIds.value = current
+        prefs.edit().putStringSet("vault_video_ids", current.map { it.toString() }.toSet()).apply()
+    }
+
+    fun isVaultVideo(videoId: Long): Boolean = _vaultVideoIds.value.contains(videoId)
+
+    fun toggleVaultAudio(audioId: Long) {
+        val current = _vaultAudioIds.value.toMutableSet()
+        if (current.contains(audioId)) {
+            current.remove(audioId)
+        } else {
+            current.add(audioId)
+        }
+        _vaultAudioIds.value = current
+        prefs.edit().putStringSet("vault_audio_ids", current.map { it.toString() }.toSet()).apply()
+    }
+
+    fun isVaultAudio(audioId: Long): Boolean = _vaultAudioIds.value.contains(audioId)
 
     // Custom Playlists
     fun createPlaylist(name: String) {
@@ -205,6 +276,24 @@ class PreferencesRepository(private val context: Context) {
     var themeStyle: String
         get() = prefs.getString("theme_style", "DARK") ?: "DARK"
         set(value) = prefs.edit().putString("theme_style", value).apply()
+
+    // Subtitle Customization
+    var subtitleTextSize: Int
+        get() = prefs.getInt("subtitle_text_size", 20)
+        set(value) = prefs.edit().putInt("subtitle_text_size", value).apply()
+
+    var subtitleColorHex: String
+        get() = prefs.getString("subtitle_color_hex", "#FFFFFF") ?: "#FFFFFF"
+        set(value) = prefs.edit().putString("subtitle_color_hex", value).apply()
+
+    var subtitleHasBackground: Boolean
+        get() = prefs.getBoolean("subtitle_has_bg", true)
+        set(value) = prefs.edit().putBoolean("subtitle_has_bg", value).apply()
+
+    // Background Video Playback
+    var isBackgroundVideoPlayEnabled: Boolean
+        get() = prefs.getBoolean("bg_video_play_enabled", false)
+        set(value) = prefs.edit().putBoolean("bg_video_play_enabled", value).apply()
 
     fun clearPlaybackHistory() {
         _recentlyPlayedAudioIds.value = emptyList()

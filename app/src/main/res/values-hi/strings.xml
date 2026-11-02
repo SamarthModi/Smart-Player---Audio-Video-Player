@@ -26,4 +26,21 @@
     <string name="sleep_timer">स्लीप टाइमर</string>
     <string name="audio_boost">ऑडियो बूस्ट (200%)</string>
     <string name="app_language">ऐप भाषा</string>
+
+    <!-- New Top-Tier Features -->
+    <string name="continue_watching">देखना जारी रखें</string>
+    <string name="recently_played">हाल ही में बजाया गया</string>
+    <string name="private_vault">प्राइवेट वॉल्ट (गुप्त फ़ोल्डर)</string>
+    <string name="play_as_audio">ऑडियो के रूप में चलाएं</string>
+    <string name="move_to_vault">प्राइवेट वॉल्ट में ले जाएं (छिपाएं)</string>
+    <string name="remove_from_vault">वॉल्ट से बाहर निकालें</string>
+    <string name="enter_pin">४-अंकों का पिन दर्ज करें</string>
+    <string name="set_pin">नया ४-अंकों का पिन सेट करें</string>
+    <string name="pin_incorrect">गलत पिन! पुनः प्रयास करें।</string>
+    <string name="pin_saved">प्राइवेट वॉल्ट पिन सेट हो गया</string>
+    <string name="delete_file">फ़ाइल हटाएं</string>
+    <string name="delete_confirm">क्या आप वाकई इस फ़ाइल को अपने डिवाइस से हटाना चाहते हैं?</string>
+    <string name="file_deleted">फ़ाइल सफलतापूर्वक हटाई गई</string>
+    <string name="speed_2x_active">२ गुना स्पीड &gt;&gt;</string>
+    <string name="subtitle_style">सबटाइटल शैली</string>
 </resources>

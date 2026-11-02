@@ -145,6 +145,35 @@ class SmartAudioPlayerManager private constructor(private val context: Context) 
         }
     }
 
+    fun playSingleMedia(uri: android.net.Uri, title: String, path: String, startPositionMs: Long = 0L) {
+        val audioItem = AudioItem(
+            id = uri.hashCode().toLong(),
+            title = title,
+            displayName = title,
+            artist = "Video Audio Background",
+            album = "Videos",
+            albumId = -1L,
+            duration = 0L,
+            size = 0L,
+            path = path,
+            uriString = uri.toString(),
+            dateAdded = System.currentTimeMillis()
+        )
+        _playbackState.value = _playbackState.value.copy(
+            queue = listOf(audioItem),
+            queueIndex = 0,
+            currentSong = audioItem
+        )
+        exoPlayer.clearMediaItems()
+        val media3Item = Media3Item.Builder()
+            .setUri(uri)
+            .setMediaId(audioItem.id.toString())
+            .build()
+        exoPlayer.setMediaItem(media3Item, startPositionMs)
+        exoPlayer.prepare()
+        exoPlayer.play()
+    }
+
     fun playQueue(songs: List<AudioItem>, startIndex: Int = 0) {
         if (songs.isEmpty()) return
         val validIndex = startIndex.coerceIn(0, songs.size - 1)

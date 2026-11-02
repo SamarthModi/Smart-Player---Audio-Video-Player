@@ -2,6 +2,7 @@ package com.smartplayer.app.ui.screens
 
 import android.content.Context
 import android.content.Intent
+import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -19,6 +20,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -27,18 +29,26 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Folder
 import androidx.compose.material.icons.filled.GridView
+import androidx.compose.material.icons.filled.Headphones
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.LockOpen
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.Sort
 import androidx.compose.material.icons.filled.ViewList
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -49,7 +59,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.SecondaryTabRow
 import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextFieldDefaults
@@ -76,6 +85,8 @@ import com.smartplayer.app.model.MediaFolder
 import com.smartplayer.app.model.SortDirection
 import com.smartplayer.app.model.SortOption
 import com.smartplayer.app.model.VideoItem
+import com.smartplayer.app.player.SmartAudioPlayerManager
+import com.smartplayer.app.ui.components.PrivateVaultPinDialog
 import com.smartplayer.app.ui.components.SortFilterDialog
 import com.smartplayer.app.ui.player.VideoPlayerActivity
 import com.smartplayer.app.ui.theme.ElectricViolet
@@ -105,15 +116,40 @@ fun VideoScreen(
 
     var selectedFolder by remember { mutableStateOf<MediaFolder?>(null) }
     var detailVideo by remember { mutableStateOf<VideoItem?>(null) }
+    var videoToDelete by remember { mutableStateOf<VideoItem?>(null) }
+
+    // Private Secret Vault States
+    var isVaultOpen by remember { mutableStateOf(false) }
+    var showVaultPinDialog by remember { mutableStateOf(false) }
 
     val favoriteVideoIds by preferencesRepository.favoriteVideoIds.collectAsState()
+    val vaultVideoIds by preferencesRepository.vaultVideoIds.collectAsState()
 
-    // Filter and Sort videos
-    val displayedVideos = remember(videos, searchQuery, sortOption, sortDirection, selectedFolder) {
-        var list = if (selectedFolder != null) {
-            videos.filter { it.folderName == selectedFolder?.name }
+    // Filter public vs private vault videos
+    val activeVideosPool = remember(videos, vaultVideoIds, isVaultOpen) {
+        if (isVaultOpen) {
+            videos.filter { vaultVideoIds.contains(it.id) }
         } else {
-            videos
+            videos.filter { !vaultVideoIds.contains(it.id) }
+        }
+    }
+
+    // Continue Watching list (for uncompleted videos with progress > 4s)
+    val continueWatchingVideos = remember(videos, vaultVideoIds, isVaultOpen) {
+        if (isVaultOpen) emptyList()
+        else videos.filter {
+            !vaultVideoIds.contains(it.id) &&
+            preferencesRepository.getVideoPosition(it.path) > 4000L &&
+            preferencesRepository.getVideoPosition(it.path) < (it.duration - 10000L)
+        }
+    }
+
+    // Filter and Sort displayed videos
+    val displayedVideos = remember(activeVideosPool, searchQuery, sortOption, sortDirection, selectedFolder) {
+        var list = if (selectedFolder != null) {
+            activeVideosPool.filter { it.folderName == selectedFolder?.name }
+        } else {
+            activeVideosPool
         }
 
         if (searchQuery.isNotBlank()) {
@@ -170,12 +206,32 @@ fun VideoScreen(
                 )
             } else {
                 Text(
-                    text = if (selectedFolder != null) selectedFolder!!.name else "Videos",
+                    text = when {
+                        isVaultOpen -> "🔒 Private Vault"
+                        selectedFolder != null -> selectedFolder!!.name
+                        else -> "Videos"
+                    },
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Bold,
-                    color = Color.White,
+                    color = if (isVaultOpen) ElectricViolet else Color.White,
                     modifier = Modifier.weight(1f)
                 )
+
+                // Private Vault Toggle Button
+                IconButton(onClick = {
+                    if (isVaultOpen) {
+                        isVaultOpen = false
+                        Toast.makeText(context, "Exited Private Vault", Toast.LENGTH_SHORT).show()
+                    } else {
+                        showVaultPinDialog = true
+                    }
+                }) {
+                    Icon(
+                        imageVector = if (isVaultOpen) Icons.Default.LockOpen else Icons.Default.Lock,
+                        contentDescription = "Private Vault",
+                        tint = if (isVaultOpen) ElectricViolet else Color.White
+                    )
+                }
 
                 IconButton(onClick = { isSearchActive = true }) {
                     Icon(Icons.Default.Search, contentDescription = "Search", tint = Color.White)
@@ -195,8 +251,32 @@ fun VideoScreen(
             }
         }
 
-        // Sub Tabs: All Videos vs Folders (when not inside a folder)
-        if (selectedFolder == null) {
+        // Vault Active Banner
+        if (isVaultOpen) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 6.dp)
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(ElectricViolet.copy(alpha = 0.2f))
+                    .padding(horizontal = 12.dp, vertical = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = "Secret Folder: ${displayedVideos.size} private items",
+                    color = ElectricViolet,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 13.sp
+                )
+                TextButton(onClick = { isVaultOpen = false }) {
+                    Text("Exit Vault", color = Color.White, fontSize = 12.sp, fontWeight = FontWeight.SemiBold)
+                }
+            }
+        }
+
+        // Sub Tabs: All Videos vs Folders (when not inside a folder and not in vault)
+        if (selectedFolder == null && !isVaultOpen) {
             SecondaryTabRow(
                 selectedTabIndex = selectedTab,
                 containerColor = MaterialTheme.colorScheme.background,
@@ -207,7 +287,7 @@ fun VideoScreen(
                     onClick = { selectedTab = 0 },
                     text = {
                         Text(
-                            "All Videos (${videos.size})",
+                            "All Videos (${activeVideosPool.size})",
                             fontWeight = if (selectedTab == 0) FontWeight.Bold else FontWeight.Normal,
                             color = if (selectedTab == 0) NeonCyan else Color.Gray
                         )
@@ -225,7 +305,7 @@ fun VideoScreen(
                     }
                 )
             }
-        } else {
+        } else if (selectedFolder != null) {
             // Folder header with Back button
             Row(
                 modifier = Modifier
@@ -241,8 +321,84 @@ fun VideoScreen(
             }
         }
 
-        // Content
-        if (selectedTab == 1 && selectedFolder == null) {
+        // Continue Watching Shelf (Only on Main Videos Tab)
+        if (selectedTab == 0 && selectedFolder == null && !isVaultOpen && continueWatchingVideos.isNotEmpty()) {
+            Column(modifier = Modifier.padding(top = 10.dp, bottom = 4.dp)) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(Icons.Default.PlayArrow, contentDescription = null, tint = NeonCyan, modifier = Modifier.size(18.dp))
+                    Spacer(modifier = Modifier.width(6.dp))
+                    Text("Continue Watching", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                }
+                Spacer(modifier = Modifier.height(8.dp))
+                LazyRow(
+                    contentPadding = PaddingValues(horizontal = 16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    items(continueWatchingVideos, key = { "cw_${it.id}" }) { video ->
+                        val savedPos = preferencesRepository.getVideoPosition(video.path)
+                        val progressFraction = if (video.duration > 0) savedPos.toFloat() / video.duration.toFloat() else 0f
+
+                        Column(
+                            modifier = Modifier
+                                .width(160.dp)
+                                .clip(RoundedCornerShape(10.dp))
+                                .background(PlayerSurface)
+                                .clickable {
+                                    VideoPlayerActivity.start(context, video.uri, video.title, video.path, video.id)
+                                }
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(90.dp)
+                                    .background(Color.Black),
+                                contentAlignment = Alignment.BottomCenter
+                            ) {
+                                AsyncImage(
+                                    model = video.uri,
+                                    contentDescription = video.title,
+                                    contentScale = ContentScale.Crop,
+                                    modifier = Modifier.fillMaxSize()
+                                )
+                                LinearProgressIndicator(
+                                    progress = { progressFraction.coerceIn(0f, 1f) },
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(4.dp),
+                                    color = NeonCyan,
+                                    trackColor = Color.Black.copy(alpha = 0.6f)
+                                )
+                            }
+                            Column(modifier = Modifier.padding(8.dp)) {
+                                Text(
+                                    text = video.title,
+                                    color = Color.White,
+                                    fontSize = 12.sp,
+                                    fontWeight = FontWeight.SemiBold,
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis
+                                )
+                                Spacer(modifier = Modifier.height(2.dp))
+                                Text(
+                                    text = "Resume at ${FormatUtils.formatDuration(savedPos)}",
+                                    color = NeonCyan,
+                                    fontSize = 10.sp
+                                )
+                            }
+                        }
+                    }
+                }
+                Spacer(modifier = Modifier.height(10.dp))
+            }
+        }
+
+        // Main Content List / Grid
+        if (selectedTab == 1 && selectedFolder == null && !isVaultOpen) {
             // Folders List
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
@@ -257,7 +413,11 @@ fun VideoScreen(
             // Videos Grid or List
             if (displayedVideos.isEmpty()) {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    Text("No videos found", color = Color.Gray, fontSize = 16.sp)
+                    Text(
+                        text = if (isVaultOpen) "No hidden videos in Private Vault.\nMove videos here using the 3-dot menu." else "No videos found",
+                        color = Color.Gray,
+                        fontSize = 15.sp
+                    )
                 }
             } else if (isGridView) {
                 LazyVerticalGrid(
@@ -274,11 +434,26 @@ fun VideoScreen(
                         VideoGridCard(
                             video = video,
                             isFavorite = isFav,
+                            isVaultItem = isVaultOpen,
                             lastPosition = lastPos,
                             onClick = {
-                                VideoPlayerActivity.start(context, video.uri, video.title, video.path)
+                                VideoPlayerActivity.start(context, video.uri, video.title, video.path, video.id)
                             },
                             onToggleFavorite = { preferencesRepository.toggleFavoriteVideo(video.id) },
+                            onToggleVault = {
+                                preferencesRepository.toggleVaultVideo(video.id)
+                                Toast.makeText(
+                                    context,
+                                    if (isVaultOpen) "Unhid video from vault" else "Moved to Private Vault",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            },
+                            onPlayAsAudio = {
+                                val mgr = SmartAudioPlayerManager.getInstance(context)
+                                mgr.playSingleMedia(video.uri, video.title, video.path, lastPos)
+                                Toast.makeText(context, "Playing video audio in background", Toast.LENGTH_SHORT).show()
+                            },
+                            onDelete = { videoToDelete = video },
                             onShowDetails = { detailVideo = video }
                         )
                     }
@@ -296,11 +471,26 @@ fun VideoScreen(
                         VideoListCard(
                             video = video,
                             isFavorite = isFav,
+                            isVaultItem = isVaultOpen,
                             lastPosition = lastPos,
                             onClick = {
-                                VideoPlayerActivity.start(context, video.uri, video.title, video.path)
+                                VideoPlayerActivity.start(context, video.uri, video.title, video.path, video.id)
                             },
                             onToggleFavorite = { preferencesRepository.toggleFavoriteVideo(video.id) },
+                            onToggleVault = {
+                                preferencesRepository.toggleVaultVideo(video.id)
+                                Toast.makeText(
+                                    context,
+                                    if (isVaultOpen) "Unhid video from vault" else "Moved to Private Vault",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            },
+                            onPlayAsAudio = {
+                                val mgr = SmartAudioPlayerManager.getInstance(context)
+                                mgr.playSingleMedia(video.uri, video.title, video.path, lastPos)
+                                Toast.makeText(context, "Playing video audio in background", Toast.LENGTH_SHORT).show()
+                            },
+                            onDelete = { videoToDelete = video },
                             onShowDetails = { detailVideo = video }
                         )
                     }
@@ -319,6 +509,51 @@ fun VideoScreen(
                 sortDirection = dir
             },
             onDismiss = { showSortDialog = false }
+        )
+    }
+
+    // Private Vault PIN Dialog
+    if (showVaultPinDialog) {
+        PrivateVaultPinDialog(
+            preferencesRepository = preferencesRepository,
+            onSuccess = {
+                showVaultPinDialog = false
+                isVaultOpen = true
+                Toast.makeText(context, "Private Vault Unlocked", Toast.LENGTH_SHORT).show()
+            },
+            onDismiss = { showVaultPinDialog = false }
+        )
+    }
+
+    // Delete Confirmation Dialog
+    videoToDelete?.let { video ->
+        AlertDialog(
+            onDismissRequest = { videoToDelete = null },
+            title = { Text("Delete Video", fontWeight = FontWeight.Bold) },
+            text = { Text("Are you sure you want to delete '${video.title}' from your device? This cannot be undone.") },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        try {
+                            val f = File(video.path)
+                            if (f.exists()) f.delete()
+                            context.contentResolver.delete(video.uri, null, null)
+                            Toast.makeText(context, "Video deleted", Toast.LENGTH_SHORT).show()
+                        } catch (e: Exception) {
+                            Toast.makeText(context, "Could not delete file", Toast.LENGTH_SHORT).show()
+                        }
+                        videoToDelete = null
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.Red)
+                ) {
+                    Text("Delete", color = Color.White)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { videoToDelete = null }) {
+                    Text("Cancel", color = Color.Gray)
+                }
+            }
         )
     }
 
@@ -353,9 +588,13 @@ fun VideoScreen(
 fun VideoListCard(
     video: VideoItem,
     isFavorite: Boolean,
+    isVaultItem: Boolean,
     lastPosition: Long,
     onClick: () -> Unit,
     onToggleFavorite: () -> Unit,
+    onToggleVault: () -> Unit,
+    onPlayAsAudio: () -> Unit,
+    onDelete: () -> Unit,
     onShowDetails: () -> Unit
 ) {
     val context = LocalContext.current
@@ -465,6 +704,28 @@ fun VideoListCard(
                 onDismissRequest = { showMenu = false }
             ) {
                 DropdownMenuItem(
+                    text = { Text("Play as Audio (Background)") },
+                    onClick = {
+                        onPlayAsAudio()
+                        showMenu = false
+                    },
+                    leadingIcon = { Icon(Icons.Default.Headphones, contentDescription = null, tint = NeonCyan) }
+                )
+                DropdownMenuItem(
+                    text = { Text(if (isVaultItem) "Unhide / Remove from Vault" else "Move to Private Vault (Hide)") },
+                    onClick = {
+                        onToggleVault()
+                        showMenu = false
+                    },
+                    leadingIcon = {
+                        Icon(
+                            if (isVaultItem) Icons.Default.Visibility else Icons.Default.VisibilityOff,
+                            contentDescription = null,
+                            tint = ElectricViolet
+                        )
+                    }
+                )
+                DropdownMenuItem(
                     text = { Text(if (isFavorite) "Remove Favorite" else "Add to Favorites") },
                     onClick = {
                         onToggleFavorite()
@@ -491,6 +752,14 @@ fun VideoListCard(
                     leadingIcon = { Icon(Icons.Default.Share, contentDescription = null) }
                 )
                 DropdownMenuItem(
+                    text = { Text("Delete Video") },
+                    onClick = {
+                        onDelete()
+                        showMenu = false
+                    },
+                    leadingIcon = { Icon(Icons.Default.Delete, contentDescription = null, tint = Color.Red) }
+                )
+                DropdownMenuItem(
                     text = { Text("Details") },
                     onClick = {
                         onShowDetails()
@@ -507,11 +776,18 @@ fun VideoListCard(
 fun VideoGridCard(
     video: VideoItem,
     isFavorite: Boolean,
+    isVaultItem: Boolean,
     lastPosition: Long,
     onClick: () -> Unit,
     onToggleFavorite: () -> Unit,
+    onToggleVault: () -> Unit,
+    onPlayAsAudio: () -> Unit,
+    onDelete: () -> Unit,
     onShowDetails: () -> Unit
 ) {
+    val context = LocalContext.current
+    var showMenu by remember { mutableStateOf(false) }
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -563,32 +839,115 @@ fun VideoGridCard(
             }
         }
 
-        Column(modifier = Modifier.padding(10.dp)) {
-            Text(
-                text = video.title,
-                color = Color.White,
-                fontSize = 13.sp,
-                fontWeight = FontWeight.SemiBold,
-                maxLines = 2,
-                overflow = TextOverflow.Ellipsis
-            )
-            Spacer(modifier = Modifier.height(4.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 10.dp, vertical = 8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = video.resolutionFormatted,
-                    color = NeonCyan,
-                    fontSize = 10.sp,
-                    fontWeight = FontWeight.Bold
+                    text = video.title,
+                    color = Color.White,
+                    fontSize = 13.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
                 )
-                Text(
-                    text = FormatUtils.formatFileSize(video.size),
-                    color = Color.Gray,
-                    fontSize = 10.sp
-                )
+                Spacer(modifier = Modifier.height(4.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = video.resolutionFormatted,
+                        color = NeonCyan,
+                        fontSize = 10.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Text(
+                        text = FormatUtils.formatFileSize(video.size),
+                        color = Color.Gray,
+                        fontSize = 10.sp
+                    )
+                }
+            }
+
+            Box {
+                IconButton(onClick = { showMenu = true }, modifier = Modifier.size(28.dp)) {
+                    Icon(Icons.Default.MoreVert, contentDescription = "More", tint = Color.Gray, modifier = Modifier.size(18.dp))
+                }
+
+                DropdownMenu(
+                    expanded = showMenu,
+                    onDismissRequest = { showMenu = false }
+                ) {
+                    DropdownMenuItem(
+                        text = { Text("Play as Audio (Background)") },
+                        onClick = {
+                            onPlayAsAudio()
+                            showMenu = false
+                        },
+                        leadingIcon = { Icon(Icons.Default.Headphones, contentDescription = null, tint = NeonCyan) }
+                    )
+                    DropdownMenuItem(
+                        text = { Text(if (isVaultItem) "Unhide from Vault" else "Move to Private Vault") },
+                        onClick = {
+                            onToggleVault()
+                            showMenu = false
+                        },
+                        leadingIcon = {
+                            Icon(
+                                if (isVaultItem) Icons.Default.Visibility else Icons.Default.VisibilityOff,
+                                contentDescription = null,
+                                tint = ElectricViolet
+                            )
+                        }
+                    )
+                    DropdownMenuItem(
+                        text = { Text(if (isFavorite) "Remove Favorite" else "Add to Favorites") },
+                        onClick = {
+                            onToggleFavorite()
+                            showMenu = false
+                        },
+                        leadingIcon = {
+                            Icon(
+                                if (isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                                contentDescription = null,
+                                tint = if (isFavorite) Color.Red else Color.White
+                            )
+                        }
+                    )
+                    DropdownMenuItem(
+                        text = { Text("Share") },
+                        onClick = {
+                            val shareIntent = Intent(Intent.ACTION_SEND).apply {
+                                type = "video/*"
+                                putExtra(Intent.EXTRA_STREAM, video.uri)
+                            }
+                            context.startActivity(Intent.createChooser(shareIntent, "Share Video"))
+                            showMenu = false
+                        },
+                        leadingIcon = { Icon(Icons.Default.Share, contentDescription = null) }
+                    )
+                    DropdownMenuItem(
+                        text = { Text("Delete Video") },
+                        onClick = {
+                            onDelete()
+                            showMenu = false
+                        },
+                        leadingIcon = { Icon(Icons.Default.Delete, contentDescription = null, tint = Color.Red) }
+                    )
+                    DropdownMenuItem(
+                        text = { Text("Details") },
+                        onClick = {
+                            onShowDetails()
+                            showMenu = false
+                        },
+                        leadingIcon = { Icon(Icons.Default.Info, contentDescription = null) }
+                    )
+                }
             }
         }
     }

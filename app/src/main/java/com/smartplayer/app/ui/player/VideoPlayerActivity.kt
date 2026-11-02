@@ -176,6 +176,10 @@ class VideoPlayerActivity : ComponentActivity() {
         intent.getStringExtra(EXTRA_VIDEO_URI)?.let { videoUriString = it }
         intent.getStringExtra(EXTRA_VIDEO_TITLE)?.let { videoTitle = it }
         intent.getStringExtra(EXTRA_VIDEO_PATH)?.let { videoPath = it }
+        val videoId = intent.getLongExtra(EXTRA_VIDEO_ID, -1L)
+        if (videoId != -1L) {
+            preferencesRepository.addRecentlyPlayedVideo(videoId)
+        }
 
         initPlayer(isSoftwareDecoder)
 
@@ -340,12 +344,14 @@ class VideoPlayerActivity : ComponentActivity() {
         const val EXTRA_VIDEO_URI = "extra_video_uri"
         const val EXTRA_VIDEO_TITLE = "extra_video_title"
         const val EXTRA_VIDEO_PATH = "extra_video_path"
+        const val EXTRA_VIDEO_ID = "extra_video_id"
 
-        fun start(context: Context, uri: Uri, title: String, path: String) {
+        fun start(context: Context, uri: Uri, title: String, path: String, videoId: Long = -1L) {
             val intent = Intent(context, VideoPlayerActivity::class.java).apply {
                 putExtra(EXTRA_VIDEO_URI, uri.toString())
                 putExtra(EXTRA_VIDEO_TITLE, title)
                 putExtra(EXTRA_VIDEO_PATH, path)
+                putExtra(EXTRA_VIDEO_ID, videoId)
             }
             context.startActivity(intent)
         }
@@ -406,6 +412,9 @@ fun VideoPlayerScreen(
     var showDoubleTapForward by remember { mutableStateOf(false) }
     val seekStepSeconds = preferencesRepository.doubleTapSeekSeconds
     val autoHideTimeoutMs = preferencesRepository.autoHideControlsSec * 1000L
+
+    // Quick 2x Hold gesture
+    var isQuick2xActive by remember { mutableStateOf(false) }
 
     // Dialogs
     var showSpeedDialog by remember { mutableStateOf(false) }
@@ -517,6 +526,28 @@ fun VideoPlayerScreen(
                     AspectRatioMode.RATIO_16_9 -> AspectRatioFrameLayout.RESIZE_MODE_FIXED_WIDTH
                     AspectRatioMode.RATIO_4_3 -> AspectRatioFrameLayout.RESIZE_MODE_FIXED_HEIGHT
                 }
+                playerView.subtitleView?.let { subView ->
+                    val textColorInt = try {
+                        android.graphics.Color.parseColor(preferencesRepository.subtitleColorHex)
+                    } catch (_: Exception) {
+                        android.graphics.Color.WHITE
+                    }
+                    val bgInt = if (preferencesRepository.subtitleHasBackground) {
+                        android.graphics.Color.argb(160, 0, 0, 0)
+                    } else {
+                        android.graphics.Color.TRANSPARENT
+                    }
+                    val captionStyle = androidx.media3.ui.CaptionStyleCompat(
+                        textColorInt,
+                        bgInt,
+                        android.graphics.Color.TRANSPARENT,
+                        androidx.media3.ui.CaptionStyleCompat.EDGE_TYPE_OUTLINE,
+                        android.graphics.Color.BLACK,
+                        null
+                    )
+                    subView.setStyle(captionStyle)
+                    subView.setFixedTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, preferencesRepository.subtitleTextSize.toFloat())
+                }
             },
             modifier = Modifier.fillMaxSize()
         )
@@ -540,8 +571,23 @@ fun VideoPlayerScreen(
                     var isVerticalSwipe = false
                     var initialSeekPos = 0L
 
+                    val holdHandler = android.os.Handler(android.os.Looper.getMainLooper())
+                    var isHolding2x = false
+                    var originalSpeed = 1.0f
+
+                    val hold2xRunnable = Runnable {
+                        if (!isHorizontalSeek && !isVerticalSwipe && !isScreenLocked) {
+                            isHolding2x = true
+                            isQuick2xActive = true
+                            originalSpeed = exoPlayer?.playbackParameters?.speed ?: playbackSpeed
+                            exoPlayer?.playbackParameters = PlaybackParameters(2.0f)
+                            performHapticFeedback(android.view.HapticFeedbackConstants.LONG_PRESS)
+                        }
+                    }
+
                     val gestureDetector = GestureDetector(ctx, object : GestureDetector.SimpleOnGestureListener() {
                         override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
+                            if (isHolding2x) return true
                             isControlsVisible = !isControlsVisible
                             if (isControlsVisible) scheduleControlsAutoHide()
                             return true
@@ -595,6 +641,7 @@ fun VideoPlayerScreen(
                                 isHorizontalSeek = false
                                 isVerticalSwipe = false
                                 initialSeekPos = exoPlayer?.currentPosition ?: 0L
+                                holdHandler.postDelayed(hold2xRunnable, 450L)
                             }
                             MotionEvent.ACTION_MOVE -> {
                                 val dx = event.x - startX
@@ -602,7 +649,11 @@ fun VideoPlayerScreen(
                                 val absDx = abs(dx)
                                 val absDy = abs(dy)
 
-                                if (!isHorizontalSeek && !isVerticalSwipe) {
+                                if (absDx > 30 || absDy > 30) {
+                                    holdHandler.removeCallbacks(hold2xRunnable)
+                                }
+
+                                if (!isHorizontalSeek && !isVerticalSwipe && !isHolding2x) {
                                     if (absDx > 40 && absDx > absDy) {
                                         isHorizontalSeek = true
                                     } else if (absDy > 40 && absDy > absDx) {
@@ -638,6 +689,12 @@ fun VideoPlayerScreen(
                                 }
                             }
                             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                                holdHandler.removeCallbacks(hold2xRunnable)
+                                if (isHolding2x) {
+                                    isHolding2x = false
+                                    isQuick2xActive = false
+                                    exoPlayer?.playbackParameters = PlaybackParameters(originalSpeed)
+                                }
                                 if (isHorizontalSeek) {
                                     val dx = event.x - startX
                                     val seekDeltaMs = ((dx / width) * 90000L).toLong()
@@ -812,6 +869,29 @@ fun VideoPlayerScreen(
             }
         }
 
+        // Quick 2x Speed HUD (Hold gesture)
+        AnimatedVisibility(
+            visible = isQuick2xActive,
+            enter = fadeIn(),
+            exit = fadeOut(),
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .padding(top = 28.dp)
+        ) {
+            Box(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(20.dp))
+                    .background(Color(0xEE00E5FF))
+                    .padding(horizontal = 18.dp, vertical = 7.dp)
+            ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(Icons.Default.Speed, contentDescription = null, tint = PlayerBlack, modifier = Modifier.size(18.dp))
+                    Spacer(modifier = Modifier.width(6.dp))
+                    Text("2X SPEED >>", color = PlayerBlack, fontSize = 13.sp, fontWeight = FontWeight.ExtraBold)
+                }
+            }
+        }
+
         // Screen Lock Unlocker
         if (isScreenLocked) {
             AnimatedVisibility(
@@ -953,9 +1033,24 @@ fun VideoPlayerScreen(
                         Icon(Icons.Default.AspectRatio, contentDescription = "Aspect Ratio", tint = Color.White)
                     }
 
+                    // Background Play as Audio
+                    IconButton(onClick = {
+                        val currentPos = exoPlayer?.currentPosition ?: 0L
+                        com.smartplayer.app.player.SmartAudioPlayerManager.getInstance(context).playSingleMedia(
+                            Uri.parse(videoUriString),
+                            videoTitle,
+                            videoPath,
+                            currentPos
+                        )
+                        Toast.makeText(context, "Playing audio in background service", Toast.LENGTH_SHORT).show()
+                        (context as? Activity)?.finish()
+                    }) {
+                        Icon(Icons.Default.Headphones, contentDescription = "Play as Audio", tint = NeonCyan)
+                    }
+
                     // Audio Track & Sync Selector
                     IconButton(onClick = { showAudioTrackDialog = true }) {
-                        Icon(Icons.Default.Headphones, contentDescription = "Audio Track", tint = Color.White)
+                        Icon(Icons.Default.Tune, contentDescription = "Audio Track", tint = Color.White)
                     }
 
                     // Subtitle & Sync Selector
@@ -1410,6 +1505,83 @@ fun VideoPlayerScreen(
                         ) {
                             Text("+100ms", color = Color.White)
                         }
+                    }
+
+                    Spacer(modifier = Modifier.height(14.dp))
+                    HorizontalDivider(color = Color.White.copy(alpha = 0.1f))
+                    Spacer(modifier = Modifier.height(10.dp))
+
+                    Text("Subtitle Text Size", color = NeonCyan, fontWeight = FontWeight.Bold, fontSize = 13.sp)
+                    Spacer(modifier = Modifier.height(6.dp))
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        listOf(14 to "Small", 18 to "Normal", 22 to "Large", 28 to "Extra").forEach { (sz, lbl) ->
+                            val isSel = preferencesRepository.subtitleTextSize == sz
+                            Button(
+                                onClick = {
+                                    preferencesRepository.subtitleTextSize = sz
+                                    Toast.makeText(context, "Size: $lbl", Toast.LENGTH_SHORT).show()
+                                },
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = if (isSel) NeonCyan else PlayerSurfaceVariant
+                                ),
+                                shape = RoundedCornerShape(8.dp),
+                                modifier = Modifier.weight(1f)
+                            ) {
+                                Text(lbl, color = if (isSel) PlayerBlack else Color.White, fontSize = 11.sp, fontWeight = FontWeight.Bold)
+                            }
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(12.dp))
+                    Text("Subtitle Font Color", color = NeonCyan, fontWeight = FontWeight.Bold, fontSize = 13.sp)
+                    Spacer(modifier = Modifier.height(6.dp))
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        listOf(
+                            "#FFFFFF" to "White",
+                            "#FFEE58" to "Yellow",
+                            "#00E5FF" to "Cyan",
+                            "#69F0AE" to "Green"
+                        ).forEach { (colorHex, lbl) ->
+                            val isSel = preferencesRepository.subtitleColorHex == colorHex
+                            Button(
+                                onClick = {
+                                    preferencesRepository.subtitleColorHex = colorHex
+                                    Toast.makeText(context, "Color: $lbl", Toast.LENGTH_SHORT).show()
+                                },
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = if (isSel) NeonCyan else PlayerSurfaceVariant
+                                ),
+                                shape = RoundedCornerShape(8.dp),
+                                modifier = Modifier.weight(1f)
+                            ) {
+                                Text(lbl, color = if (isSel) PlayerBlack else Color.White, fontSize = 11.sp, fontWeight = FontWeight.Bold)
+                            }
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(12.dp))
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text("Dark Background Box", color = Color.White, fontSize = 13.sp)
+                        Switch(
+                            checked = preferencesRepository.subtitleHasBackground,
+                            onCheckedChange = {
+                                preferencesRepository.subtitleHasBackground = it
+                            },
+                            colors = SwitchDefaults.colors(
+                                checkedThumbColor = NeonCyan,
+                                checkedTrackColor = ElectricViolet
+                            )
+                        )
                     }
                 }
             },
